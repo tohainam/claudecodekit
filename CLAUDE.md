@@ -106,6 +106,7 @@ See `.claude/rules/` for detailed standards:
 | code-quality | Best practices, clean code |
 | debugging | Root cause analysis |
 | documentation | Writing docs |
+| frontend-design | Distinctive, production-grade UI design |
 | git-workflow | Commits, branches, PRs |
 | performance | Optimization |
 | project-analysis | Codebase analysis for Claude Code setup (used by /onboard) |
