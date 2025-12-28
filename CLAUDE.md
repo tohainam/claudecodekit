@@ -8,6 +8,7 @@ After copying the `.claude/` directory to your project, you can use these comman
 
 | Command | Purpose |
 |---------|---------|
+| `/onboard [--apply]` | Analyze project and recommend Claude Code setup |
 | `/discuss <topic>` | Structured discussion for requirements and decisions |
 | `/feature <desc>` | Implement a new feature (full workflow) |
 | `/bugfix <error>` | Fix a bug (diagnosis + fix + optional test) |
@@ -37,7 +38,28 @@ After copying the `.claude/` directory to your project, you can use these comman
 
 ## Workflows
 
-### Requirements Gathering (NEW)
+### Project Onboarding (NEW)
+```
+/onboard
+→ Detect tech stack → Analyze structure → Generate recommendations → ONBOARD-REPORT.md
+
+/onboard --apply
+→ Same as above + Create all recommended rules files
+```
+Use when setting up Claude Code for a new project or updating configuration as project evolves.
+
+**What it detects:**
+- Languages: JavaScript/TypeScript, Python, Go, Rust, Java, Ruby, PHP, C#
+- Frameworks: Next.js, React, Vue, Django, FastAPI, Express, and more
+- Databases: Prisma, TypeORM, SQLAlchemy, Mongoose, etc.
+- Auth systems, testing frameworks, CI/CD, Docker
+
+**What it creates:**
+- ONBOARD-REPORT.md with full analysis
+- Recommended `.claude/rules/` files (with --apply flag)
+- Never overwrites existing files
+
+### Requirements Gathering
 ```
 /discuss "topic to explore"
 → Facilitator → (clarify) → (explore) → (decide) → Discussion Summary + ADR
@@ -80,6 +102,7 @@ See `.claude/rules/` for detailed standards:
 | documentation | Writing docs |
 | git-workflow | Commits, branches, PRs |
 | performance | Optimization |
+| project-analysis | Codebase analysis for Claude Code setup (used by /onboard) |
 | refactoring | Safe code improvement |
 | security-review | Security auditing |
 | testing | TDD, test strategies |
