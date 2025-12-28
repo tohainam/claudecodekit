@@ -19,14 +19,14 @@ Task description: $ARGUMENTS
 Before planning, check for related discussions:
 
 1. If `--discussion <path>` is provided, read that discussion file
-2. Otherwise, search `.claude/discussions/` for related topics
+2. Otherwise, search `.claude/.discussions/` for related topics
 3. Extract requirements, acceptance criteria, and selected approach from discussions
-4. Reference any related ADRs from `.claude/decisions/`
+4. Reference any related ADRs from `.claude/.decisions/`
 
 ```bash
 # Check for related discussions
-ls -la .claude/discussions/ 2>/dev/null
-ls -la .claude/decisions/ 2>/dev/null
+ls -la .claude/.discussions/ 2>/dev/null
+ls -la .claude/.decisions/ 2>/dev/null
 ```
 
 ### Step 1: Create Plan
@@ -38,8 +38,8 @@ Task: Launch planner agent
 Prompt: "Create a detailed implementation plan for: $ARGUMENTS
 
 Requirements:
-1. Check .claude/discussions/ for related discussions
-2. Check .claude/decisions/ for related ADRs
+1. Check .claude/.discussions/ for related discussions
+2. Check .claude/.decisions/ for related ADRs
 3. Analyze the task requirements thoroughly
 4. Research the codebase for patterns and conventions
 5. Identify all affected files and dependencies
@@ -48,7 +48,7 @@ Requirements:
 8. Define test strategy
 9. Identify risks and mitigations
 
-Create the plan file at .claude/plans/[datetime]-[type]-[name].md
+Create the plan file at .claude/.plans/[datetime]-[type]-[name].md
 
 Important:
 - Select ONE approach with clear reasoning (no multiple options)

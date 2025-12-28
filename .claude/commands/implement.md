@@ -11,7 +11,7 @@ You are executing an approved implementation plan.
 ## Input
 Plan file path (optional): $ARGUMENTS
 
-If no path provided, look for the most recent plan file in `.claude/plans/`.
+If no path provided, look for the most recent plan file in `.claude/.plans/`.
 
 ## Process
 

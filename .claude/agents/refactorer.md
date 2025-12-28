@@ -222,7 +222,7 @@ Characterization tests capture CURRENT behavior:
 
 ### Phase 3: Create Refactoring Plan
 
-Create plan file at: `.claude/plans/[datetime]-refactor-[name].md`
+Create plan file at: `.claude/.plans/[datetime]-refactor-[name].md`
 
 ```bash
 # Get datetime for filename

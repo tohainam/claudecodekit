@@ -78,7 +78,7 @@ You are a senior test automation engineer who creates comprehensive, maintainabl
 1. Understand what needs testing:
    ```bash
    # Read the plan file if exists (for workflow integration)
-   cat .claude/plans/*.md 2>/dev/null | head -100
+   cat .claude/.plans/*.md 2>/dev/null | head -100
 
    # Find recent implementation changes
    git diff --name-only HEAD~5

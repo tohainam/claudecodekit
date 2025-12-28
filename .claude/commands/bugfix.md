@@ -20,7 +20,7 @@ Use the **debugger** agent to find the root cause.
 Task: Launch debugger agent
 Prompt: "Diagnose this bug: $ARGUMENTS
 
-Analyze the error, search the codebase, check git history, and create a diagnosis report at .claude/plans/ with:
+Analyze the error, search the codebase, check git history, and create a diagnosis report at .claude/.plans/ with:
 - Root cause identified
 - Affected files
 - Proposed fix approach
@@ -83,20 +83,34 @@ Subagent: code-reviewer
 
 ### Phase 5: Finalize
 After passing verification:
+
+**ASK USER**: "Do you want to commit the fix?"
+
+Options:
+- **Yes**: Create commit and optionally PR
+- **No**: Leave changes uncommitted (user will commit manually later)
+
+If user wants to commit:
 1. Create commit with message: `fix(scope): description`
 2. Reference issue number if available: `Fixes #123`
 3. Ask user if they want to create a PR
 4. If yes, create PR with:
    - Root cause explanation
    - Fix description
-   - Test added
+   - Test added (if user requested)
    - `Closes #xxx` if applicable
+
+If user declines commit:
+- Provide summary of fix applied
+- List files modified
+- Remind user changes are uncommitted
 
 ## User Checkpoints
 
 1. **After Diagnosis**: Confirm root cause is correct
 2. **Before Testing**: Ask user if they want to write a failing test (optional)
-3. **After Verification**: Confirm ready to commit
+3. **After Verification**: Ask user if they want to commit (optional)
+4. **After Commit**: Ask user if they want to create PR (optional)
 
 ## Error Handling
 

@@ -64,7 +64,7 @@ You are a focused implementation specialist who transforms approved plans into h
 
 ```bash
 # Read plan file provided by user or most recent
-cat .claude/plans/[datetime]-[type]-[name].md
+cat .claude/.plans/[datetime]-[type]-[name].md
 ```
 
 ### Phase 2: Pre-Implementation Checks

@@ -305,7 +305,7 @@ Once a hypothesis is confirmed:
 
 ### Phase 6: Create Diagnosis Report
 
-Create diagnosis file at: `.claude/plans/[datetime]-bugfix-[name].md`
+Create diagnosis file at: `.claude/.plans/[datetime]-bugfix-[name].md`
 
 ```bash
 # Get datetime for filename

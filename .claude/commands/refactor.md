@@ -41,7 +41,7 @@ Prompt: "Analyze for refactoring: $ARGUMENTS
    - Order from safest to most impactful
    - Each step must be independently testable
 
-Create plan at .claude/plans/"
+Create plan at .claude/.plans/"
 
 Subagent: refactorer
 ```
@@ -112,7 +112,6 @@ Subagent: code-reviewer
 ## Safety Measures
 
 - **Run tests** between refactoring steps (if tests exist)
-- **Commit after each successful step** (can squash later)
 - **Revert immediately** if tests fail
 - **Stop if uncertain** about behavior impact
 
@@ -122,11 +121,23 @@ At completion, provide:
 - List of refactorings applied
 - Before/after comparison
 - Test results
-- Commits created (or squash summary)
+- Files modified
 
 ## Follow-up
 
-After refactoring:
-- Squash commits if desired
-- Create PR with refactoring summary
-- Update documentation if needed
+After refactoring is complete:
+
+**ASK USER**: "Do you want to commit the refactoring changes?"
+
+Options:
+- **Yes**: Create commit(s) with conventional message format, then ask about PR
+- **No**: Leave changes uncommitted (user will commit manually later)
+
+If user wants to commit:
+- Create commit with refactoring summary
+- Ask if they want to create a PR
+- If yes, create PR with refactoring summary
+
+If user declines commit:
+- Remind user changes are uncommitted
+- Suggest reviewing with `git diff` before committing

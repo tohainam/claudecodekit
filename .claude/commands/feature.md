@@ -16,8 +16,8 @@ Feature description: $ARGUMENTS
 ### Phase 0: Check for Prior Discussion
 Before planning, check for related discussions and decisions:
 
-1. Search `.claude/discussions/` for discussions related to this feature
-2. Search `.claude/decisions/` for relevant ADRs
+1. Search `.claude/.discussions/` for discussions related to this feature
+2. Search `.claude/.decisions/` for relevant ADRs
 3. If found, reference them in the planning phase
 
 If no discussion exists and requirements seem unclear:
@@ -34,7 +34,7 @@ Use the **planner** agent to create a comprehensive implementation plan.
 Task: Launch planner agent
 Prompt: "Create a detailed implementation plan for: $ARGUMENTS
 
-Analyze the codebase, identify affected files, design the solution, and create a plan file at .claude/plans/."
+Analyze the codebase, identify affected files, design the solution, and create a plan file at .claude/.plans/."
 
 Subagent: planner
 ```
@@ -83,16 +83,30 @@ Subagent: code-reviewer
 
 ### Phase 5: Finalize
 After passing review:
+
+**ASK USER**: "Do you want to commit the changes?"
+
+Options:
+- **Yes**: Create commit(s) with conventional message format, then ask about PR
+- **No**: Leave changes uncommitted (user will commit manually later)
+
+If user wants to commit:
 1. Create commit(s) with conventional message format
 2. Ask user if they want to create a PR
 3. If yes, create PR with summary
+
+If user declines commit:
+- Provide summary of changes made
+- List files modified
+- Remind user changes are uncommitted
 
 ## User Checkpoints
 
 This workflow has user checkpoints:
 1. **After Planning**: User must approve plan before implementation
 2. **Before Testing**: Ask user if they want to write tests (optional)
-3. **After Review**: User confirms ready to commit/PR
+3. **After Review**: Ask user if they want to commit (optional)
+4. **After Commit**: Ask user if they want to create PR (optional)
 
 ## Error Handling
 

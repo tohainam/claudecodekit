@@ -2,7 +2,7 @@
 
 These rules define the standard workflow for different types of tasks.
 
-## Core Workflow: Discuss (Optional) -> Plan -> Code -> Test (Optional) -> Review
+## Core Workflow: Discuss (Optional) -> Plan -> Code -> Test (Optional) -> Review -> Commit (Optional)
 
 ### Phase 0: Discussion (Optional)
 **When to Discuss:**
@@ -18,8 +18,8 @@ These rules define the standard workflow for different types of tasks.
 - Following existing patterns
 
 **Discussion Output:**
-- Discussion summary in `.claude/discussions/`
-- ADR decision record in `.claude/decisions/` (if decision made)
+- Discussion summary in `.claude/.discussions/`
+- ADR decision record in `.claude/.decisions/` (if decision made)
 - Use `/discuss <topic>` command
 
 ### Phase 1: Planning
@@ -35,7 +35,7 @@ These rules define the standard workflow for different types of tasks.
 - Adding comments/docs only
 
 **Planning Output:**
-- Plan file in `.claude/plans/`
+- Plan file in `.claude/.plans/`
 - Naming: `YYYY-MM-DD-HH-MM-<type>-<name>.md`
 - User approval required before proceeding
 
@@ -89,6 +89,24 @@ These rules define the standard workflow for different types of tasks.
 - [ ] Tests adequate (if user requested tests)
 - [ ] Documentation updated
 
+### Phase 5: Commit (Optional)
+**ASK USER** before committing changes. Committing is optional.
+
+**When User Wants to Commit:**
+1. Create commit(s) with conventional message format
+2. Ask if user wants to create a PR
+3. If yes, create PR with summary
+
+**When User Declines Commit:**
+- Provide summary of changes made
+- List files modified
+- Remind user changes are uncommitted
+- User will commit manually when ready
+
+**Skip Asking When:**
+- User has already expressed preference in this session
+- User explicitly requested commit in original task
+
 ## Command Usage Guide
 
 ### Requirements Gathering
@@ -96,28 +114,28 @@ These rules define the standard workflow for different types of tasks.
 Use Case: Unclear requirements, architectural decisions, trade-off analysis
 Command: /discuss <topic>
 Workflow: Clarify -> Explore -> Decide -> Discussion Summary + ADR
-Output: .claude/discussions/ and .claude/decisions/
+Output: .claude/.discussions/ and .claude/.decisions/
 ```
 
 ### Feature Development
 ```
 Use Case: New feature from scratch
 Command: /feature <description>
-Workflow: (Check discussions) -> Plan -> Implement -> Test (optional) -> Review -> Commit/PR
+Workflow: (Check discussions) -> Plan -> Implement -> Test (optional) -> Review -> Commit (optional) -> PR (optional)
 ```
 
 ### Bug Fixing
 ```
 Use Case: Fixing reported bugs
 Command: /bugfix <error or description>
-Workflow: Debug -> Write failing test (optional) -> Fix -> Verify -> Review
+Workflow: Debug -> Write failing test (optional) -> Fix -> Verify -> Review -> Commit (optional) -> PR (optional)
 ```
 
 ### Quick Changes
 ```
 Use Case: Simple changes (< 3 files)
 Command: Direct implementation (no command)
-Workflow: Edit -> Test (if needed) -> Commit
+Workflow: Edit -> Test (if needed) -> Commit (optional)
 ```
 
 ### Code Quality
@@ -132,10 +150,11 @@ Workflow: Analyze -> Plan -> Implement in small steps -> Verify
 ### User Approval Required
 1. After creating plan (before implementation)
 2. Before writing tests (ask if user wants tests)
-3. Before large deletions (> 10 files or > 500 lines)
-4. Before destructive git operations
-5. Before making breaking changes
-6. When switching approaches mid-implementation
+3. Before committing changes (ask if user wants to commit)
+4. Before large deletions (> 10 files or > 500 lines)
+5. Before destructive git operations
+6. Before making breaking changes
+7. When switching approaches mid-implementation
 
 ### Progress Reports
 - After each phase completion
@@ -160,11 +179,18 @@ Workflow: Analyze -> Plan -> Implement in small steps -> Verify
 
 ## Commit Strategy
 
-### When to Commit
-- After each logical unit of work
-- After passing tests
+**IMPORTANT**: Always ask user before committing. Never commit automatically.
+
+### When to Offer Commit
+- After each logical unit of work is complete
+- After passing tests and review
 - Before switching to unrelated work
 - At natural breakpoints
+
+### If User Declines Commit
+- Leave changes uncommitted
+- Provide summary of what was done
+- User can use `/commit` later when ready
 
 ### Commit Message Format
 - Use conventional commits: `type(scope): description`

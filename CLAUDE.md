@@ -21,17 +21,20 @@ After copying the `.claude/` directory to your project, you can use these comman
 | `/commit [msg]` | Create git commit |
 | `/pr [title]` | Create pull request |
 | `/check [scope]` | Run lint, typecheck, tests |
+| `/mcp-register [info]` | Register new MCP server in manifest |
 
 ## Architecture
 
 ```
 .claude/
-├── rules/          # Always loaded - coding standards
-├── skills/         # Auto-loaded - domain knowledge
+├── rules/          # Always loaded - coding standards + auto-loaders
+├── skills/         # Auto-loaded - domain knowledge (MANIFEST.md)
+├── mcp/            # MCP servers registry (MANIFEST.md)
 ├── agents/         # Subagents - specialized executors
 ├── commands/       # Slash commands - user triggers
-├── discussions/    # Discussion summaries from /discuss
-├── decisions/      # ADR decision records
+├── .discussions/   # Discussion summaries from /discuss
+├── .decisions/     # ADR decision records
+├── .plans/         # Implementation plans
 ├── hooks/          # Automation scripts
 └── settings.json   # Hooks config + permissions
 ```
@@ -69,13 +72,13 @@ Use before `/feature` or `/plan` when requirements are unclear or decisions need
 ### Feature Development
 ```
 /feature "Add user authentication"
-→ (check discussions) → Planner → (approve) → Implementer → (ask: tests?) → Tester → Reviewer → Commit/PR
+→ (check discussions) → Planner → (approve) → Implementer → (ask: tests?) → Tester → Reviewer → (ask: commit?) → (ask: PR?)
 ```
 
 ### Bug Fixing
 ```
 /bugfix "API returns 500 on checkout"
-→ Debugger → (approve) → (ask: tests?) → Write failing test → Fix → Verify → Commit/PR
+→ Debugger → (approve) → (ask: tests?) → Write failing test → Fix → Verify → (ask: commit?) → (ask: PR?)
 ```
 
 ### Quick Changes
@@ -91,6 +94,9 @@ See `.claude/rules/` for detailed standards:
 | @.claude/rules/communication.md | Response format, when to ask |
 | @.claude/rules/safety.md | Protected files, confirmations |
 | @.claude/rules/workflow.md | Plan → Code → Test (optional) → Review |
+| @.claude/rules/skill-loader.md | Auto-load skills based on task context |
+| @.claude/rules/mcp-loader.md | Auto-use MCP servers when relevant |
+| @.claude/rules/knowledge-freshness.md | Source priority chain, freshness attribution |
 
 ## Skills Available
 
@@ -105,7 +111,10 @@ See `.claude/rules/` for detailed standards:
 | project-analysis | Codebase analysis for Claude Code setup (used by /onboard) |
 | refactoring | Safe code improvement |
 | security-review | Security auditing |
+| skill-creator | Creating new skills (auto-updates MANIFEST.md) |
 | testing | TDD, test strategies |
+
+Skills are auto-loaded based on semantic matching (see `@.claude/rules/skill-loader.md`).
 
 ## Agents Available
 
@@ -120,6 +129,19 @@ See `.claude/rules/` for detailed standards:
 | refactorer | opus | Improves code safely |
 | doc-writer | sonnet | Writes documentation |
 | security-auditor | opus | Audits security |
+
+## MCP Servers
+
+MCP servers are auto-used based on semantic matching (see `@.claude/rules/mcp-loader.md`).
+
+Registry: `.claude/mcp/MANIFEST.md`
+
+| Server | Tools | Use When |
+|--------|-------|----------|
+| context7 | resolve-library-id, get-library-docs | Fetching library/framework documentation |
+| sequential-thinking | sequentialthinking | Complex multi-step problem solving |
+
+**Adding new MCP servers**: Add entry to `.claude/mcp/MANIFEST.md`
 
 ## Hooks
 

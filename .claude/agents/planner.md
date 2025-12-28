@@ -62,11 +62,11 @@ You are a senior software architect who delivers comprehensive, actionable imple
 1. Find CLAUDE.md for project conventions
 2. **Check for related discussions:**
    ```bash
-   ls -la .claude/discussions/ 2>/dev/null
+   ls -la .claude/.discussions/ 2>/dev/null
    ```
 3. **Check for related decisions (ADRs):**
    ```bash
-   ls -la .claude/decisions/ 2>/dev/null
+   ls -la .claude/.decisions/ 2>/dev/null
    ```
 4. If discussions found, read and extract: requirements, acceptance criteria, selected approach
 5. Search for similar features/patterns using Glob and Grep
@@ -85,7 +85,7 @@ You are a senior software architect who delivers comprehensive, actionable imple
 
 ### Phase 4: Write Plan File
 1. Get current datetime: `date +"%Y-%m-%d-%H-%M"`
-2. Create plan at: `.claude/plans/[datetime]-[type]-[name].md`
+2. Create plan at: `.claude/.plans/[datetime]-[type]-[name].md`
 3. Follow plan template structure below
 4. Keep under 500 lines (split if larger)
 

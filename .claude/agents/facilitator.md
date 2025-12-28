@@ -72,8 +72,8 @@ You are a senior technical facilitator who leads structured discussions to clari
 3. Identify 3-5 key questions to explore
 4. Check for related discussions/decisions:
    ```bash
-   ls -la .claude/discussions/ 2>/dev/null
-   ls -la .claude/decisions/ 2>/dev/null
+   ls -la .claude/.discussions/ 2>/dev/null
+   ls -la .claude/.decisions/ 2>/dev/null
    ```
 
 ### Phase 2: Context Gathering
@@ -135,8 +135,8 @@ Create discussion artifacts:
 date +"%Y-%m-%d-%H-%M"
 
 # Create files
-# Discussion: .claude/discussions/YYYY-MM-DD-HH-MM-<topic-slug>.md
-# Decision:   .claude/decisions/YYYY-MM-DD-<decision-title>.md
+# Discussion: .claude/.discussions/YYYY-MM-DD-HH-MM-<topic-slug>.md
+# Decision:   .claude/.decisions/YYYY-MM-DD-<decision-title>.md
 ```
 
 ## Discussion Summary Template

@@ -207,8 +207,9 @@ Skill creation involves these steps:
 2. Plan reusable skill contents (scripts, references, assets)
 3. Initialize the skill (run init_skill.py)
 4. Edit the skill (implement resources and write SKILL.md)
-5. Package the skill (run package_skill.py)
-6. Iterate based on real usage
+5. **Register the skill** (update MANIFEST.md and related files)
+6. Package the skill (run package_skill.py) - optional for local skills
+7. Iterate based on real usage
 
 Follow these steps in order, skipping only if there is a clear reason why they are not applicable.
 
@@ -317,7 +318,58 @@ Do not include any other fields in YAML frontmatter.
 
 Write instructions for using the skill and its bundled resources.
 
-### Step 5: Packaging a Skill
+### Step 5: Register the Skill (REQUIRED)
+
+After creating or updating a skill, you MUST register it in the system so it can be automatically loaded. This involves updating the Skills Manifest.
+
+#### Update MANIFEST.md
+
+Add the new skill to `.claude/skills/MANIFEST.md`:
+
+```markdown
+### <skill-name>
+**Description**: <copy the exact description from SKILL.md frontmatter>
+
+---
+```
+
+**Important**:
+- Copy the **exact** description from the SKILL.md frontmatter
+- The description is used for **semantic matching** (not keyword matching)
+- A good description includes: what the skill does + when to use it
+- Place the new entry in alphabetical order
+
+#### Example
+
+If you created a skill with this frontmatter:
+```yaml
+---
+name: pdf-processor
+description: |
+  PDF processing and manipulation including text extraction, rotation, merging,
+  splitting, and form filling. Use when working with PDF files for: (1) Extracting
+  text or data, (2) Rotating pages, (3) Merging multiple PDFs, (4) Splitting PDFs,
+  (5) Filling PDF forms programmatically.
+---
+```
+
+Add this to MANIFEST.md:
+```markdown
+### pdf-processor
+**Description**: PDF processing and manipulation including text extraction, rotation, merging, splitting, and form filling. Use when working with PDF files for: (1) Extracting text or data, (2) Rotating pages, (3) Merging multiple PDFs, (4) Splitting PDFs, (5) Filling PDF forms programmatically.
+
+---
+```
+
+#### Verification
+
+After updating MANIFEST.md, verify:
+1. The skill name matches the directory name exactly
+2. The description matches SKILL.md frontmatter exactly
+3. The entry follows the same format as other entries
+4. The skill will now be auto-loaded when tasks match its description semantically
+
+### Step 6: Packaging a Skill (Optional)
 
 Once development of the skill is complete, it must be packaged into a distributable .skill file that gets shared with the user. The packaging process automatically validates the skill first to ensure it meets all requirements:
 
@@ -344,7 +396,7 @@ The packaging script will:
 
 If validation fails, the script will report the errors and exit without creating a package. Fix any validation errors and run the packaging command again.
 
-### Step 6: Iterate
+### Step 7: Iterate
 
 After testing the skill, users may request improvements. Often this happens right after using the skill, with fresh context of how the skill performed.
 

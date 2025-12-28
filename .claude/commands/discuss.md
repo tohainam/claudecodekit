@@ -33,8 +33,8 @@ User checkpoints:
 - After decision synthesis (approve approach)
 
 Output:
-- Discussion summary: .claude/discussions/YYYY-MM-DD-HH-MM-<topic>.md
-- ADR (if decision made): .claude/decisions/YYYY-MM-DD-<title>.md"
+- Discussion summary: .claude/.discussions/YYYY-MM-DD-HH-MM-<topic>.md
+- ADR (if decision made): .claude/.decisions/YYYY-MM-DD-<title>.md"
 
 Subagent: facilitator
 ```
@@ -62,8 +62,8 @@ The facilitator will:
 
 ### Phase 5: Artifact Generation
 Create discussion artifacts:
-- **Discussion Summary**: `.claude/discussions/YYYY-MM-DD-HH-MM-<topic>.md`
-- **ADR Decision Record** (if decision made): `.claude/decisions/YYYY-MM-DD-<title>.md`
+- **Discussion Summary**: `.claude/.discussions/YYYY-MM-DD-HH-MM-<topic>.md`
+- **ADR Decision Record** (if decision made): `.claude/.decisions/YYYY-MM-DD-<title>.md`
 
 **ASK USER**: "Would you like to create an ADR decision record for this?"
 
@@ -96,7 +96,7 @@ At completion, provide:
 
 After discussion is complete:
 ```
-/plan --discussion .claude/discussions/<discussion-file>.md
+/plan --discussion .claude/.discussions/<discussion-file>.md
 ```
 or
 ```
