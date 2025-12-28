@@ -8,8 +8,9 @@ After copying the `.claude/` directory to your project, you can use these comman
 
 | Command | Purpose |
 |---------|---------|
+| `/discuss <topic>` | Structured discussion for requirements and decisions |
 | `/feature <desc>` | Implement a new feature (full workflow) |
-| `/bugfix <error>` | Fix a bug (diagnosis + fix + test) |
+| `/bugfix <error>` | Fix a bug (diagnosis + fix + optional test) |
 | `/plan <task>` | Create implementation plan only |
 | `/implement [path]` | Execute an existing plan |
 | `/review [scope]` | Review code changes |
@@ -28,22 +29,31 @@ After copying the `.claude/` directory to your project, you can use these comman
 ├── skills/         # Auto-loaded - domain knowledge
 ├── agents/         # Subagents - specialized executors
 ├── commands/       # Slash commands - user triggers
+├── discussions/    # Discussion summaries from /discuss
+├── decisions/      # ADR decision records
 ├── hooks/          # Automation scripts
 └── settings.json   # Hooks config + permissions
 ```
 
 ## Workflows
 
+### Requirements Gathering (NEW)
+```
+/discuss "topic to explore"
+→ Facilitator → (clarify) → (explore) → (decide) → Discussion Summary + ADR
+```
+Use before `/feature` or `/plan` when requirements are unclear or decisions need to be made.
+
 ### Feature Development
 ```
 /feature "Add user authentication"
-→ Planner → (approve) → Implementer → Tester → Reviewer → Commit/PR
+→ (check discussions) → Planner → (approve) → Implementer → (ask: tests?) → Tester → Reviewer → Commit/PR
 ```
 
 ### Bug Fixing
 ```
 /bugfix "API returns 500 on checkout"
-→ Debugger → (approve) → Write failing test → Fix → Verify → Commit/PR
+→ Debugger → (approve) → (ask: tests?) → Write failing test → Fix → Verify → Commit/PR
 ```
 
 ### Quick Changes
@@ -58,7 +68,7 @@ See `.claude/rules/` for detailed standards:
 | @.claude/rules/code-quality.md | Naming, structure, patterns |
 | @.claude/rules/communication.md | Response format, when to ask |
 | @.claude/rules/safety.md | Protected files, confirmations |
-| @.claude/rules/workflow.md | Plan → Code → Test → Review |
+| @.claude/rules/workflow.md | Plan → Code → Test (optional) → Review |
 
 ## Skills Available
 
@@ -78,6 +88,7 @@ See `.claude/rules/` for detailed standards:
 
 | Agent | Model | Purpose |
 |-------|-------|---------|
+| facilitator | opus | Leads discussions, creates ADRs |
 | planner | opus | Creates detailed plans |
 | implementer | sonnet | Executes plans |
 | code-reviewer | sonnet | Reviews code quality |

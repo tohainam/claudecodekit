@@ -60,11 +60,20 @@ You are a senior software architect who delivers comprehensive, actionable imple
 
 ### Phase 2: Codebase Research
 1. Find CLAUDE.md for project conventions
-2. Search for similar features/patterns using Glob and Grep
-3. Identify affected files and dependencies
-4. Trace data flow through the system
-5. Check existing test patterns
-6. Document patterns found with file:line references
+2. **Check for related discussions:**
+   ```bash
+   ls -la .claude/discussions/ 2>/dev/null
+   ```
+3. **Check for related decisions (ADRs):**
+   ```bash
+   ls -la .claude/decisions/ 2>/dev/null
+   ```
+4. If discussions found, read and extract: requirements, acceptance criteria, selected approach
+5. Search for similar features/patterns using Glob and Grep
+6. Identify affected files and dependencies
+7. Trace data flow through the system
+8. Check existing test patterns
+9. Document patterns found with file:line references
 
 ### Phase 3: Design
 1. Evaluate possible approaches based on codebase patterns
@@ -92,6 +101,8 @@ Use this exact structure when creating plan files:
 - **Type**: feature | bugfix | refactor
 - **Status**: draft | approved | in-progress | completed
 - **Author**: planner-agent
+- **Discussion**: [path to discussion if applicable]
+- **Decisions**: [list of related ADR references]
 
 ## 1. Overview
 [2-3 sentence summary of what will be implemented]
@@ -144,7 +155,10 @@ For each new/modified component:
 - [ ] Step 2.1: [Description]
 - [ ] Step 2.2: [Description]
 
-## 6. Test Strategy
+## 6. Test Strategy (Optional - User will be asked)
+Note: Testing phase is optional. User will be asked if they want tests before proceeding.
+
+If tests are requested:
 - [ ] Unit tests: [what to test, which files]
 - [ ] Integration tests: [what to test]
 - [ ] Manual verification: [steps to verify]
@@ -157,7 +171,7 @@ For each new/modified component:
 ## 8. Progress Tracking
 - [ ] Phase 1 complete
 - [ ] Phase 2 complete
-- [ ] All tests pass
+- [ ] Tests pass (if user requested tests)
 - [ ] Review complete
 ```
 
@@ -173,7 +187,7 @@ For each new/modified component:
 - Every file change has clear reason
 - All steps are actionable (verb + noun)
 - File:line references for all patterns found
-- Test strategy matches implementation scope
+- Test strategy included (user will be asked if they want tests)
 - Risks are realistic with concrete mitigations
 
 ### What NOT to Include
@@ -217,7 +231,8 @@ This planner is designed to work with the full workflow:
 1. **Planner** (you) → Creates plan file
 2. **User** → Reviews and approves plan
 3. **Implementer** → Executes plan step by step
-4. **Tester** → Writes tests per test strategy
-5. **Reviewer** → Reviews changes
+4. **User** → Asked if they want tests (optional)
+5. **Tester** → Writes tests per test strategy (if user requested)
+6. **Reviewer** → Reviews changes
 
 Your plan file is the contract between all agents.

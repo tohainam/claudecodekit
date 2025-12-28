@@ -11,7 +11,25 @@ You are creating a detailed implementation plan without executing any code chang
 ## Input
 Task description: $ARGUMENTS
 
+**Optional**: `--discussion <path>` to reference a prior discussion for context.
+
 ## Process
+
+### Step 0: Check for Discussion Context
+Before planning, check for related discussions:
+
+1. If `--discussion <path>` is provided, read that discussion file
+2. Otherwise, search `.claude/discussions/` for related topics
+3. Extract requirements, acceptance criteria, and selected approach from discussions
+4. Reference any related ADRs from `.claude/decisions/`
+
+```bash
+# Check for related discussions
+ls -la .claude/discussions/ 2>/dev/null
+ls -la .claude/decisions/ 2>/dev/null
+```
+
+### Step 1: Create Plan
 
 Use the **planner** agent to analyze and create a comprehensive plan:
 
@@ -20,13 +38,15 @@ Task: Launch planner agent
 Prompt: "Create a detailed implementation plan for: $ARGUMENTS
 
 Requirements:
-1. Analyze the task requirements thoroughly
-2. Research the codebase for patterns and conventions
-3. Identify all affected files and dependencies
-4. Design the solution with clear rationale
-5. Break down into actionable implementation steps
-6. Define test strategy
-7. Identify risks and mitigations
+1. Check .claude/discussions/ for related discussions
+2. Check .claude/decisions/ for related ADRs
+3. Analyze the task requirements thoroughly
+4. Research the codebase for patterns and conventions
+5. Identify all affected files and dependencies
+6. Design the solution with clear rationale
+7. Break down into actionable implementation steps
+8. Define test strategy
+9. Identify risks and mitigations
 
 Create the plan file at .claude/plans/[datetime]-[type]-[name].md
 

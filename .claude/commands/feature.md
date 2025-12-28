@@ -13,6 +13,20 @@ Feature description: $ARGUMENTS
 
 ## Workflow Phases
 
+### Phase 0: Check for Prior Discussion
+Before planning, check for related discussions and decisions:
+
+1. Search `.claude/discussions/` for discussions related to this feature
+2. Search `.claude/decisions/` for relevant ADRs
+3. If found, reference them in the planning phase
+
+If no discussion exists and requirements seem unclear:
+**ASK USER**: "Would you like to `/discuss` this feature first to clarify requirements?"
+
+Options:
+- **Yes**: Stop and run `/discuss` first
+- **No**: Proceed with planning
+
 ### Phase 1: Planning
 Use the **planner** agent to create a comprehensive implementation plan.
 
@@ -37,8 +51,14 @@ Prompt: "Execute the approved plan. Read the plan file and implement each step, 
 Subagent: implementer
 ```
 
-### Phase 3: Testing
-Use the **test-writer** agent to create tests for the new feature.
+### Phase 3: Testing (Optional)
+**ASK USER**: "Do you want to write tests for this feature?"
+
+Options:
+- **Yes**: Proceed with test-writer agent
+- **No**: Skip to Phase 4 (Review)
+
+If user wants tests, use the **test-writer** agent to create tests for the new feature.
 
 ```
 Task: Launch test-writer agent
@@ -46,6 +66,8 @@ Prompt: "Write comprehensive tests for the newly implemented feature. Include un
 
 Subagent: test-writer
 ```
+
+**If user skips testing**: Proceed directly to Phase 4.
 
 ### Phase 4: Review
 Use the **code-reviewer** agent to review all changes.
@@ -67,9 +89,10 @@ After passing review:
 
 ## User Checkpoints
 
-This workflow has mandatory user checkpoints:
+This workflow has user checkpoints:
 1. **After Planning**: User must approve plan before implementation
-2. **After Review**: User confirms ready to commit/PR
+2. **Before Testing**: Ask user if they want to write tests (optional)
+3. **After Review**: User confirms ready to commit/PR
 
 ## Error Handling
 
@@ -84,5 +107,5 @@ If blocked at any phase:
 At completion, provide:
 - Summary of what was implemented
 - List of files created/modified
-- Test results
+- Test results (if tests were written)
 - Any follow-up recommendations

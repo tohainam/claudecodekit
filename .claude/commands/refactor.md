@@ -48,8 +48,14 @@ Subagent: refactorer
 
 **STOP for user approval** of the refactoring plan.
 
-### Phase 2: Ensure Tests Exist
-Before refactoring, verify test coverage:
+### Phase 2: Ensure Tests Exist (Optional)
+**ASK USER**: "Do you want to verify/add test coverage before refactoring?"
+
+Options:
+- **Yes**: Check and add tests for safety net (recommended)
+- **No**: Skip to Phase 3 (Refactor) directly
+
+If user wants tests, verify test coverage:
 
 ```
 Task: Launch test-writer agent (if needed)
@@ -59,6 +65,8 @@ Subagent: test-writer
 ```
 
 Run all tests - they must pass before proceeding.
+
+**If user skips testing**: Proceed directly to Phase 3. Note: This is riskier as there's no safety net for behavior verification.
 
 ### Phase 3: Refactor (Small Steps)
 Execute refactoring in small, safe steps:
@@ -103,7 +111,7 @@ Subagent: code-reviewer
 
 ## Safety Measures
 
-- **Never skip tests** between refactoring steps
+- **Run tests** between refactoring steps (if tests exist)
 - **Commit after each successful step** (can squash later)
 - **Revert immediately** if tests fail
 - **Stop if uncertain** about behavior impact

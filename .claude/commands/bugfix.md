@@ -31,8 +31,14 @@ Subagent: debugger
 
 **STOP after diagnosis** - Wait for user to confirm the root cause is correct before proceeding.
 
-### Phase 2: Write Failing Test First
-Use the **test-writer** agent to create a test that reproduces the bug.
+### Phase 2: Write Failing Test First (Optional)
+**ASK USER**: "Do you want to write a failing test before fixing the bug? (TDD approach)"
+
+Options:
+- **Yes**: Write test first, then fix (TDD approach - recommended for regression prevention)
+- **No**: Skip to Phase 3 (Fix) directly
+
+If user wants tests, use the **test-writer** agent to create a test that reproduces the bug.
 
 ```
 Task: Launch test-writer agent
@@ -42,6 +48,8 @@ Subagent: test-writer
 ```
 
 Verify the test fails. If it passes, the bug may already be fixed or the test is wrong.
+
+**If user skips testing**: Proceed directly to Phase 3.
 
 ### Phase 3: Fix
 Use the **implementer** agent to implement the fix.
@@ -56,9 +64,9 @@ Subagent: implementer
 ### Phase 4: Verify
 Run full verification:
 
-1. **Run the specific test** - Must pass now
+1. **Run the specific test** - Must pass now (if test was written)
 2. **Run related tests** - No regressions
-3. **Run full test suite** - All tests pass
+3. **Run full test suite** - All tests pass (if project has tests)
 
 Use the **code-reviewer** agent for final check:
 
@@ -87,7 +95,8 @@ After passing verification:
 ## User Checkpoints
 
 1. **After Diagnosis**: Confirm root cause is correct
-2. **After Verification**: Confirm ready to commit
+2. **Before Testing**: Ask user if they want to write a failing test (optional)
+3. **After Verification**: Confirm ready to commit
 
 ## Error Handling
 
@@ -102,5 +111,5 @@ If the fix doesn't work:
 At completion, provide:
 - Root cause summary
 - What was fixed
-- Test added
+- Test added (if user requested)
 - Any related issues found
