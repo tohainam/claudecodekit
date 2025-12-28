@@ -1,0 +1,45 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/file-protection.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npx:*)",
+      "Bash(git:*)",
+      "Bash(go:*)",
+      "Bash(cargo:*)",
+      "Bash(pytest:*)",
+      "Bash(python -m pytest:*)",
+      "Task(*)",
+      "Skill(*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Edit(.env)",
+      "Edit(.env.*)",
+      "Write(.env)",
+      "Write(.env.*)",
+      "Read(secrets/**)",
+      "Edit(secrets/**)",
+      "Read(credentials/**)",
+      "Edit(credentials/**)",
+      "Read(*.pem)",
+      "Read(*.key)",
+      "Edit(*.pem)",
+      "Edit(*.key)"
+    ]
+  }
+}

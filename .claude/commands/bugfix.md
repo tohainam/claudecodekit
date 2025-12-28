@@ -1,0 +1,106 @@
+---
+description: Bug diagnosis and fix workflow - debug, test, fix, verify
+allowed-tools: Task, Read, Glob, Grep, Bash, Edit, Write, TodoWrite, AskUserQuestion
+argument-hint: <error message or bug description>
+---
+
+# Bugfix Workflow
+
+You are orchestrating a complete bug fix workflow. This follows a TDD approach: diagnose, write failing test, fix, verify.
+
+## Input
+Bug description/error: $ARGUMENTS
+
+## Workflow Phases
+
+### Phase 1: Diagnosis
+Use the **debugger** agent to find the root cause.
+
+```
+Task: Launch debugger agent
+Prompt: "Diagnose this bug: $ARGUMENTS
+
+Analyze the error, search the codebase, check git history, and create a diagnosis report at .claude/plans/ with:
+- Root cause identified
+- Affected files
+- Proposed fix approach
+- Risk assessment"
+
+Subagent: debugger
+```
+
+**STOP after diagnosis** - Wait for user to confirm the root cause is correct before proceeding.
+
+### Phase 2: Write Failing Test First
+Use the **test-writer** agent to create a test that reproduces the bug.
+
+```
+Task: Launch test-writer agent
+Prompt: "Write a test that reproduces the bug described in the diagnosis. The test MUST FAIL before the fix is applied - this confirms the bug exists."
+
+Subagent: test-writer
+```
+
+Verify the test fails. If it passes, the bug may already be fixed or the test is wrong.
+
+### Phase 3: Fix
+Use the **implementer** agent to implement the fix.
+
+```
+Task: Launch implementer agent
+Prompt: "Implement the fix based on the diagnosis report. Make minimal changes to fix the bug. Run the failing test after - it should now pass."
+
+Subagent: implementer
+```
+
+### Phase 4: Verify
+Run full verification:
+
+1. **Run the specific test** - Must pass now
+2. **Run related tests** - No regressions
+3. **Run full test suite** - All tests pass
+
+Use the **code-reviewer** agent for final check:
+
+```
+Task: Launch code-reviewer agent
+Prompt: "Review the bug fix. Verify:
+- Fix is minimal and targeted
+- No regressions introduced
+- Security implications considered
+- Similar bugs in codebase checked"
+
+Subagent: code-reviewer
+```
+
+### Phase 5: Finalize
+After passing verification:
+1. Create commit with message: `fix(scope): description`
+2. Reference issue number if available: `Fixes #123`
+3. Ask user if they want to create a PR
+4. If yes, create PR with:
+   - Root cause explanation
+   - Fix description
+   - Test added
+   - `Closes #xxx` if applicable
+
+## User Checkpoints
+
+1. **After Diagnosis**: Confirm root cause is correct
+2. **After Verification**: Confirm ready to commit
+
+## Error Handling
+
+If the fix doesn't work:
+1. Report the issue
+2. Analyze what went wrong
+3. Update diagnosis
+4. Try alternative approach
+
+## Output
+
+At completion, provide:
+- Root cause summary
+- What was fixed
+- Test added
+- Any related issues found
