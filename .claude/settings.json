@@ -11,6 +11,23 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/skill-loader.py",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/mcp-loader.py",
+            "timeout": 5
+          }
+        ]
+      }
     ]
   },
   "permissions": {
@@ -23,7 +40,9 @@
       "Bash(pytest:*)",
       "Bash(python -m pytest:*)",
       "Task(*)",
-      "Skill(*)"
+      "Skill(*)",
+      "Bash(chmod:*)",
+      "Bash(python3:*)"
     ],
     "deny": [
       "Read(.env)",
