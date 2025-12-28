@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation for Claude Code Universal Config - A comprehensive, reusable configuration for Claude Code that can be applied to any project">
+    <meta name="keywords" content="claude code, ai coding, documentation, commands, skills, agents">
+    <title>Claude Code Universal Config - Documentation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <button class="sidebar-toggle" aria-label="Toggle navigation">
+            <span class="hamburger"></span>
+        </button>
+        <div class="mobile-logo">
+            <span class="logo-icon">⚡</span>
+            <span>Claude Code Config</span>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <div class="logo-text">
+                    <h1>Claude Code</h1>
+                    <p class="tagline">Universal Config</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <span class="nav-section-title">Getting Started</span>
+                <a href="#overview" class="nav-link active">
+                    <span class="nav-icon">🏠</span>
+                    Overview
+                </a>
+                <a href="#installation" class="nav-link">
+                    <span class="nav-icon">📦</span>
+                    Installation
+                </a>
+                <a href="#wizard" class="nav-link">
+                    <span class="nav-icon">🚀</span>
+                    Quick Start
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">Workflows</span>
+                <a href="#workflows" class="nav-link">
+                    <span class="nav-icon">🔄</span>
+                    All Workflows
+                </a>
+                <a href="#workflow-feature" class="nav-link nav-link-sub">
+                    Feature Development
+                </a>
+                <a href="#workflow-bugfix" class="nav-link nav-link-sub">
+                    Bug Fixing
+                </a>
+                <a href="#workflow-refactor" class="nav-link nav-link-sub">
+                    Refactoring
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">Reference</span>
+                <a href="#commands" class="nav-link">
+                    <span class="nav-icon">⌨️</span>
+                    Commands
+                    <span class="nav-badge">14</span>
+                </a>
+                <a href="#concepts" class="nav-link">
+                    <span class="nav-icon">💡</span>
+                    Concepts
+                </a>
+                <a href="#skills" class="nav-link">
+                    <span class="nav-icon">🎯</span>
+                    Skills
+                    <span class="nav-badge">11</span>
+                </a>
+                <a href="#agents" class="nav-link">
+                    <span class="nav-icon">🤖</span>
+                    Agents
+                    <span class="nav-badge">9</span>
+                </a>
+                <a href="#rules" class="nav-link">
+                    <span class="nav-icon">📋</span>
+                    Rules
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">Learn</span>
+                <a href="#tutorials" class="nav-link">
+                    <span class="nav-icon">📖</span>
+                    Tutorials
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="https://github.com" class="sidebar-link" target="_blank">
+                <span>GitHub</span>
+                <span class="external-icon">↗</span>
+            </a>
+            <span class="version">v1.0.0</span>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+
+            <!-- Overview Section -->
+            <section id="overview" class="doc-section">
+                <div class="section-header">
+                    <h1>Claude Code Universal Config</h1>
+                    <p class="lead">A comprehensive, production-ready configuration with 14 commands, 11 skills, 9 agents, and smart auto-loading. Works with any project.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-value">14</span>
+                        <span class="stat-label">Commands</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value">11</span>
+                        <span class="stat-label">Skills</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value">9</span>
+                        <span class="stat-label">Agents</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value">7</span>
+                        <span class="stat-label">Rules</span>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <a href="#installation" class="action-card">
+                        <span class="action-icon">📦</span>
+                        <div class="action-content">
+                            <h3>Get Started</h3>
+                            <p>Install in your project</p>
+                        </div>
+                        <span class="action-arrow">→</span>
+                    </a>
+                    <a href="#commands" class="action-card">
+                        <span class="action-icon">⌨️</span>
+                        <div class="action-content">
+                            <h3>Browse Commands</h3>
+                            <p>See all 14 commands</p>
+                        </div>
+                        <span class="action-arrow">→</span>
+                    </a>
+                    <a href="#workflows" class="action-card">
+                        <span class="action-icon">🔄</span>
+                        <div class="action-content">
+                            <h3>View Workflows</h3>
+                            <p>Learn the processes</p>
+                        </div>
+                        <span class="action-arrow">→</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Quick Start Wizard -->
+            <section id="wizard" class="doc-section">
+                <h2>What do you want to do?</h2>
+                <p class="section-intro">Choose your goal and we'll guide you to the right command</p>
+                <div class="wizard-grid">
+                    <div class="wizard-card" data-target="commands" data-filter="feature">
+                        <div class="wizard-icon">🚀</div>
+                        <h3>Build a New Feature</h3>
+                        <p>Implement new functionality with full workflow support</p>
+                        <span class="wizard-action">Use /feature →</span>
+                    </div>
+                    <div class="wizard-card" data-target="commands" data-filter="bugfix">
+                        <div class="wizard-icon">🐛</div>
+                        <h3>Fix a Bug</h3>
+                        <p>Debug and fix issues with structured workflow</p>
+                        <span class="wizard-action">Use /bugfix →</span>
+                    </div>
+                    <div class="wizard-card" data-target="installation" data-filter="">
+                        <div class="wizard-icon">⚙️</div>
+                        <h3>Setup New Project</h3>
+                        <p>Configure Claude Code for your codebase</p>
+                        <span class="wizard-action">Use /onboard →</span>
+                    </div>
+                    <div class="wizard-card" data-target="concepts" data-filter="">
+                        <div class="wizard-icon">📚</div>
+                        <h3>Learn the Concepts</h3>
+                        <p>Understand Commands, Skills, Agents, and Rules</p>
+                        <span class="wizard-action">Explore concepts →</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Workflows Section -->
+            <section id="workflows" class="doc-section">
+                <h2>Development Workflows</h2>
+                <p class="section-intro">Structured processes for every type of task, from features to bug fixes</p>
+
+                <div class="workflow-tabs">
+                    <button class="workflow-tab active" data-workflow="feature">🚀 Feature Development</button>
+                    <button class="workflow-tab" data-workflow="bugfix">🐛 Bug Fixing</button>
+                    <button class="workflow-tab" data-workflow="refactor">🔧 Refactoring</button>
+                    <button class="workflow-tab" data-workflow="quick">⚡ Quick Changes</button>
+                </div>
+
+                <!-- Feature Development Workflow -->
+                <div class="workflow-panel active" id="workflow-feature">
+                    <div class="workflow-header">
+                        <h3>Feature Development Workflow</h3>
+                        <p>Complete process for building new features from scratch</p>
+                        <code class="workflow-command">/feature "your feature description"</code>
+                    </div>
+
+                    <div class="workflow-visual">
+                        <div class="workflow-timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker optional-marker">0</div>
+                                <div class="timeline-content">
+                                    <h4>Discuss <span class="optional-badge">Optional</span></h4>
+                                    <p>Clarify requirements and make architectural decisions</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">👤 facilitator</span>
+                                        <span class="output-badge">📄 Discussion Summary + ADR</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">1</div>
+                                <div class="timeline-content">
+                                    <h4>Plan</h4>
+                                    <p>Create detailed implementation plan with steps and file hints</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🧠 planner</span>
+                                        <span class="output-badge">📄 .claude/.plans/</span>
+                                    </div>
+                                    <div class="checkpoint">⏸️ User approval required</div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">2</div>
+                                <div class="timeline-content">
+                                    <h4>Implement</h4>
+                                    <p>Execute plan step-by-step with validation</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">💻 implementer</span>
+                                        <span class="output-badge">📝 Code changes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker optional-marker">3</div>
+                                <div class="timeline-content">
+                                    <h4>Test <span class="optional-badge">Optional</span></h4>
+                                    <p>Write comprehensive tests for new code</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🧪 test-writer</span>
+                                        <span class="output-badge">📄 Test files</span>
+                                    </div>
+                                    <div class="checkpoint">⏸️ User decides: write tests?</div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">4</div>
+                                <div class="timeline-content">
+                                    <h4>Review</h4>
+                                    <p>Check code quality, security, and best practices</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🔍 code-reviewer</span>
+                                        <span class="output-badge">📊 Review report</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker optional-marker">5</div>
+                                <div class="timeline-content">
+                                    <h4>Commit & PR <span class="optional-badge">Optional</span></h4>
+                                    <p>Create commit with conventional message, optionally open PR</p>
+                                    <div class="timeline-details">
+                                        <span class="command-badge">/commit</span>
+                                        <span class="command-badge">/pr</span>
+                                    </div>
+                                    <div class="checkpoint">⏸️ User decides: commit?</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bug Fixing Workflow -->
+                <div class="workflow-panel" id="workflow-bugfix">
+                    <div class="workflow-header">
+                        <h3>Bug Fixing Workflow</h3>
+                        <p>Structured approach to diagnose and fix bugs with verification</p>
+                        <code class="workflow-command">/bugfix "error description or symptom"</code>
+                    </div>
+
+                    <div class="workflow-visual">
+                        <div class="workflow-timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker">1</div>
+                                <div class="timeline-content">
+                                    <h4>Debug</h4>
+                                    <p>Analyze symptoms, trace execution, find root cause</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🔬 debugger</span>
+                                        <span class="output-badge">📊 Diagnosis report</span>
+                                    </div>
+                                    <div class="checkpoint">⏸️ User approves diagnosis</div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker optional-marker">2</div>
+                                <div class="timeline-content">
+                                    <h4>Write Failing Test <span class="optional-badge">TDD</span></h4>
+                                    <p>Create test that reproduces the bug (fails before fix)</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🧪 test-writer</span>
+                                        <span class="output-badge">📄 Failing test</span>
+                                    </div>
+                                    <div class="checkpoint">⏸️ User decides: TDD approach?</div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">3</div>
+                                <div class="timeline-content">
+                                    <h4>Fix</h4>
+                                    <p>Implement the fix based on diagnosis</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">💻 implementer</span>
+                                        <span class="output-badge">📝 Bug fix</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">4</div>
+                                <div class="timeline-content">
+                                    <h4>Verify</h4>
+                                    <p>Run tests, confirm fix works, check for regressions</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🔍 code-reviewer</span>
+                                        <span class="output-badge">✅ Verification</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker optional-marker">5</div>
+                                <div class="timeline-content">
+                                    <h4>Commit & PR <span class="optional-badge">Optional</span></h4>
+                                    <p>Commit with "fix:" prefix, link to issue if applicable</p>
+                                    <div class="timeline-details">
+                                        <span class="command-badge">/commit</span>
+                                        <span class="command-badge">/pr</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Refactoring Workflow -->
+                <div class="workflow-panel" id="workflow-refactor">
+                    <div class="workflow-header">
+                        <h3>Refactoring Workflow</h3>
+                        <p>Safe code improvement while maintaining behavior</p>
+                        <code class="workflow-command">/refactor "target file or description"</code>
+                    </div>
+
+                    <div class="workflow-visual">
+                        <div class="workflow-timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker">1</div>
+                                <div class="timeline-content">
+                                    <h4>Analyze</h4>
+                                    <p>Identify code smells, patterns, and improvement opportunities</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🔧 refactorer</span>
+                                        <span class="output-badge">📊 Analysis report</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">2</div>
+                                <div class="timeline-content">
+                                    <h4>Plan Changes</h4>
+                                    <p>Create step-by-step refactoring plan</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🧠 planner</span>
+                                        <span class="output-badge">📄 Refactor plan</span>
+                                    </div>
+                                    <div class="checkpoint">⏸️ User approves plan</div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item highlight-item">
+                                <div class="timeline-marker">3</div>
+                                <div class="timeline-content">
+                                    <h4>Implement in Small Steps</h4>
+                                    <p>Make atomic changes, run tests after each step</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🔧 refactorer</span>
+                                        <span class="output-badge">📝 Safe changes</span>
+                                    </div>
+                                    <div class="safety-note">🛡️ Tests run after each change</div>
+                                </div>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">4</div>
+                                <div class="timeline-content">
+                                    <h4>Verify Behavior</h4>
+                                    <p>Ensure all tests pass, behavior unchanged</p>
+                                    <div class="timeline-details">
+                                        <span class="agent-badge">🔍 code-reviewer</span>
+                                        <span class="output-badge">✅ No regressions</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Changes Workflow -->
+                <div class="workflow-panel" id="workflow-quick">
+                    <div class="workflow-header">
+                        <h3>Quick Changes Workflow</h3>
+                        <p>Fast path for simple changes (< 3 files)</p>
+                        <code class="workflow-command">Just describe what you need - no command required</code>
+                    </div>
+
+                    <div class="workflow-visual">
+                        <div class="workflow-timeline horizontal">
+                            <div class="timeline-item">
+                                <div class="timeline-marker">1</div>
+                                <div class="timeline-content">
+                                    <h4>Edit</h4>
+                                    <p>Make the change directly</p>
+                                </div>
+                            </div>
+                            <div class="timeline-connector horizontal"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker optional-marker">2</div>
+                                <div class="timeline-content">
+                                    <h4>Test</h4>
+                                    <p>If needed</p>
+                                </div>
+                            </div>
+                            <div class="timeline-connector horizontal"></div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker optional-marker">3</div>
+                                <div class="timeline-content">
+                                    <h4>Commit</h4>
+                                    <p>Optional</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quick-examples">
+                            <h4>Perfect for:</h4>
+                            <div class="example-grid">
+                                <div class="example-item">
+                                    <span class="example-icon">📝</span>
+                                    <span>Typo fixes</span>
+                                </div>
+                                <div class="example-item">
+                                    <span class="example-icon">💬</span>
+                                    <span>Adding comments</span>
+                                </div>
+                                <div class="example-item">
+                                    <span class="example-icon">🔧</span>
+                                    <span>Config changes</span>
+                                </div>
+                                <div class="example-item">
+                                    <span class="example-icon">📄</span>
+                                    <span>Single file edits</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow Comparison -->
+                <div class="workflow-comparison">
+                    <h3>Which Workflow Should I Use?</h3>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Scenario</th>
+                                    <th>Command</th>
+                                    <th>Key Phases</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>New feature from scratch</strong></td>
+                                    <td><code>/feature</code></td>
+                                    <td>Plan → Implement → Test → Review</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Something is broken</strong></td>
+                                    <td><code>/bugfix</code></td>
+                                    <td>Debug → Fix → Verify</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Code needs cleanup</strong></td>
+                                    <td><code>/refactor</code></td>
+                                    <td>Analyze → Plan → Safe changes</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Requirements unclear</strong></td>
+                                    <td><code>/discuss</code></td>
+                                    <td>Clarify → Explore → Decide</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Just need a plan</strong></td>
+                                    <td><code>/plan</code></td>
+                                    <td>Analyze → Create plan (no implementation)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Simple one-liner</strong></td>
+                                    <td><em>No command</em></td>
+                                    <td>Just ask directly</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Concepts Section -->
+            <section id="concepts" class="doc-section">
+                <h2>Core Concepts</h2>
+                <p class="section-intro">Understanding the architecture of Claude Code Universal Config</p>
+
+                <div class="concept-cards">
+                    <!-- Commands Concept -->
+                    <div class="concept-card">
+                        <div class="concept-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="concept-title">
+                                <span class="concept-icon">⚡</span>
+                                <h3>Commands</h3>
+                            </div>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="concept-content">
+                            <p><strong>Commands</strong> are slash commands you use to trigger specific workflows. They're your main interface for interacting with Claude Code.</p>
+
+                            <h4>How Commands Work</h4>
+                            <p>Type a command like <code>/feature</code> or <code>/bugfix</code> to start a structured workflow. Each command orchestrates multiple agents and follows best practices defined in rules.</p>
+
+                            <h4>Command Categories</h4>
+                            <ul>
+                                <li><strong>Workflow Commands:</strong> /feature, /bugfix, /plan, /implement</li>
+                                <li><strong>Quality Commands:</strong> /review, /test, /refactor, /debug</li>
+                                <li><strong>Git Commands:</strong> /commit, /pr</li>
+                                <li><strong>Setup Commands:</strong> /onboard, /discuss, /check, /mcp-register</li>
+                            </ul>
+
+                            <p><a href="#commands" class="inline-link">See all 14 commands →</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Skills Concept -->
+                    <div class="concept-card">
+                        <div class="concept-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="concept-title">
+                                <span class="concept-icon">🎯</span>
+                                <h3>Skills</h3>
+                            </div>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="concept-content">
+                            <p><strong>Skills</strong> are domain-specific knowledge modules that are auto-loaded based on semantic matching with your task context.</p>
+
+                            <h4>Auto-Loading Behavior</h4>
+                            <p>When you work on a task, Claude analyzes the context and automatically loads relevant skills. For example, working on tests? The <code>testing</code> skill loads automatically.</p>
+
+                            <h4>Available Skills</h4>
+                            <ul>
+                                <li><strong>architecture</strong> - System design and patterns</li>
+                                <li><strong>code-quality</strong> - Best practices and clean code</li>
+                                <li><strong>debugging</strong> - Root cause analysis</li>
+                                <li><strong>documentation</strong> - Writing effective docs</li>
+                                <li><strong>git-workflow</strong> - Commits, branches, PRs</li>
+                                <li><strong>performance</strong> - Optimization strategies</li>
+                                <li><strong>project-analysis</strong> - Codebase analysis for /onboard</li>
+                                <li><strong>refactoring</strong> - Safe code improvement</li>
+                                <li><strong>security-review</strong> - Security auditing</li>
+                                <li><strong>skill-creator</strong> - Creating new skills</li>
+                                <li><strong>testing</strong> - TDD and test strategies</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Agents Concept -->
+                    <div class="concept-card">
+                        <div class="concept-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="concept-title">
+                                <span class="concept-icon">🤖</span>
+                                <h3>Agents</h3>
+                            </div>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="concept-content">
+                            <p><strong>Agents</strong> are specialized sub-agents with specific roles in the workflow. Commands orchestrate agents to complete complex tasks.</p>
+
+                            <h4>How Agents Work</h4>
+                            <p>When you run a command like <code>/feature</code>, it uses multiple agents: planner creates the plan, implementer executes it, test-writer adds tests, and code-reviewer checks quality.</p>
+
+                            <h4>Agent Roles</h4>
+                            <table class="agent-table">
+                                <thead>
+                                    <tr>
+                                        <th>Agent</th>
+                                        <th>Model</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>facilitator</td>
+                                        <td>opus</td>
+                                        <td>Leads discussions, creates ADRs</td>
+                                    </tr>
+                                    <tr>
+                                        <td>planner</td>
+                                        <td>opus</td>
+                                        <td>Creates detailed implementation plans</td>
+                                    </tr>
+                                    <tr>
+                                        <td>implementer</td>
+                                        <td>sonnet</td>
+                                        <td>Executes plans step-by-step</td>
+                                    </tr>
+                                    <tr>
+                                        <td>code-reviewer</td>
+                                        <td>sonnet</td>
+                                        <td>Reviews code quality and security</td>
+                                    </tr>
+                                    <tr>
+                                        <td>test-writer</td>
+                                        <td>sonnet</td>
+                                        <td>Writes comprehensive tests</td>
+                                    </tr>
+                                    <tr>
+                                        <td>debugger</td>
+                                        <td>sonnet</td>
+                                        <td>Finds root causes of issues</td>
+                                    </tr>
+                                    <tr>
+                                        <td>refactorer</td>
+                                        <td>opus</td>
+                                        <td>Improves code structure safely</td>
+                                    </tr>
+                                    <tr>
+                                        <td>doc-writer</td>
+                                        <td>sonnet</td>
+                                        <td>Writes clear documentation</td>
+                                    </tr>
+                                    <tr>
+                                        <td>security-auditor</td>
+                                        <td>opus</td>
+                                        <td>Audits for security vulnerabilities</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Rules Concept -->
+                    <div class="concept-card">
+                        <div class="concept-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="concept-title">
+                                <span class="concept-icon">📋</span>
+                                <h3>Rules</h3>
+                            </div>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="concept-content">
+                            <p><strong>Rules</strong> define coding standards, communication patterns, safety protocols, and workflow procedures. They're always active and guide Claude's behavior.</p>
+
+                            <h4>Rule Categories</h4>
+                            <ul>
+                                <li><strong>code-quality.md</strong> - Naming conventions, structure, patterns, anti-patterns</li>
+                                <li><strong>communication.md</strong> - Response format, when to ask questions</li>
+                                <li><strong>safety.md</strong> - Protected files, destructive operations, confirmations required</li>
+                                <li><strong>workflow.md</strong> - Plan → Code → Test → Review process</li>
+                                <li><strong>skill-loader.md</strong> - Auto-load skills based on task context</li>
+                                <li><strong>mcp-loader.md</strong> - Auto-use MCP servers when relevant</li>
+                                <li><strong>knowledge-freshness.md</strong> - Source priority chain, freshness attribution</li>
+                            </ul>
+
+                            <h4>Customization</h4>
+                            <p>You can add project-specific rules by creating new files in <code>.claude/rules/</code>. Rules with path filters apply only to matching files.</p>
+                        </div>
+                    </div>
+
+                    <!-- Workflow Concept -->
+                    <div class="concept-card">
+                        <div class="concept-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="concept-title">
+                                <span class="concept-icon">🔄</span>
+                                <h3>Workflow</h3>
+                            </div>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="concept-content">
+                            <p><strong>Workflow</strong> is the structured process for completing tasks, ensuring quality and maintainability at every step.</p>
+
+                            <h4>The Complete Flow</h4>
+                            <div class="workflow-diagram">
+                                <div class="workflow-step">
+                                    <div class="step-number">0</div>
+                                    <div class="step-content">
+                                        <h5>Discuss (Optional)</h5>
+                                        <p>Clarify requirements and make decisions</p>
+                                        <code>/discuss</code>
+                                    </div>
+                                </div>
+                                <div class="workflow-arrow">↓</div>
+                                <div class="workflow-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h5>Plan</h5>
+                                        <p>Create detailed implementation plan</p>
+                                        <code>/plan or /feature</code>
+                                    </div>
+                                </div>
+                                <div class="workflow-arrow">↓</div>
+                                <div class="workflow-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h5>Implement</h5>
+                                        <p>Execute plan step-by-step</p>
+                                        <code>/implement</code>
+                                    </div>
+                                </div>
+                                <div class="workflow-arrow">↓</div>
+                                <div class="workflow-step optional">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h5>Test (Optional)</h5>
+                                        <p>Write comprehensive tests</p>
+                                        <code>/test</code>
+                                    </div>
+                                </div>
+                                <div class="workflow-arrow">↓</div>
+                                <div class="workflow-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h5>Review</h5>
+                                        <p>Check quality and security</p>
+                                        <code>/review</code>
+                                    </div>
+                                </div>
+                                <div class="workflow-arrow">↓</div>
+                                <div class="workflow-step optional">
+                                    <div class="step-number">5</div>
+                                    <div class="step-content">
+                                        <h5>Commit (Optional)</h5>
+                                        <p>Create git commit and PR</p>
+                                        <code>/commit → /pr</code>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4>User Checkpoints</h4>
+                            <p>You'll be asked for approval at key points:</p>
+                            <ul>
+                                <li>After plan creation (before implementation)</li>
+                                <li>Before writing tests (optional step)</li>
+                                <li>Before committing changes (optional step)</li>
+                                <li>Before destructive operations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Command Reference -->
+            <section id="commands" class="doc-section">
+                <h2>Command Reference</h2>
+                <p class="section-intro">All 14 commands with usage examples and workflows</p>
+
+                <div class="search-box">
+                    <input type="text" id="command-search" placeholder="Search commands... (e.g., 'bug', 'test', 'git')" aria-label="Search commands">
+                </div>
+
+                <div class="command-cards">
+                    <!-- /onboard -->
+                    <div class="command-card" data-category="setup">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/onboard</code></h3>
+                                <span class="command-category">Setup</span>
+                            </div>
+                            <p class="command-short-desc">Analyze project and recommend Claude Code setup</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>Setting up Claude Code for a new project or updating configuration as your project evolves.</p>
+
+                            <h4>What It Does</h4>
+                            <ul>
+                                <li>Detects languages, frameworks, databases, testing tools, CI/CD</li>
+                                <li>Generates ONBOARD-REPORT.md with full analysis</li>
+                                <li>Recommends .claude/rules/ files to create</li>
+                                <li>With <code>--apply</code> flag, creates recommended files automatically</li>
+                            </ul>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/onboard
+# Or with auto-apply:
+/onboard --apply</code></pre>
+                            </div>
+
+                            <h4>Output</h4>
+                            <ul>
+                                <li>ONBOARD-REPORT.md with detected technologies</li>
+                                <li>Recommended rules files (created with --apply)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /discuss -->
+                    <div class="command-card" data-category="workflow">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/discuss</code></h3>
+                                <span class="command-category">Workflow</span>
+                            </div>
+                            <p class="command-short-desc">Structured discussion for requirements and decisions</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>Before /feature or /plan when requirements are unclear, architectural decisions needed, or trade-offs must be analyzed.</p>
+
+                            <h4>Workflow</h4>
+                            <p>Facilitator agent leads: Clarify → Explore → Decide → Create Discussion Summary + ADR</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/discuss "Should we use REST or GraphQL for the API?"
+/discuss "How to structure authentication?"</code></pre>
+                            </div>
+
+                            <h4>Output</h4>
+                            <ul>
+                                <li>.claude/.discussions/[datetime]-[topic].md - Discussion summary</li>
+                                <li>.claude/.decisions/[datetime]-[topic].md - ADR if decision made</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /feature -->
+                    <div class="command-card" data-category="workflow">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/feature</code></h3>
+                                <span class="command-category">Workflow</span>
+                            </div>
+                            <p class="command-short-desc">Implement a new feature with full workflow</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>Building new features from scratch with a complete, structured workflow.</p>
+
+                            <h4>Workflow</h4>
+                            <p>(Check discussions) → Planner → (approve) → Implementer → (ask: tests?) → Tester → Reviewer → (ask: commit?) → (ask: PR?)</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/feature "Add user authentication with email/password"
+/feature "Create dashboard with analytics charts"</code></pre>
+                            </div>
+
+                            <h4>Agents Involved</h4>
+                            <ul>
+                                <li><strong>planner</strong> - Creates implementation plan</li>
+                                <li><strong>implementer</strong> - Executes the plan</li>
+                                <li><strong>test-writer</strong> - Adds tests (if requested)</li>
+                                <li><strong>code-reviewer</strong> - Reviews quality and security</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /bugfix -->
+                    <div class="command-card" data-category="workflow">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/bugfix</code></h3>
+                                <span class="command-category">Workflow</span>
+                            </div>
+                            <p class="command-short-desc">Fix a bug with diagnosis and structured workflow</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>Fixing reported bugs with root cause analysis and verification.</p>
+
+                            <h4>Workflow</h4>
+                            <p>Debugger → (approve) → (ask: tests?) → Write failing test → Fix → Verify → (ask: commit?) → (ask: PR?)</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/bugfix "API returns 500 on checkout"
+/bugfix "User session expires too quickly"</code></pre>
+                            </div>
+
+                            <h4>Agents Involved</h4>
+                            <ul>
+                                <li><strong>debugger</strong> - Diagnoses root cause</li>
+                                <li><strong>test-writer</strong> - Writes failing test first (if TDD requested)</li>
+                                <li><strong>implementer</strong> - Fixes the bug</li>
+                                <li><strong>code-reviewer</strong> - Verifies the fix</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /plan -->
+                    <div class="command-card" data-category="workflow">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/plan</code></h3>
+                                <span class="command-category">Workflow</span>
+                            </div>
+                            <p class="command-short-desc">Create implementation plan only</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>When you want to review the plan before implementation, or plan a complex task for later execution.</p>
+
+                            <h4>What It Does</h4>
+                            <p>Planner agent creates a detailed plan with phases, steps, file:line hints, and test strategy. Plan is saved to .claude/.plans/ for later use with /implement.</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/plan "Refactor authentication module"
+/plan "Add real-time notifications"</code></pre>
+                            </div>
+
+                            <h4>Output</h4>
+                            <ul>
+                                <li>.claude/.plans/[datetime]-[type]-[name].md</li>
+                                <li>Plan includes: phases, steps, affected files, dependencies, risks</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /implement -->
+                    <div class="command-card" data-category="workflow">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/implement</code></h3>
+                                <span class="command-category">Workflow</span>
+                            </div>
+                            <p class="command-short-desc">Execute an existing plan</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>After creating a plan with /plan, or to resume a partially completed plan.</p>
+
+                            <h4>What It Does</h4>
+                            <p>Implementer agent reads the plan, executes steps one by one, validates changes, updates checkboxes, and reports progress.</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/implement .claude/.plans/2025-12-28-feature-auth.md
+# Or use latest plan:
+/implement</code></pre>
+                            </div>
+
+                            <h4>Process</h4>
+                            <ul>
+                                <li>Reads plan file and understands all steps</li>
+                                <li>Executes each step with validation (lint, typecheck, tests)</li>
+                                <li>Updates plan checkboxes as steps complete</li>
+                                <li>Reports blockers if encountered</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /review -->
+                    <div class="command-card" data-category="quality">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/review</code></h3>
+                                <span class="command-category">Quality</span>
+                            </div>
+                            <p class="command-short-desc">Review code changes for quality and security</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>Before committing, after implementation, or reviewing PRs.</p>
+
+                            <h4>What It Checks</h4>
+                            <ul>
+                                <li>Code quality (naming, structure, patterns)</li>
+                                <li>Security (OWASP, input validation, auth)</li>
+                                <li>Performance (obvious inefficiencies)</li>
+                                <li>Tests (coverage, quality)</li>
+                                <li>Documentation (comments, READMEs)</li>
+                            </ul>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/review
+/review src/auth/
+/review --security-focus</code></pre>
+                            </div>
+
+                            <h4>Output</h4>
+                            <p>Review report with findings categorized by severity: BLOCKER, WARNING, SUGGESTION, PRAISE</p>
+                        </div>
+                    </div>
+
+                    <!-- /test -->
+                    <div class="command-card" data-category="quality">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/test</code></h3>
+                                <span class="command-category">Quality</span>
+                            </div>
+                            <p class="command-short-desc">Write tests for code</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>After implementing new features or fixing bugs, to add comprehensive test coverage.</p>
+
+                            <h4>What It Does</h4>
+                            <p>Test-writer agent creates unit, integration, and E2E tests following the testing pyramid and TDD principles.</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/test src/services/user-service.ts
+/test --tdd "authentication feature"</code></pre>
+                            </div>
+
+                            <h4>Test Types</h4>
+                            <ul>
+                                <li><strong>Unit tests</strong> - Business logic, edge cases</li>
+                                <li><strong>Integration tests</strong> - API endpoints, database</li>
+                                <li><strong>E2E tests</strong> - Critical user flows (optional)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /debug -->
+                    <div class="command-card" data-category="quality">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/debug</code></h3>
+                                <span class="command-category">Quality</span>
+                            </div>
+                            <p class="command-short-desc">Debug issue and find root cause</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>When you need to understand why something is broken, without fixing it yet. For diagnosis only (use /bugfix to fix).</p>
+
+                            <h4>What It Does</h4>
+                            <p>Debugger agent analyzes code, traces execution flow, identifies root cause, and provides detailed diagnosis report.</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/debug "Why is the API timing out?"
+/debug "Memory leak in dashboard component"</code></pre>
+                            </div>
+
+                            <h4>Output</h4>
+                            <ul>
+                                <li>Root cause analysis</li>
+                                <li>Affected code locations</li>
+                                <li>Reproduction steps</li>
+                                <li>Recommended fixes (but doesn't implement them)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /refactor -->
+                    <div class="command-card" data-category="quality">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/refactor</code></h3>
+                                <span class="command-category">Quality</span>
+                            </div>
+                            <p class="command-short-desc">Refactor code safely</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>Improving code structure, removing duplication, applying design patterns, or cleaning up tech debt.</p>
+
+                            <h4>What It Does</h4>
+                            <p>Refactorer agent improves code while maintaining behavior. Tests run after each change to ensure no regressions.</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/refactor src/utils/helpers.ts
+/refactor "Extract API client logic"</code></pre>
+                            </div>
+
+                            <h4>Safety Measures</h4>
+                            <ul>
+                                <li>Tests must exist and pass before refactoring</li>
+                                <li>Changes made in small, atomic steps</li>
+                                <li>Tests run after each step</li>
+                                <li>Rollback if tests fail</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /commit -->
+                    <div class="command-card" data-category="git">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/commit</code></h3>
+                                <span class="command-category">Git</span>
+                            </div>
+                            <p class="command-short-desc">Create git commit</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>After completing implementation and review, to create a well-formatted commit.</p>
+
+                            <h4>What It Does</h4>
+                            <ul>
+                                <li>Reviews git status and diff</li>
+                                <li>Analyzes changes and drafts commit message</li>
+                                <li>Follows conventional commits format</li>
+                                <li>Adds co-author attribution</li>
+                            </ul>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/commit
+/commit "feat: add user authentication"</code></pre>
+                            </div>
+
+                            <h4>Commit Format</h4>
+                            <pre><code>type(scope): description
+
+🤖 Generated with Claude Code
+Co-Authored-By: Claude Opus 4.5 &lt;noreply@anthropic.com&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- /pr -->
+                    <div class="command-card" data-category="git">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/pr</code></h3>
+                                <span class="command-category">Git</span>
+                            </div>
+                            <p class="command-short-desc">Create pull request</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>After committing changes, to create a PR with comprehensive summary and test plan.</p>
+
+                            <h4>What It Does</h4>
+                            <ul>
+                                <li>Analyzes all commits in branch</li>
+                                <li>Creates PR summary and test plan</li>
+                                <li>Uses gh CLI to create PR</li>
+                                <li>Returns PR URL</li>
+                            </ul>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/pr
+/pr "Add user authentication"</code></pre>
+                            </div>
+
+                            <h4>PR Format</h4>
+                            <p>Includes summary (bullet points), test plan (checklist), and Claude Code attribution.</p>
+                        </div>
+                    </div>
+
+                    <!-- /check -->
+                    <div class="command-card" data-category="quality">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/check</code></h3>
+                                <span class="command-category">Quality</span>
+                            </div>
+                            <p class="command-short-desc">Run lint, typecheck, tests</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>Before committing, after making changes, or to verify project health.</p>
+
+                            <h4>What It Does</h4>
+                            <p>Runs linter, type checker, and test suite. Reports results and fixes simple issues if requested.</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/check
+/check --fix
+/check src/</code></pre>
+                            </div>
+
+                            <h4>Checks Run</h4>
+                            <ul>
+                                <li><strong>Lint</strong> - ESLint, Pylint, RuboCop, etc.</li>
+                                <li><strong>Type Check</strong> - TypeScript, mypy, etc.</li>
+                                <li><strong>Tests</strong> - Unit and integration tests</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- /mcp-register -->
+                    <div class="command-card" data-category="setup">
+                        <div class="command-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="command-title">
+                                <h3><code>/mcp-register</code></h3>
+                                <span class="command-category">Setup</span>
+                            </div>
+                            <p class="command-short-desc">Register new MCP server</p>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="command-content">
+                            <h4>When to Use</h4>
+                            <p>Adding a new MCP (Model Context Protocol) server to the registry for auto-loading.</p>
+
+                            <h4>What It Does</h4>
+                            <p>Adds entry to .claude/mcp/MANIFEST.md so the server is auto-used when semantically relevant to tasks.</p>
+
+                            <h4>Usage</h4>
+                            <div class="code-block">
+                                <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                <pre><code>/mcp-register my-mcp-server "Description of what it does"
+# Interactive mode:
+/mcp-register</code></pre>
+                            </div>
+
+                            <h4>Required Info</h4>
+                            <ul>
+                                <li>Server name</li>
+                                <li>Tools it provides</li>
+                                <li>When to use (semantic description)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tutorials Section -->
+            <section id="tutorials" class="doc-section">
+                <h2>Tutorials</h2>
+                <p class="section-intro">Step-by-step guides to get you started</p>
+
+                <div class="tutorial-cards">
+                    <!-- Tutorial 1: Getting Started -->
+                    <div class="tutorial-card">
+                        <div class="tutorial-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="tutorial-title">
+                                <span class="tutorial-number">1</span>
+                                <h3>Getting Started</h3>
+                            </div>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="tutorial-content">
+                            <p class="tutorial-intro">Set up Claude Code Universal Config and run your first command in under 5 minutes.</p>
+
+                            <div class="tutorial-step">
+                                <h4>Step 1: Install the Configuration</h4>
+                                <p>Clone the repository or copy the <code>.claude/</code> directory to your project:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code># Clone the repo
+git clone https://github.com/your-org/claude-code-universal-config.git
+
+# Copy .claude directory to your project
+cp -r claude-code-universal-config/.claude /path/to/your/project/</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 2: Analyze Your Project</h4>
+                                <p>Run the onboarding command to detect your tech stack and get recommendations:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code>/onboard --apply</code></pre>
+                                </div>
+                                <p>This will create an ONBOARD-REPORT.md and generate recommended rules files for your stack.</p>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 3: Run Your First Command</h4>
+                                <p>Try implementing a simple feature to see the workflow in action:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code>/feature "Add a hello world endpoint"</code></pre>
+                                </div>
+                                <p>The planner will create a plan, ask for approval, then the implementer will execute it.</p>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 4: Understand the Workflow</h4>
+                                <p>During the feature implementation, you'll see:</p>
+                                <ul>
+                                    <li>A detailed plan created in <code>.claude/.plans/</code></li>
+                                    <li>Step-by-step implementation with validation</li>
+                                    <li>Options to add tests (say yes to learn testing workflow)</li>
+                                    <li>Code review findings</li>
+                                    <li>Option to commit changes (optional)</li>
+                                </ul>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Next Steps</h4>
+                                <ul>
+                                    <li>Read the <a href="#concepts">Concepts section</a> to understand Commands, Skills, Agents, Rules</li>
+                                    <li>Explore the <a href="#commands">Command Reference</a> to see all available commands</li>
+                                    <li>Try <a href="#tutorials" data-tutorial="customization">Tutorial 2: Customization</a> to adapt the config to your needs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tutorial 2: Customization -->
+                    <div class="tutorial-card">
+                        <div class="tutorial-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="tutorial-title">
+                                <span class="tutorial-number">2</span>
+                                <h3>Customization</h3>
+                            </div>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="tutorial-content">
+                            <p class="tutorial-intro">Adapt Claude Code Universal Config to your project's specific needs.</p>
+
+                            <div class="tutorial-step">
+                                <h4>Step 1: Add Project-Specific Rules</h4>
+                                <p>Create a new rule file for your project conventions:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code># Create a new rule file
+touch .claude/rules/my-project.md</code></pre>
+                                </div>
+                                <p>Example content:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code>---
+paths: src/**/*.ts
+---
+
+# My Project Rules
+
+## API Conventions
+- All API routes must have rate limiting
+- Use Zod for request validation
+- Return errors in { error: string } format
+
+## Component Patterns
+- Use React Query for data fetching
+- Prefer server components in Next.js
+- Use Tailwind CSS for styling</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 2: Configure Permissions</h4>
+                                <p>Control what operations require confirmation by editing <code>.claude/settings.json</code>:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code>{
+  "permissions": {
+    "deny": ["Bash(rm:*)"],
+    "allow": ["Bash(npm:install)"]
+  },
+  "hooks": {
+    "enabled": true
+  }
+}</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 3: Disable Optional Features</h4>
+                                <p>If you don't want certain workflows, you can remove or modify commands:</p>
+                                <ul>
+                                    <li>Remove command files from <code>.claude/commands/</code> to disable them</li>
+                                    <li>Edit workflow rules in <code>.claude/rules/workflow.md</code></li>
+                                    <li>Customize agent prompts in <code>.claude/agents/</code></li>
+                                </ul>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 4: Add Custom Skills</h4>
+                                <p>See <a href="#tutorials" data-tutorial="skill-creator">Tutorial 3</a> for creating custom skills specific to your domain.</p>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Git Ignore Local Settings</h4>
+                                <p>Create <code>.claude/settings.local.json</code> for personal overrides (already gitignored):</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code>{
+  "permissions": {
+    "allow": ["Bash(my-custom-script:*)"]
+  }
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tutorial 3: Create Your Own Skill -->
+                    <div class="tutorial-card">
+                        <div class="tutorial-header" role="button" tabindex="0" aria-expanded="false">
+                            <div class="tutorial-title">
+                                <span class="tutorial-number">3</span>
+                                <h3>Create Your Own Skill</h3>
+                            </div>
+                            <span class="toggle-icon">+</span>
+                        </div>
+                        <div class="tutorial-content">
+                            <p class="tutorial-intro">Add domain-specific knowledge that auto-loads when relevant.</p>
+
+                            <div class="tutorial-step">
+                                <h4>Step 1: Use the Skill Creator</h4>
+                                <p>The easiest way is to let Claude create the skill for you:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code># Claude will guide you through the process
+"Create a new skill for handling GraphQL schemas"</code></pre>
+                                </div>
+                                <p>The skill-creator skill will automatically load and help you structure the new skill.</p>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 2: Skill Structure</h4>
+                                <p>A skill has this structure:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code>.claude/skills/my-skill/
+├── SKILL.md              # Main skill file (always loaded)
+└── references/           # Detailed docs (loaded on-demand)
+    ├── quick-ref.md
+    ├── patterns.md
+    └── tools.md</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 3: Write SKILL.md</h4>
+                                <p>The main skill file should have:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code># My Skill Name
+
+## Quick Start
+Brief overview and most common use cases
+
+## Quick Reference
+Tables, checklists, key patterns
+
+## Reference Files
+| File | Content |
+|------|---------|
+| [references/patterns.md](references/patterns.md) | Design patterns |
+| [references/tools.md](references/tools.md) | Tool setup and usage |</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 4: Update MANIFEST.md</h4>
+                                <p>Add your skill to <code>.claude/skills/MANIFEST.md</code>:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code>| my-skill | GraphQL schema design and best practices | .claude/skills/my-skill/SKILL.md |</code></pre>
+                                </div>
+                                <p>(The skill-creator does this automatically)</p>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Step 5: Test the Skill</h4>
+                                <p>Try a task that should trigger your skill:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" aria-label="Copy code">Copy</button>
+                                    <pre><code>"Design a GraphQL schema for user authentication"</code></pre>
+                                </div>
+                                <p>Claude should auto-load your skill and you'll see: <code>Skills Loaded: my-skill</code></p>
+                            </div>
+
+                            <div class="tutorial-step">
+                                <h4>Best Practices</h4>
+                                <ul>
+                                    <li>Keep SKILL.md concise (< 500 lines) - use references/ for detail</li>
+                                    <li>Use tables and checklists for quick scanning</li>
+                                    <li>Write clear semantic descriptions for auto-loading</li>
+                                    <li>Include examples and code snippets</li>
+                                    <li>Test that the skill loads when expected</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Installation Section -->
+            <section id="installation" class="doc-section">
+                <h2>Installation</h2>
+                <p class="section-intro">Get started in less than 1 minute</p>
+
+                <div class="install-methods">
+                    <div class="install-method">
+                        <h3>Method 1: Clone Repository</h3>
+                        <p>Clone and copy the <code>.claude/</code> directory to your project:</p>
+                        <div class="code-block">
+                            <button class="copy-btn" aria-label="Copy code">Copy</button>
+                            <pre><code>git clone https://github.com/your-org/claude-code-universal-config.git
+cp -r claude-code-universal-config/.claude /path/to/your/project/
+cd /path/to/your/project
+/onboard --apply</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="install-method">
+                        <h3>Method 2: Direct Download</h3>
+                        <p>Download and extract the <code>.claude/</code> directory:</p>
+                        <div class="code-block">
+                            <button class="copy-btn" aria-label="Copy code">Copy</button>
+                            <pre><code>curl -L https://github.com/your-org/claude-code-universal-config/archive/main.zip -o claude-config.zip
+unzip claude-config.zip
+mv claude-code-universal-config-main/.claude /path/to/your/project/
+cd /path/to/your/project
+/onboard --apply</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="install-method">
+                        <h3>Verification</h3>
+                        <p>After installation, verify the setup:</p>
+                        <div class="code-block">
+                            <button class="copy-btn" aria-label="Copy code">Copy</button>
+                            <pre><code># Check that .claude directory exists
+ls -la .claude/
+
+# Run onboarding
+/onboard
+
+# You should see ONBOARD-REPORT.md created
+cat ONBOARD-REPORT.md</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="install-requirements">
+                    <h3>Requirements</h3>
+                    <ul>
+                        <li>Claude Code (desktop or CLI)</li>
+                        <li>Git (for /commit and /pr commands)</li>
+                        <li>GitHub CLI (<code>gh</code>) for /pr command (optional)</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</body>
+</html>
