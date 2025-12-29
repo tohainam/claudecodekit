@@ -92,6 +92,55 @@ Determine logical domains to organize rules recommendations:
 - Different tech stack (e.g., Next.js vs Express)
 - Organizational boundaries (apps/ vs packages/)
 
+### Step 3.5: Detect Business Domain (NEW)
+
+Analyze the codebase to detect business domain beyond just tech stack.
+
+**Reference for domain detection:**
+See [references/domain-detection.md](references/domain-detection.md) for domain keyword tables and detection patterns.
+
+**Domain detection process:**
+1. Grep codebase for domain-specific keywords
+2. Analyze model/entity names
+3. Check API route patterns
+4. Review folder naming conventions
+5. Calculate confidence score (High/Medium/Low)
+
+**Detected domains:**
+- E-commerce (cart, checkout, payment, order)
+- Healthcare (patient, appointment, prescription)
+- Fintech (transaction, account, ledger)
+- EdTech (course, lesson, enrollment)
+- Booking (reservation, availability, slot)
+- Social (post, feed, comment, follow)
+- Analytics (dashboard, metric, report)
+- And more...
+
+**Output:** List of detected domains with confidence levels and evidence
+
+### Step 3.6: Detect Architectural Patterns (NEW)
+
+Analyze code structure for common architectural patterns.
+
+**Reference for pattern detection:**
+See [references/pattern-agent-templates.md](references/pattern-agent-templates.md) for pattern detection keywords.
+
+**Pattern detection process:**
+1. Grep for state machine patterns (status, state, transition)
+2. Grep for event-driven patterns (emit, publish, subscribe)
+3. Grep for pipeline patterns (pipeline, stage, step)
+4. Grep for queue patterns (queue, job, worker)
+5. Identify entities involved in each pattern
+
+**Detected patterns:**
+- State Machine (Order states, Booking states, etc.)
+- Event-Driven (Event emitters, handlers)
+- Pipeline (Data transformation pipelines)
+- Queue/Worker (Background job processing)
+- CQRS, Saga, etc.
+
+**Output:** List of detected patterns with key files and entities
+
 ### Step 4: Generate Recommendations
 
 For each detected technology, recommend appropriate rules files, skills, and agents.
@@ -100,19 +149,32 @@ For each detected technology, recommend appropriate rules files, skills, and age
 1. Identify detected tech stack components
 2. Look up corresponding rule templates (organized in mixed folder structure)
 3. Customize templates with actual project paths
-4. Generate skill recommendations using tech-to-skill mapping
-5. Generate agent recommendations using tech-to-agent mapping
-6. Consider project-specific patterns found in analysis
-7. Group recommendations by domain (for monorepos)
+4. Generate EXISTING skill recommendations using tech-to-skill mapping
+5. Generate EXISTING agent recommendations using tech-to-agent mapping
+6. **Generate NEW skill recommendations** based on detected domains
+7. **Generate NEW agent recommendations** based on detected patterns
+8. Consider project-specific patterns found in analysis
+9. Group recommendations by domain (for monorepos)
 
 **Reference for rules templates:**
 See [references/rules-templates.md](references/rules-templates.md) for all rule templates with mixed folder structure (_global/, frontend/, backend/, devops/, testing/, security/).
 
 **Reference for skill recommendations:**
-See [references/tech-to-skill-mapping.md](references/tech-to-skill-mapping.md) to map detected technologies to relevant skills.
+See [references/tech-to-skill-mapping.md](references/tech-to-skill-mapping.md) to map detected technologies to relevant skills AND recommend creating new domain skills.
 
 **Reference for agent recommendations:**
-See [references/tech-to-agent-mapping.md](references/tech-to-agent-mapping.md) to map project characteristics to useful agents.
+See [references/tech-to-agent-mapping.md](references/tech-to-agent-mapping.md) to map project characteristics to useful agents AND recommend creating new pattern agents.
+
+**Reference for domain skill templates:**
+See [references/domain-skill-templates.md](references/domain-skill-templates.md) for templates to generate domain-specific skills.
+
+**Reference for pattern agent templates:**
+See [references/pattern-agent-templates.md](references/pattern-agent-templates.md) for templates to generate pattern-specific agents.
+
+**CRITICAL - CODE-FOCUS REQUIREMENT:**
+- NEW domain skills must document ACTUAL CODE from the project, NOT generic domain advice
+- NEW pattern agents must reference ACTUAL CODE with file:line locations and project-specific grep commands
+- All generated content must include code snippets extracted from the actual codebase
 
 **Always recommend (global rules):**
 - _global/code-style.md (universal coding standards, no paths)
@@ -436,7 +498,15 @@ No Conflicts - all new files
 - Check if ONBOARD-REPORT.md exists
   - If NO: Run analysis first, then apply
   - If YES: Read report and apply recommendations
-- Create all recommended files
+- Create all recommended rules files
+- **Create recommended NEW domain skills** (using domain-skill-templates)
+  - Must READ actual files and EXTRACT code snippets
+  - Must include file:line references
+  - Must NOT contain generic domain advice
+- **Create recommended NEW pattern agents** (using pattern-agent-templates)
+  - Must reference actual code defining states/events/stages
+  - Must include project-specific grep commands
+  - Must NOT contain generic debugging steps
 - Use merge strategy for existing files
 - Report what was created
 
@@ -466,5 +536,8 @@ No Conflicts - all new files
 | [references/rules-templates.md](references/rules-templates.md) | During Step 4 (generating recommendations) - complete rule templates with mixed folder structure and frontmatter format |
 | [references/tech-to-skill-mapping.md](references/tech-to-skill-mapping.md) | During Step 4 (skill recommendations) - maps detected technologies to relevant skills with rationale |
 | [references/tech-to-agent-mapping.md](references/tech-to-agent-mapping.md) | During Step 4 (agent recommendations) - maps project characteristics to useful agents with usage guidance |
+| [references/domain-detection.md](references/domain-detection.md) | During Step 3.5 (domain detection) - domain keyword tables and detection patterns |
+| [references/domain-skill-templates.md](references/domain-skill-templates.md) | During Step 4 (NEW skill generation) - templates for creating domain-specific skills |
+| [references/pattern-agent-templates.md](references/pattern-agent-templates.md) | During Step 3.6 & 4 (pattern detection & NEW agent generation) - templates for creating pattern-specific agents |
 
 These references are split out to keep this SKILL.md lean while providing comprehensive detection and templating capabilities.

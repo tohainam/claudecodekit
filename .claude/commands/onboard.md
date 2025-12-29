@@ -16,10 +16,12 @@ This command performs deep analysis using specialized agents and generates tailo
 1. Argument parsing and mode detection
 2. Scouter agent analysis (architecture, data flow, dependencies)
 3. Tech stack detection (languages, frameworks, tools)
-4. Researcher agent analysis (best practices for detected tech)
-5. Generate recommendations (rules, skills, agents)
-6. Create ONBOARD-REPORT.md
-7. Apply configuration (if --apply flag present)
+4. **Domain detection** (e-commerce, healthcare, fintech, etc.)
+5. **Pattern detection** (state machine, event-driven, pipeline, etc.)
+6. Researcher agent analysis (best practices for detected tech)
+7. Generate recommendations (rules, EXISTING skills/agents, **NEW skills/agents**)
+8. Create ONBOARD-REPORT.md
+9. Apply configuration (if --apply flag present)
 
 ## Input
 
@@ -146,6 +148,73 @@ Based on detected technologies, determine research topic classification:
 
 **Tech to research**: List top 3-5 detected frameworks/tools (e.g., Next.js, Prisma, NextAuth)
 
+### Step 2.5: Detect Business Domain (NEW)
+
+Analyze the codebase to detect business domain beyond just tech stack.
+
+**Reference**: `project-analysis` skill's `domain-detection.md`
+
+**Process**:
+1. Grep codebase for domain-specific keywords
+2. Analyze model/entity names (Prisma schema, TypeORM entities, etc.)
+3. Check API route patterns
+4. Review folder naming conventions
+5. Calculate confidence score (High/Medium/Low)
+
+**Domain detection commands**:
+```bash
+# E-commerce detection
+grep -r -i -c "cart\|checkout\|payment\|order\|inventory" --include="*.ts" --include="*.tsx" src/ 2>/dev/null | awk -F: '{sum += $2} END {print sum}'
+
+# Healthcare detection
+grep -r -i -c "patient\|appointment\|prescription\|diagnosis" --include="*.ts" --include="*.py" src/ 2>/dev/null | awk -F: '{sum += $2} END {print sum}'
+
+# Fintech detection
+grep -r -i -c "transaction\|account\|balance\|ledger\|transfer" --include="*.ts" --include="*.py" src/ 2>/dev/null | awk -F: '{sum += $2} END {print sum}'
+```
+
+**Confidence scoring**:
+- 10+ keyword matches → High confidence
+- 5-9 keyword matches → Medium confidence
+- 1-4 keyword matches → Low (don't recommend)
+
+**Output**: List of detected domains with evidence (keywords found, folders, routes)
+
+### Step 2.6: Detect Architectural Patterns (NEW)
+
+Analyze code structure for common architectural patterns that benefit from specialized agents.
+
+**Reference**: `project-analysis` skill's `pattern-agent-templates.md`
+
+**Process**:
+1. Grep for state machine patterns (status, state, transition)
+2. Grep for event-driven patterns (emit, publish, subscribe, handler)
+3. Grep for pipeline patterns (pipeline, stage, step, processor)
+4. Grep for queue patterns (queue, job, worker, Bull)
+5. Identify key entities involved in each pattern
+
+**Pattern detection commands**:
+```bash
+# State Machine Pattern
+grep -r -l "status\|state.*=\|transition\|fsm" --include="*.ts" src/ 2>/dev/null | head -5
+
+# Event-Driven Pattern
+grep -r -l "emit\|publish\|subscribe\|addEventListener\|EventEmitter" --include="*.ts" src/ 2>/dev/null | head -5
+
+# Pipeline Pattern
+grep -r -l "pipeline\|stage\|step\|processor\|transform" --include="*.ts" src/ 2>/dev/null | head -5
+
+# Queue/Worker Pattern
+grep -r -l "queue\|job\|worker\|Bull\|BullMQ" --include="*.ts" src/ 2>/dev/null | head -5
+```
+
+**Entity identification**:
+- For state machines: What entity has the states? (Order, Booking, Payment, etc.)
+- For events: What events are emitted? (OrderPlaced, PaymentReceived, etc.)
+- For pipelines: What data flows through? (User data, Analytics, etc.)
+
+**Output**: List of detected patterns with key files and entities
+
 ### Step 3: Run Researcher Agent (Best Practices Lookup)
 
 Use Task tool to invoke researcher agent for best practices research.
@@ -231,7 +300,7 @@ Reference: `project-analysis` skill's `tech-to-skill-mapping.md`
 - Prisma → `architecture`, `testing`
 - NextAuth → `security-review`, `architecture`
 
-#### 4.3 Agent Recommendations
+#### 4.3 Agent Recommendations (EXISTING)
 
 Reference: `project-analysis` skill's `tech-to-agent-mapping.md`
 
@@ -252,6 +321,85 @@ Reference: `project-analysis` skill's `tech-to-agent-mapping.md`
 - `refactorer` (if large/legacy codebase)
 - `doc-writer` (if docs/ directory exists)
 - `debugger` (always useful but not emphasized)
+
+#### 4.4 NEW Skill Recommendations (Based on Detected Domain)
+
+Reference: `project-analysis` skill's `domain-skill-templates.md`
+
+**Process**:
+1. For each domain detected with High/Medium confidence (from Step 2.5)
+2. Recommend creating a domain-specific skill
+3. Include evidence (keywords found, files, patterns)
+4. Provide template preview with actual project paths
+
+**Example output for E-commerce domain**:
+
+```markdown
+### NEW Skills to Create
+
+#### 1. `ecommerce` Skill (RECOMMENDED TO CREATE)
+
+**Why create:** Detected e-commerce domain with High confidence
+**Evidence:**
+- Keywords: cart (15), order (42), payment (28), checkout (8)
+- Folders: src/services/payment/, src/services/order/
+- Models: Product, Order, Cart, Payment in prisma/schema.prisma
+
+**Proposed coverage** (focus on CODE PATTERNS):
+- Payment integration patterns found in src/services/payment/
+- Cart state management patterns in src/stores/cart.ts
+- Order state transitions in src/services/order/orderService.ts
+- Inventory update patterns in src/services/inventory/
+
+**Key code files to document:**
+- src/services/payment/stripeService.ts:20-80 (payment flow)
+- src/services/order/orderService.ts:45-120 (order lifecycle)
+- prisma/schema.prisma:50-100 (domain models)
+
+**To create:** Run `/onboard --apply` or manually create `.claude/skills/ecommerce/SKILL.md`
+```
+
+#### 4.5 NEW Agent Recommendations (Based on Detected Patterns)
+
+Reference: `project-analysis` skill's `pattern-agent-templates.md`
+
+**Process**:
+1. For each pattern detected (from Step 2.6)
+2. Identify the entity involved (Order, Payment, Booking, etc.)
+3. Recommend creating a pattern-specific agent
+4. Include key files and states/events detected
+
+**Example output for State Machine pattern**:
+
+```markdown
+### NEW Agents to Create
+
+#### 1. `order-state-debugger` Agent (RECOMMENDED TO CREATE)
+
+**Why create:** Order entity has complex state machine with 6 states
+**Evidence:**
+- Order states in prisma/schema.prisma: PENDING, PAID, PROCESSING, SHIPPED, DELIVERED, CANCELLED
+- Transition logic in src/services/order/orderService.ts:45-120
+- 15+ state transition functions detected
+
+**Purpose:** Debug order state transitions when orders get stuck or skip states
+
+**Key code locations:**
+- State definitions: prisma/schema.prisma:75 (enum OrderStatus)
+- Transition handlers: src/services/order/orderService.ts
+- State validation: src/utils/orderValidation.ts
+
+**Proposed agent definition:**
+```yaml
+name: order-state-debugger
+description: Debug order state transitions and lifecycle issues
+model: sonnet
+tools: Read, Grep, Bash
+skills: ecommerce, debugging
+```
+
+**To create:** Run `/onboard --apply` or manually create `.claude/agents/order-state-debugger.md`
+```
 
 **Output Progress**: "Generating recommendations..."
 
@@ -318,6 +466,28 @@ Generated: [timestamp]
 ### Infrastructure
 - [Docker/CI/etc]
 
+## Domain Analysis
+
+### Detected Domains
+
+#### 1. [Domain Name] ([Confidence] Confidence)
+
+**Evidence:**
+- Keywords found: [keyword] ([count]), [keyword] ([count])
+- Folders: [folder paths]
+- Models/Entities: [model names in schema files]
+- Routes: [API route patterns]
+
+### Detected Architectural Patterns
+
+#### 1. [Pattern Name] Pattern
+
+**Entity:** [Entity involved, e.g., Order, Booking]
+**Evidence:**
+- States/Events: [list of states or events]
+- Key files: [file:line references]
+- Transition logic: [file:line]
+
 ## Best Practices Research
 
 [Include researcher findings if available]
@@ -382,17 +552,51 @@ Rules are organized in mixed folder structure:
 
 [... more rules organized by folder ...]
 
-### Skills to Enable
+### Skills to Enable (EXISTING)
 
-Based on your tech stack, these skills are recommended:
+Based on your tech stack, these existing skills are recommended:
 
 #### 1. [skill-name]
 **Why**: [Rationale based on detected tech]
 **Use for**: [Specific use cases]
 
-[... more skills with rationale ...]
+[... more existing skills with rationale ...]
 
-### Agents to Use
+### NEW Skills to Create
+
+Based on detected domain and code patterns, these NEW skills should be created.
+
+**IMPORTANT:** Skills document ACTUAL CODE from your project, NOT generic domain knowledge.
+
+#### 1. `[domain]` Skill (RECOMMENDED TO CREATE)
+
+**Why create:** Detected [domain] domain with [confidence] confidence
+**Evidence:**
+- Keywords: [keyword] ([count]), [keyword] ([count])
+- Folders: [folder paths with domain logic]
+- Models: [model names]
+
+**Code patterns to document** (extracted from your codebase):
+
+| Pattern | Location | Code Preview |
+|---------|----------|--------------|
+| [Entity] lifecycle | `[file:line-range]` | `function create[Entity]...` |
+| State transitions | `[file:line-range]` | `validTransitions = {...}` |
+| Error handling | `[file:line-range]` | `class [Domain]Error...` |
+
+**Sample code extraction:**
+```[language]
+// From [file:line-range]
+[ACTUAL_CODE_SNIPPET_FROM_PROJECT]
+```
+
+**Key files this skill will reference:**
+- `[file]:[line-range]` - [purpose]
+- `[file]:[line-range]` - [purpose]
+
+**To create:** Run `/onboard --apply` or manually create `.claude/skills/[domain]/SKILL.md`
+
+### Agents to Use (EXISTING)
 
 Based on your project characteristics, these agents will be helpful:
 
@@ -403,7 +607,60 @@ Based on your project characteristics, these agents will be helpful:
 
 #### Recommended for Your Project
 
-[List recommended agents with usage guidance and examples]
+[List recommended existing agents with usage guidance and examples]
+
+### NEW Agents to Create
+
+Based on detected architectural patterns, these NEW agents should be created.
+
+**IMPORTANT:** Agents reference ACTUAL CODE with specific file:line locations and project-specific grep commands.
+
+#### 1. `[entity]-state-debugger` Agent (RECOMMENDED TO CREATE)
+
+**Why create:** [Entity] has complex state machine with [N] states
+**Evidence:**
+- States: [list of states from schema/code]
+- Transition logic: [file:line-range]
+- [N] state transition functions detected
+
+**Purpose:** Debug [entity] state transitions when [entity]s get stuck or skip states
+
+**Code this agent will reference:**
+
+```[language]
+// State enum from [file:line]
+enum [Entity]Status {
+  [ACTUAL_STATES_FROM_PROJECT]
+}
+
+// Transition logic from [file:line-range]
+const validTransitions = {
+  [ACTUAL_TRANSITIONS_FROM_PROJECT]
+};
+```
+
+**Debug commands for this project:**
+```bash
+# Find state definition
+grep -n "enum [Entity]Status" [schema_file]
+
+# Find transition callers
+grep -rn "transition[Entity]State" src/
+
+# Check state handlers
+grep -rn "case '[STATE_NAME]'" src/
+```
+
+**Proposed definition:**
+```yaml
+name: [entity]-state-debugger
+description: Debug [entity] state transitions and lifecycle issues
+model: sonnet
+tools: Read, Grep, Bash
+skills: [domain], debugging
+```
+
+**To create:** Run `/onboard --apply` or manually create `.claude/agents/[entity]-state-debugger.md`
 
 ### Example Workflow Commands
 
@@ -543,18 +800,110 @@ OR for global rules:
 ---
 ```
 
-#### 7.5 Create Project-Specific Skills (If Needed)
+#### 7.5 Create NEW Domain Skills (If Recommended)
 
-If report recommends project-specific skills (e.g., for unique domain):
+**CRITICAL: Skills must contain ACTUAL CODE from the project, not generic advice.**
 
-1. Check if skill-creator skill is available
-2. Use skill-creator to generate project-specific skill
-3. Run `scripts/init_skill.py` if available
-4. Document in summary
+For each domain skill recommended in the report:
 
-**Fallback**: If skill-creator unavailable, note in report that user can create manually
+1. Create skill directory: `mkdir -p .claude/skills/[domain]`
+2. Load template from `domain-skill-templates.md`
+3. **READ the actual files** identified during domain detection
+4. **EXTRACT code snippets** with line numbers:
+   ```bash
+   # Extract actual code
+   sed -n '45,78p' src/services/order/orderService.ts
+   ```
+5. Customize template with EXTRACTED code:
+   - Replace `[ACTUAL_CODE_FROM_PROJECT]` with real code
+   - Replace `[FILE_PATH]:[LINE_RANGE]` with actual locations
+   - Replace `[NAMING_PATTERNS]` with patterns found in codebase
+6. Write to `.claude/skills/[domain]/SKILL.md`
+7. Track created skills for summary
 
-#### 7.6 Report Results
+**Skill content requirements:**
+- ✅ Actual code snippets from project files
+- ✅ File:line references for all patterns
+- ✅ Real function/class names from codebase
+- ✅ Project-specific conventions and naming
+- ❌ Generic domain advice (NO!)
+- ❌ Industry best practices not in codebase (NO!)
+
+**Example of what skill should contain:**
+```markdown
+## Pattern: Order State Transitions
+
+**Source:** `src/services/order/orderService.ts:45-78`
+
+```typescript
+// ACTUAL CODE FROM THIS PROJECT
+export async function transitionOrderState(orderId: string, newState: OrderStatus) {
+  const validTransitions: Record<OrderStatus, OrderStatus[]> = {
+    PENDING: ['PAID', 'CANCELLED'],
+    PAID: ['PROCESSING', 'REFUNDED'],
+    // ...
+  };
+}
+```
+```
+
+#### 7.6 Create NEW Pattern Agents (If Recommended)
+
+**CRITICAL: Agents must reference ACTUAL CODE with specific grep commands for THIS project.**
+
+For each pattern agent recommended in the report:
+
+1. Load template from `pattern-agent-templates.md`
+2. **READ the actual files** where pattern was detected
+3. **EXTRACT the code** that defines the pattern:
+   ```bash
+   # Get actual state enum
+   grep -n "enum.*Status" prisma/schema.prisma
+   # Get actual transition logic
+   grep -A 20 "validTransitions" src/services/order/orderService.ts
+   ```
+4. Customize template with EXTRACTED code:
+   - Replace `[entity]` with actual entity (Order, Booking, etc.)
+   - Replace `[ACTUAL_ENUM_OR_STATE_DEFINITION]` with real enum code
+   - Replace `[ACTUAL_TRANSITION_LOGIC]` with real transition code
+   - Replace grep patterns with project-specific file paths
+5. Write to `.claude/agents/[entity]-[pattern].md`
+6. Track created agents for summary
+
+**Agent content requirements:**
+- ✅ Actual code defining states/events/stages
+- ✅ File:line references for key locations
+- ✅ Grep commands using actual project file paths
+- ✅ Valid state transitions extracted from code
+- ❌ Generic debugging steps (NO!)
+- ❌ Placeholder file paths (NO!)
+
+**Example of what agent should contain:**
+```markdown
+## State Machine Definition
+
+**States defined in:** `prisma/schema.prisma:75`
+
+```prisma
+enum OrderStatus {
+  PENDING
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+```
+
+## Debug Commands
+
+### Find transition callers
+```bash
+grep -rn "transitionOrderState" src/
+```
+```
+
+#### 7.7 Report Results
 
 Display what was created:
 
@@ -584,6 +933,7 @@ Display what was created:
 
 ## Files Created ([X] total)
 
+### Rules
 ✓ .claude/rules/_global/code-style.md
 ✓ .claude/rules/_global/git-workflow.md
 ✓ .claude/rules/frontend/components.md
@@ -595,6 +945,14 @@ Display what was created:
 ✓ .claude/rules/testing/testing.md
 ✓ .claude/rules/devops/docker.md
 ✓ .claude/rules/devops/ci.md
+
+### NEW Domain Skills Created
+✓ .claude/skills/ecommerce/SKILL.md (e-commerce patterns from your codebase)
+✓ .claude/skills/project-conventions/SKILL.md (your project's specific patterns)
+
+### NEW Pattern Agents Created
+✓ .claude/agents/order-state-debugger.md (Order state machine debugging)
+✓ .claude/agents/payment-validator.md (Payment flow validation)
 
 ## Already Present
 
@@ -731,7 +1089,8 @@ This command creates:
 
 1. **ONBOARD-REPORT.md** (always) - Full analysis report in project root
 2. **.claude/rules/\*\*/\*.md** (if --apply) - Rules in mixed folder structure
-3. **.claude/skills/[project-name]/** (if --apply and needed) - Project-specific skill via skill-creator
+3. **.claude/skills/[domain]/SKILL.md** (if --apply and domain detected) - Domain-specific skills with code patterns
+4. **.claude/agents/[entity]-[pattern].md** (if --apply and patterns detected) - Pattern-specific agents
 
 ## Integration with Agent Workflow
 

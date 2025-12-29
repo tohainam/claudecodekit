@@ -380,10 +380,122 @@ Agents are designed to work together in workflows:
 | `doc-writer` | As Needed | Documentation updates, new features |
 | `security-auditor` | As Needed | Pre-release, after auth changes, security reviews |
 
+## Pattern-Based NEW Agent Recommendations
+
+Beyond recommending existing agents, onboard should analyze the project's architectural patterns and recommend CREATING new project-specific agents.
+
+### When to Recommend Creating New Agents
+
+| Condition | Recommendation |
+|-----------|----------------|
+| State machine pattern detected | Recommend creating `[entity]-state-debugger` agent |
+| Event-driven architecture detected | Recommend creating `event-tracer` agent |
+| Data pipeline detected | Recommend creating `pipeline-validator` agent |
+| Queue/worker system detected | Recommend creating `job-debugger` agent |
+| Payment integration detected | Recommend creating `payment-validator` agent |
+| Complex domain workflow detected | Recommend creating domain-specific debugger |
+
+### Pattern → NEW Agent Mapping
+
+Reference: [pattern-agent-templates.md](pattern-agent-templates.md) for templates
+
+| Detected Pattern | Detection Keywords | NEW Agent to Create |
+|------------------|-------------------|---------------------|
+| State Machine | status, state, transition, fsm | `[entity]-state-debugger` |
+| Event-Driven | emit, publish, subscribe, event, handler | `event-tracer` |
+| Pipeline | pipeline, stage, step, transform | `pipeline-validator` |
+| Queue/Worker | queue, job, worker, process | `job-debugger` |
+| CQRS | command, query, handler | `cqrs-tracer` |
+| Saga | saga, compensate, orchestrator | `saga-debugger` |
+
+### Domain → NEW Agent Mapping
+
+| Detected Domain | NEW Agents to Create |
+|-----------------|---------------------|
+| E-commerce | `order-state-debugger`, `payment-validator` |
+| Healthcare | `patient-flow-debugger`, `hipaa-auditor` |
+| Fintech | `transaction-tracer`, `reconciliation-validator` |
+| Booking | `availability-debugger`, `booking-validator` |
+
+### Agent Creation Output Format
+
+In ONBOARD-REPORT.md, include:
+
+```markdown
+## Recommended NEW Agents to Create
+
+### Pattern-Based Agents
+
+#### 1. `order-state-debugger` (State Machine Pattern Detected)
+
+**Why create:** Order entity has complex state machine with 6 states
+**Evidence:**
+- Order states in: prisma/schema.prisma (PENDING, PAID, PROCESSING, SHIPPED, DELIVERED, CANCELLED)
+- Transition logic in: src/services/order/orderService.ts:45-120
+- 15+ state transition functions detected
+
+**Purpose:** Debug order state transitions when orders get stuck or skip states
+
+**Proposed definition:**
+```yaml
+name: order-state-debugger
+model: sonnet
+tools: Read, Grep, Bash
+skills: ecommerce, debugging
+```
+
+**To create:** Run `/onboard --apply` or manually create `.claude/agents/order-state-debugger.md`
+
+#### 2. `event-tracer` (Event-Driven Pattern Detected)
+
+**Why create:** Event-driven architecture detected with 12+ event types
+**Evidence:**
+- Event emitter in: src/lib/events.ts
+- Event handlers in: src/handlers/*.ts
+- Events: OrderPlaced, PaymentReceived, ShipmentCreated, etc.
+
+**Purpose:** Trace event flow when handlers don't fire or events get lost
+
+**To create:** Run `/onboard --apply` or manually create `.claude/agents/event-tracer.md`
+```
+
+### Agent Creation Process (--apply mode)
+
+When `/onboard --apply` is run:
+
+1. **Detect patterns** using grep/glob
+2. **Identify entities** involved (Order, Payment, etc.)
+3. **Load template** from `pattern-agent-templates.md`
+4. **Extract context**:
+   - Key files implementing the pattern
+   - States/events/stages involved
+   - Related domain skill
+5. **Replace placeholders** with detected values
+6. **Generate agent file** at `.claude/agents/[agent-name].md`
+7. **Report creation** in output
+
+### Pattern Detection Commands
+
+```bash
+# State Machine Pattern
+grep -r -l "status.*=\|state.*=\|transition" --include="*.ts" src/
+
+# Event-Driven Pattern
+grep -r -l "emit\|publish\|subscribe\|addEventListener" --include="*.ts" src/
+
+# Pipeline Pattern
+grep -r -l "pipeline\|stage\|step\|processor" --include="*.ts" src/
+
+# Queue Pattern
+grep -r -l "queue\|job\|worker\|Bull\|BullMQ" --include="*.ts" src/
+```
+
 ## Notes
 
 - **Agents are specialized**: Each has a specific purpose and model (opus for complex, sonnet for execution)
 - **Agents use Task tool**: Invoked via `/command` patterns that use the Task tool
 - **Agents can auto-invoke others**: facilitator auto-invokes scouter and researcher
+- **Pattern agents** focus on debugging/validation for specific patterns
+- **Domain agents** complement domain skills with active debugging capability
 - **Recommendations guide workflow**: Not all agents needed for every project
 - **User decides invocation**: Recommendations are advisory, user controls agent usage

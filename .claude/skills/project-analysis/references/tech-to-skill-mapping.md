@@ -184,9 +184,171 @@ Some skills are NOT auto-recommended because they're task-specific:
 | `skill-creator` | Creating new skills | Only needed during onboard --apply for project-specific skills |
 | `project-analysis` | Analyzing codebases | Used internally by /onboard command |
 
+## Domain-Based NEW Skill Recommendations
+
+Beyond recommending existing skills, onboard should analyze the project's business domain and recommend CREATING new project-specific skills.
+
+**CRITICAL: Domain skills document ACTUAL CODE from the project, NOT generic domain knowledge.**
+
+❌ BAD (generic domain advice):
+```markdown
+## E-commerce Patterns
+- Use webhooks for payment notifications
+- Implement idempotency for order creation
+- Handle cart abandonment
+```
+
+✅ GOOD (actual code from project):
+```markdown
+## E-commerce Patterns
+
+### Order State Transitions
+**Source:** `src/services/order/orderService.ts:45-78`
+```typescript
+// ACTUAL CODE FROM THIS PROJECT
+const validTransitions: Record<OrderStatus, OrderStatus[]> = {
+  PENDING: ['PAID', 'CANCELLED'],
+  PAID: ['PROCESSING', 'REFUNDED'],
+  // ...
+};
+```
+
+### Payment Flow
+**Source:** `src/services/payment/stripeService.ts:20-80`
+```typescript
+// ACTUAL CODE FROM THIS PROJECT
+export async function createPaymentIntent(...) {
+  // ...
+}
+```
+```
+
+### When to Recommend Creating New Skills
+
+| Condition | Recommendation |
+|-----------|----------------|
+| Domain detected with High confidence | Recommend creating domain skill (CODE-FOCUSED) |
+| Unique project conventions found | Recommend creating `project-conventions` skill (CODE-FOCUSED) |
+| Complex workflows not covered by existing skills | Recommend creating workflow-specific skill (CODE-FOCUSED) |
+
+### Domain → NEW Skill Mapping
+
+Reference: [domain-detection.md](domain-detection.md) for detection patterns
+Reference: [domain-skill-templates.md](domain-skill-templates.md) for templates
+
+| Detected Domain | NEW Skill to Create | Template |
+|-----------------|---------------------|----------|
+| E-commerce (cart, checkout, payment) | `ecommerce` | Universal Skill Template |
+| Healthcare (patient, appointment, prescription) | `healthcare` | Universal Skill Template |
+| Fintech (transaction, account, ledger) | `fintech` | Universal Skill Template |
+| EdTech (course, lesson, enrollment) | `edtech` | Universal Skill Template |
+| Booking (reservation, availability, slot) | `booking` | Universal Skill Template |
+| Social (post, feed, comment, follow) | `social` | Universal Skill Template |
+| Analytics (dashboard, metric, report) | `analytics` | Universal Skill Template |
+| CMS (article, content, media, publish) | `cms` | Universal Skill Template |
+| Project Management (task, issue, sprint) | `project-management` | Universal Skill Template |
+| IoT (device, sensor, telemetry) | `iot` | Universal Skill Template |
+| Marketplace (listing, seller, buyer) | `marketplace` | Universal Skill Template |
+
+**Note:** All domains use the Universal Skill Template from `domain-skill-templates.md`. The template extracts ACTUAL CODE from the detected domain files - it does NOT contain generic domain advice.
+
+### Project Convention Skills
+
+When unique project patterns are detected, recommend creating a `project-conventions` skill:
+
+| Detection | Include in Skill |
+|-----------|------------------|
+| Custom error handling pattern | Error handling conventions |
+| Specific folder structure | File organization rules |
+| Custom naming conventions | Naming patterns |
+| Unique service layer patterns | Service implementation guide |
+| Special API response format | API conventions |
+
+### Skill Creation Output Format
+
+In ONBOARD-REPORT.md, include:
+
+```markdown
+## Recommended NEW Skills to Create
+
+**IMPORTANT:** These skills will document ACTUAL CODE from your project, not generic advice.
+
+### 1. `ecommerce` Skill (RECOMMENDED TO CREATE)
+
+**Why create:** Detected e-commerce domain with High confidence
+**Evidence:**
+- Keywords: cart (15), order (42), payment (28), checkout (8)
+- Folders: src/services/payment/, src/services/order/
+- Models: Product, Order, Cart, Payment
+
+**Code patterns to document** (from your actual codebase):
+
+| Pattern | Location | Code Preview |
+|---------|----------|--------------|
+| Payment flow | `src/services/payment/stripeService.ts:20-80` | `createPaymentIntent(...)` |
+| Order lifecycle | `src/services/order/orderService.ts:45-120` | `transitionOrderState(...)` |
+| Cart management | `src/stores/cart.ts:10-60` | `useCartStore(...)` |
+
+**Sample code extraction:**
+```typescript
+// From src/services/order/orderService.ts:45-78
+export async function transitionOrderState(orderId: string, newState: OrderStatus) {
+  const validTransitions: Record<OrderStatus, OrderStatus[]> = {
+    PENDING: ['PAID', 'CANCELLED'],
+    PAID: ['PROCESSING', 'REFUNDED'],
+    // ACTUAL CODE FROM THIS PROJECT
+  };
+}
+```
+
+**To create:** Run `/onboard --apply` or manually create `.claude/skills/ecommerce/SKILL.md`
+
+### 2. `project-conventions` Skill (RECOMMENDED TO CREATE)
+
+**Why create:** Unique patterns detected that differ from standard conventions
+**Evidence:**
+- Custom error classes in src/lib/errors/
+- Service layer pattern: src/services/*Service.ts
+- Custom API response wrapper
+
+**Code patterns to document:**
+
+| Pattern | Location | Code Preview |
+|---------|----------|--------------|
+| Error handling | `src/lib/errors.ts:5-30` | `class AppError extends...` |
+| Service pattern | `src/services/orderService.ts:1-20` | `export class OrderService...` |
+| API response | `src/lib/response.ts:10-40` | `function apiResponse(...)` |
+```
+
+### Skill Creation Process (--apply mode)
+
+When `/onboard --apply` is run:
+
+1. **Load template** from `domain-skill-templates.md`
+2. **READ the actual files** identified during domain detection
+3. **EXTRACT code snippets** with line numbers:
+   ```bash
+   # Extract actual code from detected files
+   sed -n '45,78p' src/services/order/orderService.ts
+   ```
+4. **Replace placeholders** with ACTUAL CODE:
+   - `[ACTUAL_CODE_FROM_PROJECT]` → extracted code snippets
+   - `[FILE_PATH]:[LINE_RANGE]` → actual file locations
+   - `[NAMING_PATTERNS]` → patterns found in file/function names
+5. **Generate skill file** at `.claude/skills/[domain]/SKILL.md`
+6. **Report creation** in output
+
+**Content requirements:**
+- ✅ Actual code snippets from project files
+- ✅ File:line references for all patterns
+- ✅ Real function/class names from codebase
+- ❌ Generic domain advice (NO!)
+- ❌ Industry best practices not in codebase (NO!)
+
 ## Notes
 
 - **Skills are loaded automatically** by skill-loader hook based on task context
 - **Recommendations guide users** on which skills exist and when to use them
 - **Project-specific skills** can be created via skill-creator during --apply mode
+- **Domain skills** complement tech skills - both should be recommended
 - **Skill priorities** are determined by frequency of use and relevance to daily tasks
