@@ -103,11 +103,12 @@ Auto-discovered from `.mcp.json`:
 
 ## Hooks
 
-| Hook               | Event        | Purpose                              |
-| ------------------ | ------------ | ------------------------------------ |
-| file-protection.py | PreToolUse   | Block editing .env, secrets, locks   |
-| skill-loader.py    | Notification | Scan skills → inject JSON context    |
-| mcp-loader.py      | Notification | Read .mcp.json → inject JSON context |
+| Hook                 | Event        | Purpose                                  |
+| -------------------- | ------------ | ---------------------------------------- |
+| file-protection.py   | PreToolUse   | Block editing .env, secrets, locks       |
+| skill-loader.py      | SessionStart | Scan skills → inject JSON context        |
+| mcp-loader.py        | SessionStart | Read .mcp.json → inject JSON context     |
+| language-loader.py   | SessionStart | Load response language from settings     |
 
 ## Customization
 

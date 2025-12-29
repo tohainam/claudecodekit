@@ -94,30 +94,51 @@ Determine logical domains to organize rules recommendations:
 
 ### Step 4: Generate Recommendations
 
-For each detected technology, recommend appropriate rules files.
+For each detected technology, recommend appropriate rules files, skills, and agents.
 
 **Recommendation process:**
 1. Identify detected tech stack components
-2. Look up corresponding rule templates
+2. Look up corresponding rule templates (organized in mixed folder structure)
 3. Customize templates with actual project paths
-4. Consider project-specific patterns found in analysis
-5. Group recommendations by domain (for monorepos)
+4. Generate skill recommendations using tech-to-skill mapping
+5. Generate agent recommendations using tech-to-agent mapping
+6. Consider project-specific patterns found in analysis
+7. Group recommendations by domain (for monorepos)
 
-**Reference for templates:**
-See [references/rules-templates.md](references/rules-templates.md) for all rule templates and tech-to-rules mapping.
+**Reference for rules templates:**
+See [references/rules-templates.md](references/rules-templates.md) for all rule templates with mixed folder structure (_global/, frontend/, backend/, devops/, testing/, security/).
 
-**Always recommend:**
-- code-style.md (universal coding standards)
-- git-workflow.md (if .git exists)
+**Reference for skill recommendations:**
+See [references/tech-to-skill-mapping.md](references/tech-to-skill-mapping.md) to map detected technologies to relevant skills.
+
+**Reference for agent recommendations:**
+See [references/tech-to-agent-mapping.md](references/tech-to-agent-mapping.md) to map project characteristics to useful agents.
+
+**Always recommend (global rules):**
+- _global/code-style.md (universal coding standards, no paths)
+- _global/git-workflow.md (if .git exists, no paths)
 
 **Conditional recommendations based on detection:**
-- components.md (if React/Vue/Angular/Svelte detected)
-- api.md (if backend framework detected)
-- database.md (if ORM detected)
-- security.md (if auth system detected)
-- testing.md (if test framework detected)
-- docker.md (if Dockerfile exists)
-- ci.md (if .github/workflows or .gitlab-ci.yml exists)
+- frontend/components.md (if React/Vue/Angular/Svelte detected)
+- frontend/pages.md (if Next.js/Nuxt/SvelteKit detected)
+- backend/api.md (if backend framework detected)
+- backend/middleware.md (if Express/Fastify/Django detected)
+- backend/database.md (if ORM detected)
+- security/security.md (if auth system detected)
+- testing/testing.md (if test framework detected)
+- devops/docker.md (if Dockerfile exists)
+- devops/ci.md (if .github/workflows or .gitlab-ci.yml exists)
+- _global/monorepo.md (if monorepo detected)
+
+**Skill recommendations (always provide):**
+- Map detected technologies to skills
+- Prioritize by relevance (4-7 skills maximum)
+- Include rationale for each skill
+
+**Agent recommendations (always provide):**
+- Map project characteristics to agents
+- Include usage guidance for each agent
+- Note command invocation patterns
 
 ### Step 5: Create Output
 
@@ -133,7 +154,27 @@ Generated: [timestamp]
 - **Project Type**: [e.g., Next.js Full-Stack Application]
 - **Languages**: [e.g., TypeScript, JavaScript]
 - **Key Frameworks**: [e.g., Next.js 14, React 18, Prisma]
-- **Recommendations**: [X] rules files, [Y] skills
+- **Recommendations**: [X] rules files, [Y] skills, [Z] agents
+
+## Codebase Analysis
+
+### Architecture Overview
+[Summary from scouter agent - if invoked]
+- High-level architecture pattern (MVC, Clean Architecture, etc.)
+- Key architectural decisions
+- Integration points
+
+### Data Flow
+[Summary from scouter agent - if invoked]
+- Request/response flow
+- State management approach
+- Data persistence patterns
+
+### Dependencies
+[Summary from scouter agent - if invoked]
+- External dependencies analysis
+- Internal module dependencies
+- Dependency injection patterns
 
 ## Tech Stack Detection
 
@@ -158,6 +199,22 @@ Generated: [timestamp]
 ### Infrastructure
 - [Docker/CI/etc]
 
+## Best Practices Research
+
+[Summary from researcher agent - if invoked]
+
+### Official Documentation
+- [Framework]: Key patterns and recommendations from official docs
+
+### Best Practices
+- Industry standards for detected technologies
+- Security considerations
+- Performance optimization patterns
+
+### Current State
+- Latest versions and migration paths
+- Breaking changes to be aware of
+
 ## Project Structure
 
 ```
@@ -176,31 +233,106 @@ project-root/
 
 ### Rules to Create
 
-#### 1. .claude/rules/code-style.md
+Rules are organized in mixed folder structure:
+
+#### Global Rules (apply to all files)
+
+##### 1. .claude/rules/_global/code-style.md
 **Purpose**: Universal coding standards
-**Paths**: `**/*.{ext}`
+**Frontmatter**: No paths (applies to all files)
 **Template**: Built-in generic template
 **Priority**: High
 
-#### [More rules...]
+##### 2. .claude/rules/_global/git-workflow.md
+**Purpose**: Git conventions and workflow
+**Frontmatter**: No paths (applies to all files)
+**Priority**: High
+
+#### Frontend Rules (component/UI files)
+
+##### 3. .claude/rules/frontend/components.md
+**Purpose**: Component development patterns
+**Frontmatter**: `paths: [COMPONENT_PATHS]`
+**Example paths**: `src/components/**/*.{tsx,ts}, app/components/**/*.{tsx,ts}`
+**Priority**: High
+
+#### Backend Rules (API/service files)
+
+##### 4. .claude/rules/backend/api.md
+**Purpose**: API endpoint patterns
+**Frontmatter**: `paths: [API_PATHS]`
+**Example paths**: `src/routes/**/*.{ts,js}, app/api/**/*.ts`
+**Priority**: High
+
+#### [More rules organized by folder...]
 
 ### Skills to Enable
 
-- [Skill name]: [Why it's relevant]
+Based on your tech stack, these skills are recommended:
+
+#### 1. frontend-design
+**Why**: Provides React/Next.js component patterns and modern UI development best practices
+**Use for**: Component development, styling patterns, accessibility
+
+#### 2. architecture
+**Why**: Covers API design, Prisma schema patterns, and backend architecture
+**Use for**: System design decisions, database modeling, service organization
+
+#### 3. security-review
+**Why**: Essential for NextAuth setup, OAuth flows, and authentication security
+**Use for**: Security audits, auth implementation review, vulnerability prevention
+
+#### [More skills with rationale...]
+
+### Agents to Use
+
+Based on your project characteristics, these agents will be helpful:
+
+#### Core Workflow Agents (Always Use)
+
+- **planner** (opus): Use `/plan <task>` or `/feature <desc>` to create implementation plans
+- **implementer** (sonnet): Use `/implement [path]` to execute plans with validation
+
+#### Recommended for Your Project
+
+- **researcher** (opus): Use `/research <topic>` to fetch current docs for Next.js, Prisma, NextAuth
+  - Example: `/research Prisma relations` or `/research Next.js App Router`
+
+- **test-writer** (sonnet): Use `/test <file>` to write comprehensive tests
+  - Your project has Vitest - use this agent for test generation
+
+- **code-reviewer** (sonnet): Use `/review [scope]` before commits/PRs
+  - Essential with git repository detected
+
+- **scouter** (opus): Use `/scout <topic>` for deep codebase analysis
+  - Helpful for understanding complex areas before changes
+  - Example: `/scout authentication flow`
+
+- **security-auditor** (opus): Review security-critical code
+  - Important due to NextAuth usage
+  - Use for auth implementation audits
+
+#### [More agents with usage guidance...]
 
 ### Example Workflow Commands
 
 Based on your stack, these commands will be most useful:
-- `/feature` - [When to use]
-- `/test` - [When to use]
-- `/review` - [When to use]
+
+- `/feature <description>` - Full feature workflow (plan → implement → test → review)
+- `/research <topic>` - Fetch current documentation (e.g., `/research Prisma migrations`)
+- `/scout <area>` - Deep codebase analysis (e.g., `/scout API architecture`)
+- `/test <file>` - Generate comprehensive tests
+- `/review` - Review changes before commit
+- `/refactor <file>` - Safe code improvements
 
 ## Next Steps
 
-1. **Review this report** - Verify detected technologies are accurate
-2. **Run with --apply** - Execute `/onboard --apply` to create all recommended files
+1. **Review this report** - Verify detected technologies and recommendations are accurate
+2. **Run with --apply** - Execute `/onboard --apply` to create all recommended rules
 3. **Customize** - Edit generated rules to match your team's conventions
-4. **Test** - Try commands like `/feature` to verify configuration works
+4. **Enable skills** - Skills are auto-loaded, but review recommendations above
+5. **Try agents** - Use recommended agents via commands (e.g., `/research`, `/scout`)
+6. **Test** - Try `/feature <simple-task>` to verify full workflow works
 
 ## Incremental Updates
 
@@ -219,6 +351,7 @@ Conflicts:
 
 ---
 Generated by project-analysis skill
+For questions or issues, refer to CLAUDE.md documentation
 ```
 
 ## Monorepo Handling
@@ -330,6 +463,8 @@ No Conflicts - all new files
 | File | When to Read |
 |------|--------------|
 | [references/tech-detection.md](references/tech-detection.md) | During Step 1 (tech stack detection) - comprehensive detection tables for all supported languages, frameworks, databases, testing tools |
-| [references/rules-templates.md](references/rules-templates.md) | During Step 4 (generating recommendations) - complete rule templates and tech-to-rules mapping |
+| [references/rules-templates.md](references/rules-templates.md) | During Step 4 (generating recommendations) - complete rule templates with mixed folder structure and frontmatter format |
+| [references/tech-to-skill-mapping.md](references/tech-to-skill-mapping.md) | During Step 4 (skill recommendations) - maps detected technologies to relevant skills with rationale |
+| [references/tech-to-agent-mapping.md](references/tech-to-agent-mapping.md) | During Step 4 (agent recommendations) - maps project characteristics to useful agents with usage guidance |
 
 These references are split out to keep this SKILL.md lean while providing comprehensive detection and templating capabilities.

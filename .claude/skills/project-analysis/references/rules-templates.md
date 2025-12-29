@@ -1,6 +1,36 @@
 # Rules Templates Reference
 
-This reference provides complete rule templates for all supported tech stacks. Use these templates during Step 4 of the project analysis workflow to generate recommendations.
+This reference provides complete rule templates for all supported tech stacks, organized by folder structure. Use these templates during Step 4 of the project analysis workflow to generate recommendations.
+
+## Mixed Folder Structure
+
+Rules are organized into folders for better organization:
+
+```
+.claude/rules/
+├── _global/          # Universal rules (no paths, apply to all files)
+├── frontend/      # Frontend-specific rules with component/page paths
+├── backend/       # Backend-specific rules with API/service paths
+├── devops/        # Infrastructure rules with Docker/CI paths
+├── testing/       # Testing rules with test file paths
+└── security/      # Security rules (some universal, some specific)
+```
+
+## Frontmatter Format
+
+All rules use YAML frontmatter with single-line `paths` field:
+
+```yaml
+---
+paths: glob-pattern-1, glob-pattern-2, glob-pattern-3
+---
+```
+
+**Format rules:**
+- Single line, comma-separated
+- Use brace expansion: `**/*.{ts,tsx,js,jsx}`
+- Global rules have no `paths` field (apply to all files)
+- Specific rules have targeted paths
 
 ## Template Usage Guide
 
@@ -19,19 +49,36 @@ Templates should be customized with:
 - **Detected framework versions** for accurate patterns
 - **Project-specific patterns** found during analysis
 
+### Path Placeholder Replacement
+
+Replace these placeholders with actual paths from project analysis:
+
+| Placeholder | Example Replacement | How to Detect |
+|-------------|---------------------|---------------|
+| `[COMPONENT_PATHS]` | `src/components/**/*.tsx, app/components/**/*.tsx` | Find component directories in structure |
+| `[PAGES_PATHS]` | `app/**/page.tsx, pages/**/*.tsx` | Next.js app/ or pages/ directory |
+| `[API_PATHS]` | `src/routes/**/*.ts, app/api/**/*.ts` | API route directories |
+| `[MIDDLEWARE_PATHS]` | `src/middleware/**/*.ts` | Middleware directory |
+| `[DB_PATHS]` | `prisma/**, src/models/**/*.ts` | ORM schema or model directories |
+| `[TEST_PATHS]` | `**/*.test.ts, **/*.spec.ts, tests/**` | Test file patterns from config |
+
 ### When to Recommend
 
 Use the Tech-to-Rules Mapping Table at the end of this file to determine which rules to recommend based on detected technologies.
 
-## Global Rules (Always Recommend)
+## Global Rules (_global/ folder)
 
-### code-style.md Template
+Global rules apply to all files and have no `paths` field in frontmatter.
 
-Recommend for: All projects
+### _global/code-style.md Template
+
+**Location**: `.claude/rules/_global/code-style.md`
+**Recommend for**: All projects
+**Frontmatter**: No paths field (applies to all files)
 
 ```markdown
 ---
-paths: "**/*"
+# No paths field - applies to all files
 ---
 
 # Code Style Rules
@@ -110,13 +157,15 @@ Run before committing:
 - Tests: [DETECTED_TEST_FRAMEWORK]
 ```
 
-### git-workflow.md Template
+### _global/git-workflow.md Template
 
-Recommend for: All projects with .git directory
+**Location**: `.claude/rules/_global/git-workflow.md`
+**Recommend for**: All projects with .git directory
+**Frontmatter**: No paths field (applies to all files)
 
 ```markdown
 ---
-paths: "**/*"
+# No paths field - applies to all files
 ---
 
 # Git Workflow Rules
@@ -188,18 +237,26 @@ docs(readme): update installation instructions
 - [ ] Commit message follows convention
 ```
 
-## Frontend Rules
+## Frontend Rules (frontend/ folder)
 
-### components.md Template
+Frontend rules target component, page, and UI-specific files.
 
-Recommend for: React, Vue, Angular, Svelte projects
+### frontend/components.md Template
 
-Customize `[FRAMEWORK]` and paths based on detection.
+**Location**: `.claude/rules/frontend/components.md`
+**Recommend for**: React, Vue, Angular, Svelte projects
+**Frontmatter**: Component paths (customize based on project structure)
+
+Customize `[FRAMEWORK]` and `[COMPONENT_PATHS]` based on detection.
 
 ```markdown
 ---
-paths: "[COMPONENT_PATHS - e.g., src/components/**, app/components/**]"
+paths: [COMPONENT_PATHS]
 ---
+# Example paths:
+# paths: src/components/**/*.{tsx,ts}, app/components/**/*.{tsx,ts}
+# paths: src/components/**/*.vue
+# paths: src/app/**/*.component.ts
 
 # Component Development Rules
 
@@ -296,14 +353,21 @@ components/
 - Aim for > 70% coverage on critical components
 ```
 
-### pages.md Template
+### frontend/pages.md Template
 
-Recommend for: Next.js, Nuxt, SvelteKit (routing frameworks)
+**Location**: `.claude/rules/frontend/pages.md`
+**Recommend for**: Next.js, Nuxt, SvelteKit (routing frameworks)
+**Frontmatter**: Page/route paths (customize based on framework)
 
 ```markdown
 ---
-paths: "[PAGES_PATHS - e.g., app/**, pages/**, src/routes/**]"
+paths: [PAGES_PATHS]
 ---
+# Example paths:
+# Next.js App Router: app/**/page.tsx, app/**/layout.tsx, app/**/loading.tsx, app/**/error.tsx
+# Next.js Pages Router: pages/**/*.{tsx,ts}
+# Nuxt: pages/**/*.vue
+# SvelteKit: src/routes/**/*.svelte
 
 # Pages & Routing Rules
 
@@ -344,16 +408,27 @@ Guidelines for [FRAMEWORK] page components and routing.
 - Optimize fonts with next/font
 ```
 
-## Backend Rules
+## Backend Rules (backend/ folder)
 
-### api.md Template
+Backend rules target API routes, services, and server-side code.
 
-Recommend for: Express, Fastify, Django, Flask, FastAPI, Gin projects
+### backend/api.md Template
+
+**Location**: `.claude/rules/backend/api.md`
+**Recommend for**: Express, Fastify, Django, Flask, FastAPI, Gin projects
+**Frontmatter**: API route paths (customize based on framework)
 
 ```markdown
 ---
-paths: "[API_PATHS - e.g., src/routes/**, app/routers/**, api/**]"
+paths: [API_PATHS]
 ---
+# Example paths:
+# Express/Fastify: src/routes/**/*.{ts,js}, src/api/**/*.{ts,js}
+# Next.js: app/api/**/*.ts, pages/api/**/*.ts
+# FastAPI: app/routers/**/*.py, app/api/**/*.py
+# Django: */views.py, */urls.py
+# Flask: app/routes/**/*.py
+# Gin (Go): internal/handlers/**/*.go, internal/routes/**/*.go
 
 # API Development Rules
 
@@ -469,14 +544,21 @@ async def get_users():
 - Aim for > 80% coverage on API routes
 ```
 
-### middleware.md Template
+### backend/middleware.md Template
 
-Recommend for: Express, Fastify, Django projects with middleware patterns
+**Location**: `.claude/rules/backend/middleware.md`
+**Recommend for**: Express, Fastify, Django projects with middleware patterns
+**Frontmatter**: Middleware paths (customize based on framework)
 
 ```markdown
 ---
-paths: "[MIDDLEWARE_PATHS - e.g., src/middleware/**, app/middleware/**]"
+paths: [MIDDLEWARE_PATHS]
 ---
+# Example paths:
+# Express/Fastify: src/middleware/**/*.{ts,js}
+# Next.js: middleware.ts, src/middleware.ts
+# Django: */middleware.py
+# FastAPI: app/middleware/**/*.py
 
 # Middleware Rules
 
@@ -530,14 +612,23 @@ export const authorize = (...roles: string[]) => {
 - Document middleware behavior
 ```
 
-### database.md Template
+### backend/database.md Template
 
-Recommend for: Projects with Prisma, TypeORM, Drizzle, SQLAlchemy, GORM
+**Location**: `.claude/rules/backend/database.md`
+**Recommend for**: Projects with Prisma, TypeORM, Drizzle, SQLAlchemy, GORM
+**Frontmatter**: Database schema/model paths (customize based on ORM)
 
 ```markdown
 ---
-paths: "[DB_PATHS - e.g., prisma/**, src/models/**, app/models/**]"
+paths: [DB_PATHS]
 ---
+# Example paths:
+# Prisma: prisma/schema.prisma, prisma/migrations/**
+# TypeORM: src/models/**/*.{ts,js}, src/entities/**/*.{ts,js}
+# Drizzle: src/db/**/*.{ts,js}
+# SQLAlchemy: app/models/**/*.py
+# Django ORM: */models.py
+# GORM: internal/models/**/*.go
 
 # Database Rules
 
@@ -611,15 +702,19 @@ const user = await prisma.user.findUnique({
 - Monitor connection usage
 ```
 
-## Auth & Security Rules
+## Security Rules (security/ folder)
 
-### security.md Template
+Security rules include both universal guidelines and auth-specific patterns.
 
-Recommend for: Projects with authentication systems
+### security/security.md Template
+
+**Location**: `.claude/rules/security/security.md`
+**Recommend for**: Projects with authentication systems
+**Frontmatter**: No paths field (universal security guidelines)
 
 ```markdown
 ---
-paths: "**/*"
+# No paths field - security applies to all files
 ---
 
 # Security Rules
@@ -700,16 +795,26 @@ API_KEY="..."
 - Implement request signing for sensitive operations
 ```
 
-## Testing Rules
+## Testing Rules (testing/ folder)
 
-### testing.md Template
+Testing rules target test files and test-related code.
 
-Recommend for: Projects with Jest, Vitest, Pytest, etc.
+### testing/testing.md Template
+
+**Location**: `.claude/rules/testing/testing.md`
+**Recommend for**: Projects with Jest, Vitest, Pytest, etc.
+**Frontmatter**: Test file paths (customize based on framework conventions)
 
 ```markdown
 ---
-paths: "[TEST_PATHS - e.g., **/*.test.ts, **/*.spec.ts, tests/**]"
+paths: [TEST_PATHS]
 ---
+# Example paths:
+# Jest/Vitest: **/*.test.{ts,tsx,js,jsx}, **/*.spec.{ts,tsx,js,jsx}
+# Pytest: tests/**/*.py, **/*_test.py
+# Go: **/*_test.go
+# Java: **/src/test/**/*.java
+# Ruby: spec/**/*_spec.rb
 
 # Testing Rules
 
@@ -782,15 +887,19 @@ describe('UserService', () => {
 ```
 ```
 
-## DevOps Rules
+## DevOps Rules (devops/ folder)
 
-### docker.md Template
+DevOps rules target infrastructure and deployment configuration.
 
-Recommend for: Projects with Dockerfile
+### devops/docker.md Template
+
+**Location**: `.claude/rules/devops/docker.md`
+**Recommend for**: Projects with Dockerfile
+**Frontmatter**: Docker-related file paths
 
 ```markdown
 ---
-paths: "**/Dockerfile, **/docker-compose.yml"
+paths: **/Dockerfile, **/docker-compose.yml, **/docker-compose.*.yml, **/.dockerignore
 ---
 
 # Docker Rules
@@ -841,13 +950,15 @@ CMD ["node", "dist/index.js"]
 - Don't include secrets in images
 ```
 
-### ci.md Template
+### devops/ci.md Template
 
-Recommend for: Projects with GitHub Actions, GitLab CI, etc.
+**Location**: `.claude/rules/devops/ci.md`
+**Recommend for**: Projects with GitHub Actions, GitLab CI, etc.
+**Frontmatter**: CI/CD configuration paths
 
 ```markdown
 ---
-paths: ".github/workflows/**, .gitlab-ci.yml"
+paths: .github/workflows/**/*.{yml,yaml}, .gitlab-ci.yml, .circleci/config.yml, azure-pipelines.yml, Jenkinsfile
 ---
 
 # CI/CD Rules
@@ -893,15 +1004,19 @@ jobs:
 - Keep secrets in environment variables
 ```
 
-## Monorepo Rules
+## Monorepo Rules (Special Case)
 
-### Monorepo Structure Template
+Monorepo rules apply to all files and workspace configuration.
 
-Recommend for: Projects with nx.json, turbo.json, or workspace config
+### _global/monorepo.md Template
+
+**Location**: `.claude/rules/_global/monorepo.md`
+**Recommend for**: Projects with nx.json, turbo.json, or workspace config
+**Frontmatter**: No paths field (applies to monorepo organization overall)
 
 ```markdown
 ---
-paths: "**/*"
+# No paths field - monorepo organization applies to all workspaces
 ---
 
 # Monorepo Organization Rules
@@ -957,43 +1072,43 @@ Different workspaces may have different tech stacks. See:
 
 ## Tech-to-Rules Mapping Table
 
-Use this table to determine which rules to recommend:
+Use this table to determine which rules to recommend based on detected technologies. All paths should be customized with actual project structure.
 
-| Detected Technology | Recommended Rules | Paths Pattern Example |
-|---------------------|-------------------|----------------------|
-| **All projects** | code-style.md | `**/*` |
-| **Git repository** | git-workflow.md | `**/*` |
-| **React** | components.md | `src/components/**` |
-| **Vue** | components.md | `src/components/**` |
-| **Angular** | components.md | `src/app/**` |
-| **Svelte** | components.md | `src/lib/**` |
-| **Next.js** | components.md, pages.md | `app/**`, `components/**` |
-| **Nuxt** | components.md, pages.md | `pages/**`, `components/**` |
-| **Express** | api.md, middleware.md | `src/routes/**`, `src/middleware/**` |
-| **Fastify** | api.md, middleware.md | `src/routes/**` |
-| **NestJS** | api.md | `src/**/*.controller.ts` |
-| **Django** | api.md, middleware.md | `*/views.py`, `*/middleware.py` |
-| **Flask** | api.md | `app/routes/**` |
-| **FastAPI** | api.md | `app/routers/**` |
-| **Gin (Go)** | api.md | `internal/handlers/**` |
-| **Prisma** | database.md | `prisma/**` |
-| **TypeORM** | database.md | `src/models/**` |
-| **Drizzle** | database.md | `src/db/**` |
-| **SQLAlchemy** | database.md | `app/models/**` |
-| **Mongoose** | database.md | `src/models/**` |
-| **NextAuth** | security.md | `**/*` |
-| **Auth.js** | security.md | `**/*` |
-| **Passport** | security.md | `**/*` |
-| **JWT packages** | security.md | `**/*` |
-| **Jest** | testing.md | `**/*.test.{ts,js}` |
-| **Vitest** | testing.md | `**/*.test.{ts,js}` |
-| **Pytest** | testing.md | `tests/**` |
-| **Playwright** | testing.md | `e2e/**`, `tests/**` |
-| **Dockerfile** | docker.md | `**/Dockerfile` |
-| **GitHub Actions** | ci.md | `.github/workflows/**` |
-| **GitLab CI** | ci.md | `.gitlab-ci.yml` |
-| **Nx monorepo** | monorepo.md + workspace-specific | Per workspace |
-| **Turborepo** | monorepo.md + workspace-specific | Per workspace |
+| Detected Technology | Recommended Rules | Folder Location | Example Paths |
+|---------------------|-------------------|----------------|---------------|
+| **All projects** | _global/code-style.md | _global/ | (no paths - applies to all) |
+| **Git repository** | _global/git-workflow.md | _global/ | (no paths - applies to all) |
+| **React** | frontend/components.md | frontend/ | `src/components/**/*.{tsx,ts}` |
+| **Vue** | frontend/components.md | frontend/ | `src/components/**/*.vue` |
+| **Angular** | frontend/components.md | frontend/ | `src/app/**/*.component.ts` |
+| **Svelte** | frontend/components.md | frontend/ | `src/lib/**/*.svelte` |
+| **Next.js** | frontend/components.md, frontend/pages.md | frontend/ | `app/**/*.{tsx,ts}`, `components/**/*.{tsx,ts}` |
+| **Nuxt** | frontend/components.md, frontend/pages.md | frontend/ | `pages/**/*.vue`, `components/**/*.vue` |
+| **Express** | backend/api.md, backend/middleware.md | backend/ | `src/routes/**/*.{ts,js}`, `src/middleware/**/*.{ts,js}` |
+| **Fastify** | backend/api.md, backend/middleware.md | backend/ | `src/routes/**/*.{ts,js}` |
+| **NestJS** | backend/api.md | backend/ | `src/**/*.controller.ts`, `src/**/*.service.ts` |
+| **Django** | backend/api.md, backend/middleware.md | backend/ | `*/views.py`, `*/middleware.py` |
+| **Flask** | backend/api.md | backend/ | `app/routes/**/*.py` |
+| **FastAPI** | backend/api.md | backend/ | `app/routers/**/*.py`, `app/api/**/*.py` |
+| **Gin (Go)** | backend/api.md | backend/ | `internal/handlers/**/*.go` |
+| **Prisma** | backend/database.md | backend/ | `prisma/schema.prisma`, `prisma/migrations/**` |
+| **TypeORM** | backend/database.md | backend/ | `src/models/**/*.{ts,js}`, `src/entities/**/*.{ts,js}` |
+| **Drizzle** | backend/database.md | backend/ | `src/db/**/*.{ts,js}` |
+| **SQLAlchemy** | backend/database.md | backend/ | `app/models/**/*.py` |
+| **Mongoose** | backend/database.md | backend/ | `src/models/**/*.{ts,js}` |
+| **NextAuth** | security/security.md | security/ | (no paths - universal security) |
+| **Auth.js** | security/security.md | security/ | (no paths - universal security) |
+| **Passport** | security/security.md | security/ | (no paths - universal security) |
+| **JWT packages** | security/security.md | security/ | (no paths - universal security) |
+| **Jest** | testing/testing.md | testing/ | `**/*.test.{ts,tsx,js,jsx}`, `**/*.spec.{ts,tsx,js,jsx}` |
+| **Vitest** | testing/testing.md | testing/ | `**/*.test.{ts,tsx,js,jsx}`, `**/*.spec.{ts,tsx,js,jsx}` |
+| **Pytest** | testing/testing.md | testing/ | `tests/**/*.py`, `**/*_test.py` |
+| **Playwright** | testing/testing.md | testing/ | `e2e/**/*.{ts,js}`, `tests/**/*.spec.{ts,js}` |
+| **Dockerfile** | devops/docker.md | devops/ | `**/Dockerfile`, `**/docker-compose.yml` |
+| **GitHub Actions** | devops/ci.md | devops/ | `.github/workflows/**/*.{yml,yaml}` |
+| **GitLab CI** | devops/ci.md | devops/ | `.gitlab-ci.yml` |
+| **Nx monorepo** | _global/monorepo.md + workspace-specific | _global/ + per workspace | (no paths for monorepo.md) + specific paths per workspace |
+| **Turborepo** | _global/monorepo.md + workspace-specific | _global/ + per workspace | (no paths for monorepo.md) + specific paths per workspace |
 
 ## Customization Notes
 

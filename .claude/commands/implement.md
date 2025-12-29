@@ -20,7 +20,23 @@ If no path provided, look for the most recent plan file in `.claude/.plans/`.
 2. Verify plan status is "approved" or user confirms to proceed
 3. Parse implementation steps
 
-### Step 2: Execute
+### Step 2: Create Todo List (CRITICAL)
+**You (the parent session) MUST create the todo list yourself before launching the implementer agent.**
+
+The implementer subagent has its own isolated context. Its TodoWrite calls do NOT sync to the main Claude Code visible todos. You must:
+
+1. Extract all implementation steps from the plan file
+2. Use TodoWrite to create todos based on plan steps:
+   ```
+   TodoWrite([
+     { content: "Step 1: [description from plan]", status: "pending", activeForm: "Implementing step 1" },
+     { content: "Step 2: [description from plan]", status: "pending", activeForm: "Implementing step 2" },
+     ...
+   ])
+   ```
+3. Keep this list visible to the user throughout implementation
+
+### Step 3: Execute
 Use Task tool with **implementer** agent to execute the plan:
 
 ```
@@ -46,7 +62,22 @@ If blocked:
 Subagent: implementer
 ```
 
-### Step 3: Verify
+### Step 4: Update Todos (CRITICAL)
+After implementer returns, **you MUST update the main session's todos**:
+
+1. Parse the implementer's completion report
+2. For each completed step, mark the corresponding todo as completed:
+   ```
+   TodoWrite([
+     { content: "Step 1: [description]", status: "completed", activeForm: "..." },
+     { content: "Step 2: [description]", status: "completed", activeForm: "..." },
+     { content: "Step 3: [description]", status: "in_progress", activeForm: "..." },  // if still working
+     ...
+   ])
+   ```
+3. If implementer was blocked, update todos to reflect actual progress
+
+### Step 5: Verify
 After implementation:
 1. Run any tests specified in the plan
 2. Verify all lint/typecheck passes

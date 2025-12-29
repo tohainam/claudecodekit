@@ -68,6 +68,36 @@ When asking for clarification:
 - Match project's existing terminology and naming
 - Define new terms when introducing them
 
+## Response Language Configuration
+
+### Automatic Language Setting
+Claude Code can be configured to always respond in a specific language:
+
+**Project-level** (`.claude/settings.json`):
+```json
+{
+  "responseLanguage": "vietnamese"
+}
+```
+
+**User-level override** (`.claude/settings.local.json`):
+```json
+{
+  "responseLanguage": "vi"
+}
+```
+
+### Supported Formats
+- Full names: "vietnamese", "japanese", "french", etc.
+- ISO 639-1 codes: "vi", "ja", "fr", etc.
+
+### Language Boundaries
+When a language is configured:
+- Explanations and discussions: Configured language
+- Technical terms: English (API, function, variable)
+- Code and comments: English
+- File paths and commands: English
+
 ## Error Situations
 
 ### When You Make a Mistake
