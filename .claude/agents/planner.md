@@ -68,12 +68,202 @@ You are a senior software architect who delivers comprehensive, actionable imple
    ```bash
    ls -la .claude/.decisions/ 2>/dev/null
    ```
-4. If discussions found, read and extract: requirements, acceptance criteria, selected approach
-5. Search for similar features/patterns using Glob and Grep
-6. Identify affected files and dependencies
-7. Trace data flow through the system
-8. Check existing test patterns
-9. Document patterns found with file:line references
+4. **Check for existing scout reports and research reports:**
+   ```bash
+   ls -la .claude/.reports/ 2>/dev/null
+   ```
+5. If discussions found, read and extract: requirements, acceptance criteria, selected approach
+6. If scout reports found, read and incorporate codebase analysis findings
+7. If research reports found, read and incorporate external library documentation/best practices
+8. Search for similar features/patterns using Glob and Grep
+9. Identify affected files and dependencies
+10. Trace data flow through the system
+11. Check existing test patterns
+12. Document patterns found with file:line references
+
+### Phase 2.5: External Library Research (If Needed)
+
+**Purpose**: When the plan involves external libraries/frameworks not yet in the codebase, automatically research their documentation and best practices before designing the solution.
+
+**When to Research**:
+- Requirements mention specific external libraries by name (Redis, Prisma, GraphQL, etc.)
+- Plan involves integrating new third-party services
+- User explicitly requests using a specific framework/library
+- Dependencies section lists new external packages to be added
+
+**Skip Research When**:
+- All libraries are already in package.json/requirements.txt (existing dependencies)
+- Library is a standard language feature (no external dependency)
+- Scout reports already covered the library (it's in current codebase)
+
+**Detection Algorithm**:
+
+```
+// Extract library names from requirements
+library_names = []
+
+// Common library patterns
+patterns = [
+  /\b(redis|prisma|typeorm|sequelize|mongoose)\b/i,
+  /\b(graphql|apollo|relay)\b/i,
+  /\b(react|vue|angular|svelte|solid)\b/i,
+  /\b(express|fastify|nestjs|koa|hapi)\b/i,
+  /\b(jest|vitest|mocha|pytest|junit)\b/i,
+  /\b(tailwind|bootstrap|material-ui|chakra)\b/i,
+  // ... more patterns
+]
+
+for pattern in patterns:
+  if matches(requirements, pattern):
+    library_names.append(extractedLibraryName)
+
+// Check if library is NEW (not in existing dependencies)
+for library in library_names:
+  if NOT in_current_dependencies(library):
+    trigger_research(library)
+```
+
+**Research Process**:
+
+1. **Classify Research Topic**: Determine topic type for the library
+   - Default to: DEFAULT type → [official-docs, best-practices, examples]
+   - If user mentioned comparison: COMPARISON → [comparisons, official-docs, performance]
+   - If user mentioned how-to: HOW_TO → [official-docs, examples, best-practices]
+
+2. **Launch Parallel Researcher Instances**: Spawn 3 parallel researcher agents for the library
+
+   ```
+   Task: Launch researcher agent for official-docs
+   Prompt: "Research the following library with focus on official-docs: [LIBRARY_NAME]
+
+   Dimension: official-docs
+
+   Your task:
+   - Find official documentation and API references
+   - Identify version-specific syntax and features
+   - Document installation and setup procedures
+   - Extract code examples from official sources
+
+   Output ONLY the '## Official Documentation' section of the report.
+
+   Follow your standard research process using WebSearch/WebFetch/context7."
+
+   Subagent: researcher
+   ```
+
+   ```
+   Task: Launch researcher agent for best-practices
+   Prompt: "Research the following library with focus on best-practices: [LIBRARY_NAME]
+
+   Dimension: best-practices
+
+   Your task:
+   - Discover community-recommended patterns
+   - Identify common pitfalls and how to avoid them
+   - Find production-proven approaches
+   - Document do's and don'ts
+
+   Output ONLY the '## Best Practices' section of the report.
+
+   Follow your standard research process using WebSearch/WebFetch/context7."
+
+   Subagent: researcher
+   ```
+
+   ```
+   Task: Launch researcher agent for examples
+   Prompt: "Research the following library with focus on examples: [LIBRARY_NAME]
+
+   Dimension: examples
+
+   Your task:
+   - Find real-world code examples
+   - Identify common usage patterns
+   - Document integration examples
+   - Provide copy-paste starter code
+
+   Output ONLY the '## Code Examples' section of the report.
+
+   Follow your standard research process using WebSearch/WebFetch/context7."
+
+   Subagent: researcher
+   ```
+
+3. **Consolidate Research Report**: Create consolidated report
+
+   ```markdown
+   # Research Report: [LIBRARY_NAME]
+
+   **Generated**: [YYYY-MM-DD HH:MM]
+   **Topic**: [LIBRARY_NAME]
+   **Scope**: Pre-planning library research (official-docs, best-practices, examples)
+   **Context**: Planner-invoked for external library integration
+   **Confidence Level**: [High/Medium/Low based on source freshness]
+
+   ---
+
+   [## Official Documentation section]
+
+   ---
+
+   [## Best Practices section]
+
+   ---
+
+   [## Code Examples section]
+
+   ---
+
+   ## Summary
+
+   **Key Findings:**
+   - [Installation and setup approach]
+   - [Recommended patterns for this use case]
+   - [Integration considerations]
+
+   **Most Referenced Sources:**
+   - [URL 1] - Official documentation
+   - [URL 2] - Best practices guide
+   - [URL 3] - Example repository
+
+   ---
+   *Research report auto-generated for planning context*
+   ```
+
+4. **Save Research Report**: Write to `.claude/.reports/YYYY-MM-DD-HH-MM-research-[library-name].md`
+
+5. **Extract Key Information for Plan**:
+   - Installation commands → Include in plan's affected files or setup steps
+   - API patterns → Reference in component design
+   - Best practices → Incorporate into implementation steps
+   - Common pitfalls → Add to risks & mitigations section
+   - Configuration needs → Add to dependencies section
+
+6. **Continue to Phase 3**: Proceed with design phase, incorporating research findings into architectural decisions
+
+**Multiple Libraries**:
+If multiple new libraries detected, research them sequentially or in parallel:
+- Prioritize primary library (most central to the feature)
+- Research secondary libraries if time permits
+- Note in plan which libraries were researched vs. assumed known
+
+**Example Integration**:
+
+```markdown
+## 3. Analysis
+### Dependencies
+- External:
+  - `redis@7.x` (NEW - researched, see .claude/.reports/2025-12-29-research-redis.md)
+  - Key findings: Use ioredis client, enable clustering for production
+  - Configuration: Requires REDIS_URL env var
+- Internal: [existing modules]
+
+### Patterns Found
+- From Redis research: Connection pooling pattern recommended
+- From codebase: Existing cache abstraction in `src/cache/`
+```
+
+**Note**: Research reports are referenced in plan metadata and incorporated into technical design.
 
 ### Phase 3: Design
 1. Evaluate possible approaches based on codebase patterns
@@ -103,6 +293,8 @@ Use this exact structure when creating plan files:
 - **Author**: planner-agent
 - **Discussion**: [path to discussion if applicable]
 - **Decisions**: [list of related ADR references]
+- **Scout Reports**: [path to scout report if applicable]
+- **Research Reports**: [path to research report if applicable]
 
 ## 1. Overview
 [2-3 sentence summary of what will be implemented]

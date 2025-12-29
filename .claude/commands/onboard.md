@@ -1,6 +1,6 @@
 ---
 description: Analyze project and recommend Claude Code configuration. Use --apply to generate files.
-allowed-tools: Read, Glob, Grep, Bash, Write, TodoWrite
+allowed-tools: Read, Glob, Grep, Bash, Write, Skill, AskUserQuestion
 argument-hint: [--apply]
 ---
 
@@ -13,6 +13,7 @@ Automated project analysis and Claude Code configuration setup.
 Arguments: $ARGUMENTS
 
 Parse for `--apply` flag:
+
 - If `--apply` present: Run analysis + create all recommended files
 - If no flag: Run analysis only, create ONBOARD-REPORT.md
 
@@ -30,17 +31,19 @@ $ARGUMENTS is empty or other → Apply mode = false
 ### Step 2: Check for Existing Report
 
 If apply mode is true:
+
 - Check if `ONBOARD-REPORT.md` exists in project root
 - If YES: Skip analysis, use existing report
 - If NO: Run full analysis first
 
 ### Step 3: Run Project Analysis
 
-Use the **project-analysis** skill to analyze the codebase following this workflow:
+Use Skill tool with **project-analysis** skill to analyze the codebase following this workflow:
 
 #### 3.1 Detect Tech Stack
 
 Use Glob to find manifest files:
+
 ```bash
 # Find all package managers and config files
 **/{package.json,requirements.txt,pyproject.toml,go.mod,Cargo.toml,pom.xml,build.gradle,Gemfile,composer.json,*.csproj}
@@ -49,6 +52,7 @@ Use Glob to find manifest files:
 Read detected files and reference `project-analysis` skill's tech-detection.md for identification.
 
 Record:
+
 - Languages (with versions)
 - Frameworks (with versions)
 - Database/ORM systems
@@ -60,12 +64,14 @@ Record:
 #### 3.2 Analyze Project Structure
 
 Use Glob to map directory structure:
+
 ```bash
 # Find key directories
 **/
 ```
 
 Identify:
+
 - Source code location (src/, app/, lib/)
 - Component organization
 - API/route definitions
@@ -78,16 +84,19 @@ Record all paths accurately for rules' `paths:` targeting.
 #### 3.3 Identify Project Domains
 
 Determine if monorepo:
+
 - Check for nx.json, turbo.json, pnpm-workspace.yaml, lerna.json
 - Find multiple package.json files
 - Detect apps/, packages/ structure
 
 For monorepos:
+
 - Group by workspace
 - Analyze tech stack per workspace
 - Note workspace dependencies
 
 For single projects:
+
 - Treat entire project as one domain
 
 #### 3.4 Generate Recommendations
@@ -97,15 +106,18 @@ Reference `project-analysis` skill's rules-templates.md for appropriate template
 For each detected technology, recommend rules files using the Tech-to-Rules Mapping Table.
 
 Customize templates with:
+
 - Actual project paths from structure analysis
 - Detected framework names and versions
 - Project-specific patterns found
 
 Always recommend:
+
 - `.claude/rules/code-style.md` (all projects)
 - `.claude/rules/git-workflow.md` (if .git exists)
 
 Conditionally recommend based on detection:
+
 - `components.md` (if frontend framework)
 - `pages.md` (if routing framework)
 - `api.md` (if backend framework)
@@ -121,6 +133,7 @@ Conditionally recommend based on detection:
 Generate comprehensive report using the template from project-analysis skill's SKILL.md.
 
 Include:
+
 - Executive Summary
 - Tech Stack Detection (detailed)
 - Project Structure (mapped paths)
@@ -140,6 +153,7 @@ After creating report, show concise summary:
 # Onboarding Analysis Complete
 
 ## Detected Tech Stack
+
 - Languages: [List]
 - Frameworks: [List]
 - Database: [List]
@@ -147,7 +161,8 @@ After creating report, show concise summary:
 - Testing: [List]
 
 ## Recommendations
-- [X] rules files to create
+
+- [x] rules files to create
 - [Y] skills to enable
 
 ## Next Steps
@@ -167,12 +182,14 @@ If apply mode is true, continue:
 #### 5.1 Parse ONBOARD-REPORT.md
 
 Read the report and extract:
+
 - All recommended rules files (path + content)
 - Skills to enable (list)
 
 #### 5.2 Check for Existing Files
 
 For each recommended file:
+
 - Check if file already exists
 - If exists: Skip and note in "Already Present" list
 - If not exists: Add to "Will Create" list
@@ -182,6 +199,7 @@ For each recommended file:
 For each file in "Will Create" list:
 
 1. Create directory if needed:
+
    ```bash
    mkdir -p .claude/rules/[subdirs-if-any]
    ```
@@ -198,6 +216,7 @@ Display what was created:
 # Onboard Complete
 
 ## Files Created
+
 ✓ .claude/rules/code-style.md
 ✓ .claude/rules/git-workflow.md
 ✓ .claude/rules/components.md
@@ -207,6 +226,7 @@ Display what was created:
 [... more files ...]
 
 ## Already Present
+
 - .claude/rules/code-quality.md (keeping your version)
 
 ## Next Steps
@@ -225,10 +245,12 @@ Your Claude Code configuration is ready!
 If `.claude/` directory already exists:
 
 ### Detection
+
 - List existing `.claude/rules/` files
 - List existing `.claude/skills/` directories
 
 ### Diff Generation
+
 Show in ONBOARD-REPORT.md:
 
 ```markdown
@@ -237,19 +259,22 @@ Show in ONBOARD-REPORT.md:
 ### Existing Configuration Detected
 
 Already present:
+
 - .claude/rules/code-quality.md
 - .claude/rules/communication.md
 - .claude/skills/testing/
 
 New recommendations:
-- .claude/rules/components.md (for React components at src/components/**)
-- .claude/rules/api.md (for Express routes at src/routes/**)
-- .claude/rules/database.md (for Prisma at prisma/**)
+
+- .claude/rules/components.md (for React components at src/components/\*\*)
+- .claude/rules/api.md (for Express routes at src/routes/\*\*)
+- .claude/rules/database.md (for Prisma at prisma/\*\*)
 
 Conflicts: None
 ```
 
 ### Merge Strategy
+
 - **Never overwrite** existing files
 - Only create files that don't exist
 - If similar file exists (e.g., user has custom components.md), note it but don't replace
@@ -258,24 +283,29 @@ Conflicts: None
 ## Error Handling
 
 ### No Manifest Files Found
+
 ```
 Unable to detect project type. This may not be a code project, or it uses an unsupported language.
 
 Supported: JavaScript/TypeScript, Python, Go, Rust, Java, Ruby, PHP, C#
-
-Would you like to:
-1. Specify project type manually
-2. Proceed with minimal configuration
-3. Cancel
 ```
 
+Use AskUserQuestion tool: "How would you like to proceed?"
+Options:
+
+- Specify project type manually
+- Proceed with minimal configuration
+- Cancel
+
 ### Analysis Fails
+
 - Log error details
 - Create partial report with what was detected
 - Note analysis failure in report
 - Suggest manual review
 
 ### File Creation Fails
+
 - Report which files failed
 - Note error message
 - Continue with other files
@@ -292,13 +322,15 @@ Would you like to:
 ## Output Files
 
 This command creates:
+
 1. **ONBOARD-REPORT.md** (always) - Full analysis report in project root
-2. **.claude/rules/*.md** (if --apply) - Recommended rules files
+2. **.claude/rules/\*.md** (if --apply) - Recommended rules files
 3. No skills files (skills are separate downloads/installs)
 
 ## User Guidance
 
 After onboarding, remind users:
+
 - Review generated files and customize for their team
 - Generated rules are starting points, not rigid requirements
 - They can edit, delete, or add more rules as needed

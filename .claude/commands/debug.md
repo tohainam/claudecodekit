@@ -13,7 +13,7 @@ Issue description: $ARGUMENTS
 
 ## Process
 
-Use the **debugger** agent:
+Use Task tool with **debugger** agent:
 
 ```
 Task: Launch debugger agent

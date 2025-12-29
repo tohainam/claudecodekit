@@ -15,23 +15,25 @@ Task description: $ARGUMENTS
 
 ## Process
 
-### Step 0: Check for Discussion Context
-Before planning, check for related discussions:
+### Step 0: Check for Prior Context
+Before planning, check for related discussions, decisions, and scout reports:
 
 1. If `--discussion <path>` is provided, read that discussion file
 2. Otherwise, search `.claude/.discussions/` for related topics
 3. Extract requirements, acceptance criteria, and selected approach from discussions
 4. Reference any related ADRs from `.claude/.decisions/`
+5. Check `.claude/.reports/` for existing scout reports on related code
 
 ```bash
-# Check for related discussions
+# Check for related context
 ls -la .claude/.discussions/ 2>/dev/null
 ls -la .claude/.decisions/ 2>/dev/null
+ls -la .claude/.reports/ 2>/dev/null
 ```
 
 ### Step 1: Create Plan
 
-Use the **planner** agent to analyze and create a comprehensive plan:
+Use Task tool with **planner** agent to analyze and create a comprehensive plan:
 
 ```
 Task: Launch planner agent
@@ -40,13 +42,14 @@ Prompt: "Create a detailed implementation plan for: $ARGUMENTS
 Requirements:
 1. Check .claude/.discussions/ for related discussions
 2. Check .claude/.decisions/ for related ADRs
-3. Analyze the task requirements thoroughly
-4. Research the codebase for patterns and conventions
-5. Identify all affected files and dependencies
-6. Design the solution with clear rationale
-7. Break down into actionable implementation steps
-8. Define test strategy
-9. Identify risks and mitigations
+3. Check .claude/.reports/ for existing scout reports
+4. Analyze the task requirements thoroughly
+5. Research the codebase for patterns and conventions
+6. Identify all affected files and dependencies
+7. Design the solution with clear rationale
+8. Break down into actionable implementation steps
+9. Define test strategy
+10. Identify risks and mitigations
 
 Create the plan file at .claude/.plans/[datetime]-[type]-[name].md
 

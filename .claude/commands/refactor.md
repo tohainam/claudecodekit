@@ -17,7 +17,7 @@ Target and goal: $ARGUMENTS
 ## Process
 
 ### Phase 1: Analysis
-Use the **refactorer** agent for analysis:
+Use Task tool with **refactorer** agent for analysis:
 
 ```
 Task: Launch refactorer agent (read-only phase)
@@ -46,16 +46,16 @@ Create plan at .claude/.plans/"
 Subagent: refactorer
 ```
 
-**STOP for user approval** of the refactoring plan.
+Use AskUserQuestion tool: "Do you approve this refactoring plan?"
 
 ### Phase 2: Ensure Tests Exist (Optional)
-**ASK USER**: "Do you want to verify/add test coverage before refactoring?"
+Use AskUserQuestion tool: "Do you want to verify/add test coverage before refactoring?"
 
 Options:
 - **Yes**: Check and add tests for safety net (recommended)
 - **No**: Skip to Phase 3 (Refactor) directly
 
-If user wants tests, verify test coverage:
+If user wants tests, use Task tool with **test-writer** agent to verify test coverage:
 
 ```
 Task: Launch test-writer agent (if needed)
@@ -69,7 +69,7 @@ Run all tests - they must pass before proceeding.
 **If user skips testing**: Proceed directly to Phase 3. Note: This is riskier as there's no safety net for behavior verification.
 
 ### Phase 3: Refactor (Small Steps)
-Execute refactoring in small, safe steps:
+Use Task tool with **refactorer** agent to execute refactoring in small, safe steps:
 
 ```
 Task: Launch refactorer agent
@@ -96,7 +96,7 @@ Subagent: refactorer
 ```
 
 ### Phase 4: Verify
-Final verification:
+Use Task tool with **code-reviewer** agent for final verification:
 
 ```
 Task: Launch code-reviewer agent
@@ -127,7 +127,7 @@ At completion, provide:
 
 After refactoring is complete:
 
-**ASK USER**: "Do you want to commit the refactoring changes?"
+Use AskUserQuestion tool: "Do you want to commit the refactoring changes?"
 
 Options:
 - **Yes**: Create commit(s) with conventional message format, then ask about PR

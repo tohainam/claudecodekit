@@ -8,6 +8,8 @@ Reusable Claude Code configuration for any project. Copy `.claude/` directory to
 | -------------------- | --------------------------------- |
 | `/onboard [--apply]` | Analyze project, recommend setup  |
 | `/discuss <topic>`   | Requirements gathering, decisions |
+| `/scout <topic>`     | Deep codebase research            |
+| `/research <topic>`  | Deep internet research            |
 | `/feature <desc>`    | Full feature workflow             |
 | `/bugfix <error>`    | Bug diagnosis + fix               |
 | `/plan <task>`       | Create implementation plan        |
@@ -33,6 +35,7 @@ Reusable Claude Code configuration for any project. Copy `.claude/` directory to
 ├── settings.json   # Permissions + hooks config
 ├── .discussions/   # /discuss outputs
 ├── .decisions/     # ADR records
+├── .reports/       # Scout + research reports
 └── .plans/         # Implementation plans
 ```
 
@@ -83,6 +86,8 @@ Auto-discovered from `.claude/skills/*/SKILL.md`:
 | code-reviewer    | sonnet | Reviews code            |
 | test-writer      | sonnet | Writes tests            |
 | debugger         | sonnet | Finds root causes       |
+| scouter          | opus   | Deep codebase research  |
+| researcher       | opus   | Deep internet research  |
 | refactorer       | opus   | Safe improvements       |
 | doc-writer       | sonnet | Documentation           |
 | security-auditor | opus   | Security audits         |

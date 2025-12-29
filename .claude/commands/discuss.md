@@ -14,7 +14,7 @@ Topic: $ARGUMENTS
 ## Workflow Phases
 
 ### Phase 1: Launch Facilitator
-Use the **facilitator** agent to lead the structured discussion.
+Use Task tool with **facilitator** agent to lead the structured discussion.
 
 ```
 Task: Launch facilitator agent
@@ -45,7 +45,7 @@ The facilitator will:
 - Define scope (what's in, what's out)
 - Establish acceptance criteria
 
-**USER CHECKPOINT**: Confirm understanding before proceeding.
+Use AskUserQuestion tool: "Does this understanding look correct? Should we proceed to solution exploration?"
 
 ### Phase 3: Solution Exploration
 The facilitator will:
@@ -58,14 +58,14 @@ The facilitator will:
 - Summarize discussion insights
 - Recommend an approach with rationale
 
-**USER CHECKPOINT**: Approve the recommended approach.
+Use AskUserQuestion tool: "Do you approve the recommended approach?"
 
 ### Phase 5: Artifact Generation
 Create discussion artifacts:
 - **Discussion Summary**: `.claude/.discussions/YYYY-MM-DD-HH-MM-<topic>.md`
 - **ADR Decision Record** (if decision made): `.claude/.decisions/YYYY-MM-DD-<title>.md`
 
-**ASK USER**: "Would you like to create an ADR decision record for this?"
+Use AskUserQuestion tool: "Would you like to create an ADR decision record for this?"
 
 ## User Checkpoints
 

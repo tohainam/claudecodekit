@@ -1,6 +1,6 @@
 ---
 description: Execute an existing implementation plan
-allowed-tools: Task, Read, Glob, Grep, Bash, Edit, Write, TodoWrite
+allowed-tools: Task, Read, Glob, Grep, Bash, Edit, Write, TodoWrite, AskUserQuestion
 argument-hint: [plan-file-path]
 ---
 
@@ -21,7 +21,7 @@ If no path provided, look for the most recent plan file in `.claude/.plans/`.
 3. Parse implementation steps
 
 ### Step 2: Execute
-Use the **implementer** agent to execute the plan:
+Use Task tool with **implementer** agent to execute the plan:
 
 ```
 Task: Launch implementer agent
@@ -66,7 +66,8 @@ If implementation fails:
 1. Report which step failed
 2. Show the error
 3. Keep partial progress (don't revert)
-4. Ask user how to proceed:
+4. Use AskUserQuestion tool: "How would you like to proceed?"
+   Options:
    - Fix the issue and continue
    - Skip this step
    - Stop and reassess

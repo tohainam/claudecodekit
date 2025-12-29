@@ -19,7 +19,7 @@ Scope can be:
 
 ## Process
 
-Use the **code-reviewer** agent to perform the review:
+Use Task tool with **code-reviewer** agent to perform the review:
 
 ```
 Task: Launch code-reviewer agent

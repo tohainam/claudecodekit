@@ -13,7 +13,7 @@ Target to test: $ARGUMENTS
 
 ## Process
 
-Use the **test-writer** agent:
+Use Task tool with **test-writer** agent:
 
 ```
 Task: Launch test-writer agent

@@ -13,8 +13,14 @@ Bug description/error: $ARGUMENTS
 
 ## Workflow Phases
 
+### Phase 0: Check for Prior Context
+Before diagnosis, check for existing scout reports that may provide codebase context:
+
+1. Search `.claude/.reports/` for existing scout reports on related code
+2. If found, pass to debugger agent for faster context gathering
+
 ### Phase 1: Diagnosis
-Use the **debugger** agent to find the root cause.
+Use Task tool with **debugger** agent to find the root cause.
 
 ```
 Task: Launch debugger agent
@@ -29,16 +35,16 @@ Analyze the error, search the codebase, check git history, and create a diagnosi
 Subagent: debugger
 ```
 
-**STOP after diagnosis** - Wait for user to confirm the root cause is correct before proceeding.
+Use AskUserQuestion tool: "Is this root cause analysis correct? Should we proceed with the fix?"
 
 ### Phase 2: Write Failing Test First (Optional)
-**ASK USER**: "Do you want to write a failing test before fixing the bug? (TDD approach)"
+Use AskUserQuestion tool: "Do you want to write a failing test before fixing the bug? (TDD approach)"
 
 Options:
 - **Yes**: Write test first, then fix (TDD approach - recommended for regression prevention)
 - **No**: Skip to Phase 3 (Fix) directly
 
-If user wants tests, use the **test-writer** agent to create a test that reproduces the bug.
+If user wants tests, use Task tool with **test-writer** agent to create a test that reproduces the bug.
 
 ```
 Task: Launch test-writer agent
@@ -52,7 +58,7 @@ Verify the test fails. If it passes, the bug may already be fixed or the test is
 **If user skips testing**: Proceed directly to Phase 3.
 
 ### Phase 3: Fix
-Use the **implementer** agent to implement the fix.
+Use Task tool with **implementer** agent to implement the fix.
 
 ```
 Task: Launch implementer agent
@@ -68,7 +74,7 @@ Run full verification:
 2. **Run related tests** - No regressions
 3. **Run full test suite** - All tests pass (if project has tests)
 
-Use the **code-reviewer** agent for final check:
+Use Task tool with **code-reviewer** agent for final check:
 
 ```
 Task: Launch code-reviewer agent
@@ -84,7 +90,7 @@ Subagent: code-reviewer
 ### Phase 5: Finalize
 After passing verification:
 
-**ASK USER**: "Do you want to commit the fix?"
+Use AskUserQuestion tool: "Do you want to commit the fix?"
 
 Options:
 - **Yes**: Create commit and optionally PR

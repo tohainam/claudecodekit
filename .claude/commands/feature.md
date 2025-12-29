@@ -13,22 +13,23 @@ Feature description: $ARGUMENTS
 
 ## Workflow Phases
 
-### Phase 0: Check for Prior Discussion
-Before planning, check for related discussions and decisions:
+### Phase 0: Check for Prior Context
+Before planning, check for related discussions, decisions, and scout reports:
 
 1. Search `.claude/.discussions/` for discussions related to this feature
 2. Search `.claude/.decisions/` for relevant ADRs
-3. If found, reference them in the planning phase
+3. Search `.claude/.reports/` for existing scout reports on related code
+4. If found, reference them in the planning phase
 
 If no discussion exists and requirements seem unclear:
-**ASK USER**: "Would you like to `/discuss` this feature first to clarify requirements?"
+Use AskUserQuestion tool: "Would you like to /discuss this feature first to clarify requirements?"
 
 Options:
 - **Yes**: Stop and run `/discuss` first
 - **No**: Proceed with planning
 
 ### Phase 1: Planning
-Use the **planner** agent to create a comprehensive implementation plan.
+Use Task tool with **planner** agent to create a comprehensive implementation plan.
 
 ```
 Task: Launch planner agent
@@ -39,10 +40,10 @@ Analyze the codebase, identify affected files, design the solution, and create a
 Subagent: planner
 ```
 
-**STOP after planning** - Wait for user to review and approve the plan before proceeding.
+Use AskUserQuestion tool: "Do you approve this implementation plan?"
 
 ### Phase 2: Implementation
-After plan approval, use the **implementer** agent to execute the plan.
+After plan approval, use Task tool with **implementer** agent to execute the plan.
 
 ```
 Task: Launch implementer agent
@@ -52,13 +53,13 @@ Subagent: implementer
 ```
 
 ### Phase 3: Testing (Optional)
-**ASK USER**: "Do you want to write tests for this feature?"
+Use AskUserQuestion tool: "Do you want to write tests for this feature?"
 
 Options:
 - **Yes**: Proceed with test-writer agent
 - **No**: Skip to Phase 4 (Review)
 
-If user wants tests, use the **test-writer** agent to create tests for the new feature.
+If user wants tests, use Task tool with **test-writer** agent to create tests for the new feature.
 
 ```
 Task: Launch test-writer agent
@@ -70,7 +71,7 @@ Subagent: test-writer
 **If user skips testing**: Proceed directly to Phase 4.
 
 ### Phase 4: Review
-Use the **code-reviewer** agent to review all changes.
+Use Task tool with **code-reviewer** agent to review all changes.
 
 ```
 Task: Launch code-reviewer agent
@@ -84,7 +85,7 @@ Subagent: code-reviewer
 ### Phase 5: Finalize
 After passing review:
 
-**ASK USER**: "Do you want to commit the changes?"
+Use AskUserQuestion tool: "Do you want to commit the changes?"
 
 Options:
 - **Yes**: Create commit(s) with conventional message format, then ask about PR

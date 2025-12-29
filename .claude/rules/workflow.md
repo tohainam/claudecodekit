@@ -20,6 +20,12 @@ These rules define the standard workflow for different types of tasks.
 **Discussion Output:**
 - Discussion summary in `.claude/.discussions/`
 - ADR decision record in `.claude/.decisions/` (if decision made)
+- Scout reports in `.claude/.reports/` (auto-generated for code-related topics)
+  - Naming: `YYYY-MM-DD-HH-MM-<topic>.md`
+  - Contains architecture, data flow, and dependencies analysis
+- Research reports in `.claude/.reports/` (auto-generated for non-code topics)
+  - Naming: `YYYY-MM-DD-HH-MM-research-<topic>.md`
+  - Contains external library docs, best practices, comparisons, troubleshooting
 - Use `/discuss <topic>` command
 
 ### Phase 1: Planning
@@ -54,7 +60,7 @@ These rules define the standard workflow for different types of tasks.
 - Wait for user decision
 
 ### Phase 3: Testing (Optional)
-**ASK USER** before writing tests. Testing is recommended but optional.
+Use AskUserQuestion tool before writing tests. Testing is recommended but optional.
 
 **When Tests Are Requested:**
 - Happy path (normal use cases)
@@ -90,7 +96,7 @@ These rules define the standard workflow for different types of tasks.
 - [ ] Documentation updated
 
 ### Phase 5: Commit (Optional)
-**ASK USER** before committing changes. Committing is optional.
+Use AskUserQuestion tool before committing changes. Committing is optional.
 
 **When User Wants to Commit:**
 1. Create commit(s) with conventional message format
@@ -115,6 +121,26 @@ Use Case: Unclear requirements, architectural decisions, trade-off analysis
 Command: /discuss <topic>
 Workflow: Clarify -> Explore -> Decide -> Discussion Summary + ADR
 Output: .claude/.discussions/ and .claude/.decisions/
+```
+
+### Codebase Research
+```
+Use Case: Deep analysis of existing code before changes or discussions
+Command: /scout <topic>
+Workflow: Parallel Analysis (Architecture + Data Flow + Dependencies) -> Consolidated Report
+Output: .claude/.reports/
+Note: Auto-invoked during /discuss for code-related topics
+```
+
+### Internet Research
+```
+Use Case: External library docs, tech comparisons, best practices, troubleshooting
+Command: /research <topic>
+Workflow: Classify Topic -> Select Dimensions -> Research (parallel) -> Consolidate -> Report
+Output: .claude/.reports/
+Topic Types: COMPARISON, HOW_TO, BEST_PRACTICE, TROUBLESHOOTING, SECURITY, PERFORMANCE, CURRENT_STATE, DEFAULT
+Dimensions: official-docs, best-practices, comparisons, examples, current-state, troubleshooting, security, performance
+Note: Auto-invoked during /discuss for non-code topics and during /plan for external libraries
 ```
 
 ### Feature Development
@@ -169,6 +195,7 @@ Workflow: Analyze -> Plan -> Implement in small steps -> Verify
 - Add notes for deviations from plan
 - Log any issues encountered
 - Update status in metadata
+- Reference scout reports or research reports in metadata if auto-generated during workflow
 
 ### Reporting Format
 ```
