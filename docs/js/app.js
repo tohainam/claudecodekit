@@ -1,6 +1,6 @@
 /**
- * Claude Code Kit - Neo-Terminal 2026
- * Modern documentation with terminal-inspired interactions
+ * Claude Code Kit - Neo-Editorial Terminal 2026
+ * Modern documentation with View Transitions and enhanced interactions
  */
 
 (function() {
@@ -11,11 +11,9 @@
     // ===========================================
 
     const CONFIG = {
-        scrollThrottle: 100,
-        searchDebounce: 150,
-        animationDuration: 300,
-        typingSpeed: 50,
-        cursorBlinkSpeed: 530
+        searchDebounce: 120,
+        animationDuration: 350,
+        scrollOffset: 96
     };
 
     const state = {
@@ -24,7 +22,8 @@
         paletteSelectedIndex: 0,
         mobileNavOpen: false,
         currentFilter: 'all',
-        hasAnimated: new Set()
+        supportsViewTransitions: typeof document.startViewTransition === 'function',
+        supportsScrollTimeline: CSS.supports('animation-timeline', 'scroll()')
     };
 
     // ===========================================
@@ -53,9 +52,6 @@
         elements.workflowPanels = document.querySelectorAll('.workflow-panel');
         elements.copyBtns = document.querySelectorAll('.copy-btn');
         elements.sections = document.querySelectorAll('.section[id], .hero[id]');
-        elements.heroTitle = document.querySelector('.hero-title');
-        elements.bentoCards = document.querySelectorAll('.bento-card');
-        elements.skillCards = document.querySelectorAll('.skill-card');
         elements.stats = document.querySelectorAll('.stat');
     }
 
@@ -67,11 +63,11 @@
         if (!localStorage.getItem('theme')) {
             state.theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
         }
-        applyTheme(state.theme);
+        applyTheme(state.theme, false);
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             if (!localStorage.getItem('theme')) {
-                applyTheme(e.matches ? 'dark' : 'light');
+                applyTheme(e.matches ? 'dark' : 'light', true);
             }
         });
 
@@ -80,24 +76,33 @@
         }
     }
 
-    function applyTheme(theme) {
-        state.theme = theme;
-        elements.html.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+    function applyTheme(theme, animate = true) {
+        const apply = () => {
+            state.theme = theme;
+            elements.html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        };
+
+        if (animate && state.supportsViewTransitions) {
+            document.startViewTransition(apply);
+        } else {
+            apply();
+        }
     }
 
     function toggleTheme() {
         const newTheme = state.theme === 'dark' ? 'light' : 'dark';
-        applyTheme(newTheme);
+        applyTheme(newTheme, true);
     }
 
     // ===========================================
-    // Progress Bar
+    // Progress Bar (JS Fallback)
     // ===========================================
 
     function initProgressBar() {
-        if (!elements.progressBar) return;
+        if (!elements.progressBar || state.supportsScrollTimeline) return;
 
+        // Only use JS if CSS scroll-timeline is not supported
         let ticking = false;
 
         function updateProgress() {
@@ -125,30 +130,30 @@
     function initMobileNav() {
         if (!elements.mobileMenuBtn || !elements.mobileNav) return;
 
+        function updateMobileNavState(isOpen) {
+            state.mobileNavOpen = isOpen;
+            elements.mobileMenuBtn.classList.toggle('active', isOpen);
+            elements.mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+            elements.mobileNav.classList.toggle('open', isOpen);
+            elements.mobileNav.setAttribute('aria-hidden', !isOpen);
+            elements.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+
         elements.mobileMenuBtn.addEventListener('click', () => {
-            state.mobileNavOpen = !state.mobileNavOpen;
-            elements.mobileMenuBtn.classList.toggle('active', state.mobileNavOpen);
-            elements.mobileNav.classList.toggle('open', state.mobileNavOpen);
-            elements.body.style.overflow = state.mobileNavOpen ? 'hidden' : '';
+            updateMobileNavState(!state.mobileNavOpen);
         });
 
         elements.navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 if (state.mobileNavOpen) {
-                    state.mobileNavOpen = false;
-                    elements.mobileMenuBtn.classList.remove('active');
-                    elements.mobileNav.classList.remove('open');
-                    elements.body.style.overflow = '';
+                    updateMobileNavState(false);
                 }
             });
         });
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && state.mobileNavOpen) {
-                state.mobileNavOpen = false;
-                elements.mobileMenuBtn.classList.remove('active');
-                elements.mobileNav.classList.remove('open');
-                elements.body.style.overflow = '';
+                updateMobileNavState(false);
             }
         });
     }
@@ -182,52 +187,8 @@
     function updateActiveNav(activeId) {
         elements.navLinks.forEach(link => {
             const href = link.getAttribute('href');
-            if (href === `#${activeId}`) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
+            link.classList.toggle('active', href === `#${activeId}`);
         });
-    }
-
-    // ===========================================
-    // Scroll Animations
-    // ===========================================
-
-    function initScrollAnimations() {
-        const animatedElements = [
-            ...elements.bentoCards,
-            ...elements.skillCards,
-            ...elements.commandCards,
-            ...elements.stats
-        ];
-
-        if (!animatedElements.length) return;
-
-        // Set initial state
-        animatedElements.forEach((el, index) => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = `opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${index % 4 * 0.1}s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${index % 4 * 0.1}s`;
-        });
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px 0px -10% 0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !state.hasAnimated.has(entry.target)) {
-                    state.hasAnimated.add(entry.target);
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        animatedElements.forEach(el => observer.observe(el));
     }
 
     // ===========================================
@@ -260,12 +221,13 @@
 
     function animateCounter(element) {
         const target = parseInt(element.textContent, 10);
-        const duration = 1500;
+        const duration = 1200;
         const start = performance.now();
 
         function update(currentTime) {
             const elapsed = currentTime - start;
             const progress = Math.min(elapsed / duration, 1);
+            // Ease out quart
             const eased = 1 - Math.pow(1 - progress, 4);
             element.textContent = Math.round(target * eased);
 
@@ -278,7 +240,7 @@
     }
 
     // ===========================================
-    // Command Palette
+    // Command Palette with Fuzzy Search
     // ===========================================
 
     const searchableItems = [];
@@ -324,12 +286,12 @@
 
     function buildSearchIndex() {
         const sectionData = [
-            { type: 'section', id: 'features', title: 'Features', icon: '*', desc: 'Why Claude Code Kit?' },
-            { type: 'section', id: 'commands', title: 'All Commands', icon: '/', desc: '14 available commands' },
-            { type: 'section', id: 'workflows', title: 'Workflows', icon: '~', desc: 'Structured development flows' },
-            { type: 'section', id: 'skills', title: 'Skills', icon: '+', desc: '12 auto-loading skills' },
-            { type: 'section', id: 'agents', title: 'Agents', icon: '@', desc: '9 specialized agents' },
-            { type: 'section', id: 'installation', title: 'Get Started', icon: '>', desc: 'Installation guide' }
+            { type: 'section', id: 'features', title: 'Features', icon: '*', desc: 'Why Claude Code Kit?', keywords: 'features why benefits' },
+            { type: 'section', id: 'commands', title: 'All Commands', icon: '/', desc: '14 available commands', keywords: 'commands reference list' },
+            { type: 'section', id: 'workflows', title: 'Workflows', icon: '~', desc: 'Structured development flows', keywords: 'workflows process flow' },
+            { type: 'section', id: 'skills', title: 'Skills', icon: '+', desc: '12 auto-loading skills', keywords: 'skills abilities auto' },
+            { type: 'section', id: 'agents', title: 'Agents', icon: '@', desc: '9 specialized agents', keywords: 'agents ai models' },
+            { type: 'section', id: 'installation', title: 'Get Started', icon: '>', desc: 'Installation guide', keywords: 'install setup start begin' }
         ];
 
         sectionData.forEach(item => searchableItems.push(item));
@@ -338,6 +300,7 @@
             const name = card.querySelector('.command-name')?.textContent || '';
             const desc = card.querySelector('.command-desc')?.textContent || '';
             const category = card.dataset.category || '';
+            const searchData = card.dataset.search || '';
 
             searchableItems.push({
                 type: 'command',
@@ -346,59 +309,165 @@
                 icon: '/',
                 desc: desc,
                 category: category,
+                keywords: searchData,
                 element: card
             });
         });
     }
 
+    // Fuzzy search implementation
+    function fuzzyMatch(pattern, str) {
+        if (!pattern) return { score: 0, matches: [] };
+
+        const patternLower = pattern.toLowerCase();
+        const strLower = str.toLowerCase();
+        const matches = [];
+
+        let patternIdx = 0;
+        let score = 0;
+        let consecutive = 0;
+        let lastMatchIdx = -1;
+
+        for (let i = 0; i < strLower.length && patternIdx < patternLower.length; i++) {
+            if (strLower[i] === patternLower[patternIdx]) {
+                matches.push(i);
+
+                // Scoring
+                score += 1;
+                if (lastMatchIdx === i - 1) {
+                    consecutive++;
+                    score += consecutive * 2;
+                } else {
+                    consecutive = 0;
+                }
+
+                // Bonus for word boundary
+                if (i === 0 || /[\s\-_\/]/.test(str[i - 1])) {
+                    score += 10;
+                }
+
+                // Bonus for camelCase
+                if (i > 0 && str[i] === str[i].toUpperCase() && str[i - 1] === str[i - 1].toLowerCase()) {
+                    score += 5;
+                }
+
+                lastMatchIdx = i;
+                patternIdx++;
+            }
+        }
+
+        // Return 0 if pattern wasn't fully matched
+        if (patternIdx !== patternLower.length) {
+            return { score: 0, matches: [] };
+        }
+
+        // Bonus for shorter strings (more relevant)
+        score += Math.max(0, 20 - str.length);
+
+        return { score, matches };
+    }
+
+    function highlightMatches(str, matches) {
+        if (!matches.length) return escapeHtml(str);
+
+        let result = '';
+        let lastIdx = 0;
+
+        matches.forEach(matchIdx => {
+            result += escapeHtml(str.slice(lastIdx, matchIdx));
+            result += `<mark>${escapeHtml(str[matchIdx])}</mark>`;
+            lastIdx = matchIdx + 1;
+        });
+
+        result += escapeHtml(str.slice(lastIdx));
+        return result;
+    }
+
     function openPalette() {
-        state.paletteOpen = true;
+        if (state.supportsViewTransitions) {
+            document.startViewTransition(() => {
+                state.paletteOpen = true;
+                elements.commandPalette.classList.add('open');
+            });
+        } else {
+            state.paletteOpen = true;
+            elements.commandPalette.classList.add('open');
+        }
+
         state.paletteSelectedIndex = 0;
-        elements.commandPalette.classList.add('open');
         elements.paletteInput.value = '';
         renderPaletteResults('');
         elements.body.style.overflow = 'hidden';
 
-        // Focus with delay to ensure DOM is ready and visible
         setTimeout(() => {
             if (elements.paletteInput) {
                 elements.paletteInput.focus();
-                elements.paletteInput.select();
             }
         }, 50);
     }
 
     function closePalette() {
-        state.paletteOpen = false;
-        elements.commandPalette.classList.remove('open');
+        if (state.supportsViewTransitions) {
+            document.startViewTransition(() => {
+                state.paletteOpen = false;
+                elements.commandPalette.classList.remove('open');
+            });
+        } else {
+            state.paletteOpen = false;
+            elements.commandPalette.classList.remove('open');
+        }
         elements.body.style.overflow = '';
     }
 
     function handlePaletteSearch(e) {
-        const query = e.target.value.toLowerCase().trim();
+        const query = e.target.value.trim();
         renderPaletteResults(query);
     }
 
     function renderPaletteResults(query) {
-        let results = searchableItems;
+        let results;
 
-        if (query) {
-            results = searchableItems.filter(item => {
-                const searchText = `${item.title} ${item.desc}`.toLowerCase();
-                return searchText.includes(query);
-            });
+        if (!query) {
+            results = searchableItems.map(item => ({
+                ...item,
+                score: 0,
+                titleMatches: [],
+                descMatches: []
+            }));
+        } else {
+            results = searchableItems.map(item => {
+                const searchText = `${item.title} ${item.desc} ${item.keywords || ''}`;
+                const titleMatch = fuzzyMatch(query, item.title);
+                const descMatch = fuzzyMatch(query, item.desc);
+                const keywordsMatch = fuzzyMatch(query, item.keywords || '');
+
+                const totalScore = Math.max(
+                    titleMatch.score * 2,
+                    descMatch.score,
+                    keywordsMatch.score
+                );
+
+                return {
+                    ...item,
+                    score: totalScore,
+                    titleMatches: titleMatch.matches,
+                    descMatches: descMatch.matches
+                };
+            }).filter(item => item.score > 0)
+              .sort((a, b) => b.score - a.score);
         }
 
         const sections = results.filter(r => r.type === 'section');
         const commands = results.filter(r => r.type === 'command');
 
         let html = '';
+        let itemIndex = 0;
 
         if (sections.length > 0) {
             html += `
                 <div class="palette-group">
                     <div class="palette-group-title">Sections</div>
-                    ${sections.map((item, i) => renderPaletteItem(item, i)).join('')}
+                    ${sections.map(item => renderPaletteItem(item, itemIndex++, query)).join('')}
                 </div>
             `;
         }
@@ -407,7 +476,7 @@
             html += `
                 <div class="palette-group">
                     <div class="palette-group-title">Commands</div>
-                    ${commands.map((item, i) => renderPaletteItem(item, sections.length + i)).join('')}
+                    ${commands.map(item => renderPaletteItem(item, itemIndex++, query)).join('')}
                 </div>
             `;
         }
@@ -428,13 +497,16 @@
         updatePaletteSelection();
     }
 
-    function renderPaletteItem(item, index) {
+    function renderPaletteItem(item, index, query) {
         const selectedClass = index === state.paletteSelectedIndex ? 'selected' : '';
+        const titleHtml = query ? highlightMatches(item.title, item.titleMatches) : escapeHtml(item.title);
+        const descHtml = query ? highlightMatches(item.desc, item.descMatches) : escapeHtml(item.desc);
+
         return `
             <button class="palette-item ${selectedClass}" data-type="${item.type}" data-id="${item.id}" data-index="${index}">
                 <span class="palette-item-icon">${item.icon}</span>
-                <span class="palette-item-text">${escapeHtml(item.title)}</span>
-                <span class="palette-item-hint">${escapeHtml(item.desc).substring(0, 40)}</span>
+                <span class="palette-item-text">${titleHtml}</span>
+                <span class="palette-item-hint">${descHtml.substring(0, 40)}</span>
             </button>
         `;
     }
@@ -483,19 +555,45 @@
         closePalette();
 
         if (type === 'section') {
-            scrollToSection(id);
+            navigateToSection(id);
         } else if (type === 'command') {
-            scrollToSection('commands');
+            navigateToSection('commands');
             setTimeout(() => {
                 const commandCard = document.querySelector(`[data-search*="/${id}"]`);
                 if (commandCard) {
                     commandCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    commandCard.style.boxShadow = 'inset 0 0 0 2px var(--accent), var(--shadow-glow-sm)';
-                    setTimeout(() => {
-                        commandCard.style.boxShadow = '';
-                    }, 2000);
+                    highlightCard(commandCard);
                 }
-            }, 400);
+            }, 450);
+        }
+    }
+
+    function highlightCard(card) {
+        card.style.boxShadow = 'inset 0 0 0 2px var(--color-accent), var(--shadow-glow-sm)';
+        setTimeout(() => {
+            card.style.boxShadow = '';
+        }, 2500);
+    }
+
+    // ===========================================
+    // Navigation with View Transitions
+    // ===========================================
+
+    function navigateToSection(id) {
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        const headerHeight = elements.header?.offsetHeight || 72;
+        const top = section.getBoundingClientRect().top + window.pageYOffset - headerHeight - 24;
+
+        if (state.supportsViewTransitions) {
+            document.startViewTransition(() => {
+                window.scrollTo({ top, behavior: 'instant' });
+                history.pushState(null, '', `#${id}`);
+            });
+        } else {
+            window.scrollTo({ top, behavior: 'smooth' });
+            history.pushState(null, '', `#${id}`);
         }
     }
 
@@ -511,8 +609,12 @@
                 const filter = btn.dataset.filter;
                 filterCommands(filter);
 
-                elements.filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                // Update ARIA states for filter tabs
+                elements.filterBtns.forEach(b => {
+                    const isActive = b === btn;
+                    b.classList.toggle('active', isActive);
+                    b.setAttribute('aria-selected', isActive);
+                });
             });
         });
     }
@@ -522,10 +624,11 @@
 
         elements.commandCards.forEach((card, index) => {
             const cardCategory = card.dataset.category;
+            const shouldShow = category === 'all' || cardCategory === category;
 
-            if (category === 'all' || cardCategory === category) {
+            if (shouldShow) {
                 card.classList.remove('hidden');
-                card.style.animation = `fadeSlide 0.4s cubic-bezier(0.23, 1, 0.32, 1) ${index * 0.05}s forwards`;
+                card.style.animationDelay = `${index * 0.05}s`;
             } else {
                 card.classList.add('hidden');
             }
@@ -543,17 +646,50 @@
             tab.addEventListener('click', () => {
                 const workflow = tab.dataset.workflow;
 
-                elements.workflowTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
+                // Update tab states with ARIA
+                elements.workflowTabs.forEach(t => {
+                    const isActive = t === tab;
+                    t.classList.toggle('active', isActive);
+                    t.setAttribute('aria-selected', isActive);
+                });
 
+                // Update panel visibility with hidden attribute
                 elements.workflowPanels.forEach(panel => {
-                    if (panel.id === `workflow-${workflow}`) {
-                        panel.classList.add('active');
-                    } else {
-                        panel.classList.remove('active');
-                    }
+                    const isActive = panel.id === `workflow-${workflow}`;
+                    panel.classList.toggle('active', isActive);
+                    panel.hidden = !isActive;
                 });
             });
+        });
+
+        // Touch gesture support for mobile
+        let touchStartX = 0;
+        const tabsArray = Array.from(elements.workflowTabs);
+
+        elements.workflowPanels.forEach(panel => {
+            panel.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+            }, { passive: true });
+
+            panel.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].clientX;
+                const diff = touchStartX - touchEndX;
+
+                if (Math.abs(diff) > 50) {
+                    const currentIndex = tabsArray.findIndex(t => t.classList.contains('active'));
+                    let newIndex;
+
+                    if (diff > 0 && currentIndex < tabsArray.length - 1) {
+                        newIndex = currentIndex + 1;
+                    } else if (diff < 0 && currentIndex > 0) {
+                        newIndex = currentIndex - 1;
+                    }
+
+                    if (newIndex !== undefined) {
+                        tabsArray[newIndex].click();
+                    }
+                }
+            }, { passive: true });
         });
     }
 
@@ -565,7 +701,6 @@
         elements.copyBtns.forEach(btn => {
             btn.addEventListener('click', async () => {
                 const code = btn.dataset.code || btn.closest('.code-block')?.querySelector('code')?.textContent;
-
                 if (!code) return;
 
                 // Remove the "$ " prefix if present
@@ -574,11 +709,11 @@
                 try {
                     await navigator.clipboard.writeText(cleanCode);
                     showCopyFeedback(btn, true);
-                } catch (err) {
+                } catch {
+                    // Fallback for older browsers
                     const textarea = document.createElement('textarea');
                     textarea.value = cleanCode;
-                    textarea.style.position = 'fixed';
-                    textarea.style.opacity = '0';
+                    textarea.style.cssText = 'position:fixed;opacity:0;';
                     document.body.appendChild(textarea);
                     textarea.select();
 
@@ -626,56 +761,10 @@
                 const target = document.querySelector(href);
                 if (target) {
                     e.preventDefault();
-                    scrollToSection(href.substring(1));
+                    navigateToSection(href.substring(1));
                 }
             });
         });
-    }
-
-    function scrollToSection(id) {
-        const section = document.getElementById(id);
-        if (!section) return;
-
-        const headerHeight = elements.header?.offsetHeight || 72;
-        const top = section.getBoundingClientRect().top + window.pageYOffset - headerHeight - 24;
-
-        window.scrollTo({
-            top: top,
-            behavior: 'smooth'
-        });
-
-        history.pushState(null, '', `#${id}`);
-    }
-
-    // ===========================================
-    // Header Scroll Effect
-    // ===========================================
-
-    function initHeaderScroll() {
-        if (!elements.header) return;
-
-        let lastScroll = 0;
-        let ticking = false;
-
-        function updateHeader() {
-            const currentScroll = window.scrollY;
-
-            if (currentScroll > 100) {
-                elements.header.style.backdropFilter = 'blur(20px) saturate(180%)';
-            } else {
-                elements.header.style.backdropFilter = 'blur(20px) saturate(180%)';
-            }
-
-            lastScroll = currentScroll;
-            ticking = false;
-        }
-
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(updateHeader);
-                ticking = true;
-            }
-        }, { passive: true });
     }
 
     // ===========================================
@@ -693,12 +782,62 @@
                     openPalette();
                     break;
                 case 't':
-                    if (!e.metaKey && !e.ctrlKey) {
+                    if (!e.metaKey && !e.ctrlKey && !e.altKey) {
                         toggleTheme();
                     }
                     break;
             }
         });
+    }
+
+    // ===========================================
+    // View Transition Styles
+    // ===========================================
+
+    function injectViewTransitionStyles() {
+        if (!state.supportsViewTransitions) return;
+
+        const style = document.createElement('style');
+        style.textContent = `
+            ::view-transition-old(root),
+            ::view-transition-new(root) {
+                animation-duration: 0.3s;
+                animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            ::view-transition-old(root) {
+                animation-name: fade-out;
+            }
+
+            ::view-transition-new(root) {
+                animation-name: fade-in;
+            }
+
+            @keyframes fade-out {
+                to { opacity: 0; }
+            }
+
+            @keyframes fade-in {
+                from { opacity: 0; }
+            }
+
+            /* Theme transition specific */
+            [data-theme="dark"]::view-transition-old(root) {
+                z-index: 1;
+            }
+
+            [data-theme="light"]::view-transition-new(root) {
+                z-index: 999;
+            }
+
+            /* Highlight animation for fuzzy search */
+            .palette-item mark {
+                background: transparent;
+                color: var(--color-accent);
+                font-weight: 600;
+            }
+        `;
+        document.head.appendChild(style);
     }
 
     // ===========================================
@@ -724,57 +863,35 @@
     }
 
     // ===========================================
-    // CSS Animation Injection
-    // ===========================================
-
-    function injectAnimationStyles() {
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeSlide {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // ===========================================
     // Initialization
     // ===========================================
 
     function init() {
         cacheElements();
-        injectAnimationStyles();
+        injectViewTransitionStyles();
         initTheme();
         initProgressBar();
         initMobileNav();
         initScrollSpy();
-        initScrollAnimations();
         initCounterAnimation();
         initCommandPalette();
         initCommandsFilter();
         initWorkflowTabs();
         initCopyButtons();
         initSmoothScroll();
-        initHeaderScroll();
         initKeyboardShortcuts();
 
         // Handle initial hash
         if (window.location.hash) {
             const id = window.location.hash.substring(1);
-            setTimeout(() => scrollToSection(id), 100);
+            setTimeout(() => navigateToSection(id), 100);
         }
 
         // Log ready message
-        console.log('%c Claude Code Kit %c Documentation loaded',
-            'background: linear-gradient(135deg, #00ffd5, #ff00aa); color: #030303; padding: 4px 8px; border-radius: 4px; font-weight: bold;',
-            'color: #00ffd5;'
+        console.log(
+            '%c Claude Code Kit %c 2026 Edition',
+            'background: linear-gradient(135deg, oklch(82% 0.15 185), oklch(68% 0.22 330)); color: oklch(9% 0.005 265); padding: 6px 10px; border-radius: 6px; font-weight: bold; font-family: monospace;',
+            'color: oklch(82% 0.15 185); font-family: monospace;'
         );
     }
 

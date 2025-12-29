@@ -5,42 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Claude Code Kit - A comprehensive, production-ready configuration for Claude Code. 14 commands, 12 skills, 9 agents.">
     <meta name="keywords" content="claude code, ai coding, documentation, commands, skills, agents, anthropic">
-    <meta name="theme-color" content="#030303">
+    <meta name="theme-color" content="#0D0D0D" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+    <meta name="color-scheme" content="dark light">
     <title>Claude Code Kit - Documentation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <!-- View Transitions styles -->
+    <style>
+        @view-transition {
+            navigation: auto;
+        }
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 0.25s;
+        }
+        ::view-transition-old(theme-toggle),
+        ::view-transition-new(theme-toggle) {
+            animation: none;
+            mix-blend-mode: normal;
+        }
+        [data-theme="light"]::view-transition-old(root) {
+            animation: none;
+        }
+        [data-theme="dark"]::view-transition-new(root) {
+            animation: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- Skip link for keyboard users -->
+    <a href="#hero" class="skip-link">Skip to main content</a>
+
     <!-- Command Palette -->
-    <div class="command-palette" id="commandPalette" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="command-palette" id="commandPalette" role="dialog" aria-modal="true" aria-labelledby="paletteLabel" aria-describedby="paletteHint">
         <div class="palette-backdrop"></div>
         <div class="palette-container">
+            <h2 id="paletteLabel" class="visually-hidden">Command Palette</h2>
             <div class="palette-header">
                 <div class="palette-search">
-                    <svg class="palette-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg class="palette-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                     </svg>
-                    <input type="text" id="paletteInput" placeholder="Search commands, sections..." autocomplete="off">
-                    <kbd class="palette-esc">ESC</kbd>
+                    <input type="text" id="paletteInput" placeholder="Search commands, sections..." autocomplete="off" aria-label="Search" aria-controls="paletteResults" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-haspopup="listbox">
+                    <kbd class="palette-esc" aria-hidden="true">ESC</kbd>
                 </div>
+                <p id="paletteHint" class="visually-hidden">Use arrow keys to navigate, Enter to select, Escape to close</p>
             </div>
-            <div class="palette-results" id="paletteResults">
-                <div class="palette-group">
-                    <div class="palette-group-title">Quick Actions</div>
-                    <button class="palette-item" data-action="section" data-target="commands">
-                        <span class="palette-item-icon">/</span>
+            <div class="palette-results" id="paletteResults" role="listbox" aria-live="polite">
+                <div class="palette-group" role="group" aria-labelledby="quickActionsLabel">
+                    <div class="palette-group-title" id="quickActionsLabel">Quick Actions</div>
+                    <button class="palette-item" data-action="section" data-target="commands" role="option">
+                        <span class="palette-item-icon" aria-hidden="true">/</span>
                         <span class="palette-item-text">Browse Commands</span>
                         <span class="palette-item-hint">14 available</span>
                     </button>
-                    <button class="palette-item" data-action="section" data-target="workflows">
-                        <span class="palette-item-icon">~</span>
+                    <button class="palette-item" data-action="section" data-target="workflows" role="option">
+                        <span class="palette-item-icon" aria-hidden="true">~</span>
                         <span class="palette-item-text">View Workflows</span>
                         <span class="palette-item-hint">4 workflows</span>
                     </button>
-                    <button class="palette-item" data-action="section" data-target="skills">
-                        <span class="palette-item-icon">*</span>
+                    <button class="palette-item" data-action="section" data-target="skills" role="option">
+                        <span class="palette-item-icon" aria-hidden="true">*</span>
                         <span class="palette-item-text">Explore Skills</span>
                         <span class="palette-item-hint">12 skills</span>
                     </button>
@@ -58,10 +86,10 @@
     <div class="progress-bar" id="progressBar"></div>
 
     <!-- Header -->
-    <header class="header">
+    <header class="header" style="view-transition-name: header;">
         <div class="header-inner">
-            <a href="#" class="logo">
-                <div class="logo-mark">
+            <a href="#" class="logo" aria-label="Claude Code Kit - Home">
+                <div class="logo-mark" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="4 17 10 11 4 5"/>
                         <line x1="12" y1="19" x2="20" y2="19"/>
@@ -70,7 +98,7 @@
                 <span class="logo-text">Claude Code Kit</span>
             </a>
 
-            <nav class="nav">
+            <nav class="nav" aria-label="Main navigation">
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#commands" class="nav-link">Commands</a>
                 <a href="#workflows" class="nav-link">Workflows</a>
@@ -79,27 +107,27 @@
             </nav>
 
             <div class="header-actions">
-                <button class="cmd-trigger" id="cmdTrigger" aria-label="Open command palette">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <button class="cmd-trigger" id="cmdTrigger" aria-label="Open command palette" aria-keyshortcuts="Control+K Meta+K">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                     </svg>
                     <span>Search</span>
-                    <kbd>&#x2318;K</kbd>
+                    <kbd aria-hidden="true">&#x2318;K</kbd>
                 </button>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-keyshortcuts="t" style="view-transition-name: theme-toggle;">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
                     </svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                     </svg>
                 </button>
-                <a href="https://github.com/anthropics/claude-code" class="github-link" target="_blank" rel="noopener" aria-label="GitHub">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
+                <a href="https://github.com/anthropics/claude-code" class="github-link" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub (opens in new tab)">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
                     </svg>
                 </a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobileNav">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -109,8 +137,8 @@
     </header>
 
     <!-- Mobile Nav -->
-    <div class="mobile-nav" id="mobileNav">
-        <nav class="mobile-nav-links">
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+        <nav class="mobile-nav-links" aria-label="Mobile navigation">
             <a href="#features">Features</a>
             <a href="#commands">Commands</a>
             <a href="#workflows">Workflows</a>
@@ -122,44 +150,44 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="hero" id="hero">
-            <div class="hero-bg">
+        <section class="hero" id="hero" aria-labelledby="heroTitle" style="view-transition-name: hero;">
+            <div class="hero-bg" aria-hidden="true">
                 <div class="hero-gradient"></div>
                 <div class="hero-grid"></div>
             </div>
             <div class="hero-content">
                 <div class="hero-badge">
-                    <span class="badge-dot"></span>
+                    <span class="badge-dot" aria-hidden="true"></span>
                     Open Source // MIT License
                 </div>
-                <h1 class="hero-title">
+                <h1 class="hero-title" id="heroTitle">
                     <span class="title-line title-gradient">Supercharge</span>
-                    <span class="title-line">Claude Code<span class="cursor"></span></span>
+                    <span class="title-line">Claude Code<span class="cursor" aria-hidden="true"></span></span>
                 </h1>
                 <p class="hero-description">
                     Production-ready configuration with intelligent workflows, auto-loading skills, and specialized agents. Copy the .claude directory and start coding.
                 </p>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-value">14</span>
-                        <span class="stat-label">Commands</span>
+                <div class="hero-stats" role="list" aria-label="Kit statistics">
+                    <div class="stat" role="listitem">
+                        <span class="stat-value" aria-hidden="true">14</span>
+                        <span class="stat-label"><span class="visually-hidden">14 </span>Commands</span>
                     </div>
-                    <div class="stat">
-                        <span class="stat-value">12</span>
-                        <span class="stat-label">Skills</span>
+                    <div class="stat" role="listitem">
+                        <span class="stat-value" aria-hidden="true">12</span>
+                        <span class="stat-label"><span class="visually-hidden">12 </span>Skills</span>
                     </div>
-                    <div class="stat">
-                        <span class="stat-value">9</span>
-                        <span class="stat-label">Agents</span>
+                    <div class="stat" role="listitem">
+                        <span class="stat-value" aria-hidden="true">9</span>
+                        <span class="stat-label"><span class="visually-hidden">9 </span>Agents</span>
                     </div>
-                    <div class="stat">
-                        <span class="stat-value">7</span>
-                        <span class="stat-label">Rules</span>
+                    <div class="stat" role="listitem">
+                        <span class="stat-value" aria-hidden="true">7</span>
+                        <span class="stat-label"><span class="visually-hidden">7 </span>Rules</span>
                     </div>
                 </div>
                 <div class="hero-actions">
                     <a href="#installation" class="btn btn-primary">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                             <polyline points="7 10 12 15 17 10"/>
                             <line x1="12" y1="15" x2="12" y2="3"/>
@@ -168,29 +196,29 @@
                     </a>
                     <a href="#commands" class="btn btn-secondary">
                         Browse Commands
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
                     </a>
                 </div>
                 <div class="hero-hint">
-                    Press <kbd>&#x2318;</kbd><kbd>K</kbd> to search anything
+                    Press <kbd aria-label="Command">&#x2318;</kbd><kbd aria-label="K">K</kbd> to search anything
                 </div>
             </div>
         </section>
 
         <!-- Features Bento Grid -->
-        <section class="section" id="features">
+        <section class="section" id="features" aria-labelledby="featuresTitle" style="view-transition-name: features;">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Why Claude Code Kit?</span>
-                    <h2 class="section-title">Everything You Need</h2>
+                    <h2 class="section-title" id="featuresTitle">Everything You Need</h2>
                     <p class="section-description">A complete toolkit that makes Claude Code smarter, faster, and more consistent.</p>
                 </div>
 
-                <div class="bento-grid">
-                    <div class="bento-card bento-large">
-                        <div class="bento-icon">
+                <div class="bento-grid" role="list">
+                    <article class="bento-card bento-large" role="listitem">
+                        <div class="bento-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="3" y="3" width="18" height="18" rx="2"/>
                                 <path d="m9 12 2 2 4-4"/>
@@ -198,26 +226,26 @@
                         </div>
                         <h3>Auto-Loading Skills</h3>
                         <p>Skills are automatically loaded based on semantic understanding of your task. Working on tests? Testing skill loads. Debugging? Debugging skill activates. No manual configuration needed.</p>
-                        <div class="bento-visual skills-visual">
+                        <div class="bento-visual skills-visual" aria-hidden="true">
                             <div class="skill-tag" style="--delay: 0s">testing</div>
                             <div class="skill-tag" style="--delay: 0.1s">security</div>
                             <div class="skill-tag" style="--delay: 0.2s">performance</div>
                             <div class="skill-tag" style="--delay: 0.3s">refactoring</div>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="bento-card">
-                        <div class="bento-icon">
+                    <article class="bento-card" role="listitem">
+                        <div class="bento-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
                             </svg>
                         </div>
                         <h3>Structured Workflows</h3>
                         <p>Plan &rarr; Implement &rarr; Test &rarr; Review. Built-in checkpoints keep you in control.</p>
-                    </div>
+                    </article>
 
-                    <div class="bento-card">
-                        <div class="bento-icon">
+                    <article class="bento-card" role="listitem">
+                        <div class="bento-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="3"/>
                                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
@@ -225,20 +253,20 @@
                         </div>
                         <h3>9 Specialized Agents</h3>
                         <p>Planner, Implementer, Debugger, and more. Each optimized for specific tasks in your workflow.</p>
-                    </div>
+                    </article>
 
-                    <div class="bento-card">
-                        <div class="bento-icon">
+                    <article class="bento-card" role="listitem">
+                        <div class="bento-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                             </svg>
                         </div>
                         <h3>Safety Rules</h3>
                         <p>Protected files, confirmation prompts, and rollback strategies keep your code safe.</p>
-                    </div>
+                    </article>
 
-                    <div class="bento-card bento-wide">
-                        <div class="bento-icon">
+                    <article class="bento-card bento-wide" role="listitem">
+                        <div class="bento-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="4 17 10 11 4 5"/>
                                 <line x1="12" y1="19" x2="20" y2="19"/>
@@ -249,29 +277,29 @@
                         <div class="command-preview">
                             <code>/feature "Add user authentication with OAuth"</code>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
         <!-- Commands Section -->
-        <section class="section section-dark" id="commands">
+        <section class="section section-dark" id="commands" aria-labelledby="commandsTitle" style="view-transition-name: commands;">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Reference</span>
-                    <h2 class="section-title">All Commands</h2>
+                    <h2 class="section-title" id="commandsTitle">All Commands</h2>
                     <p class="section-description">14 commands to handle any development task. Filter by category or search with &#x2318;K.</p>
                 </div>
 
-                <div class="commands-filter">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="workflow">Workflow</button>
-                    <button class="filter-btn" data-filter="quality">Quality</button>
-                    <button class="filter-btn" data-filter="git">Git</button>
-                    <button class="filter-btn" data-filter="setup">Setup</button>
+                <div class="commands-filter" role="tablist" aria-label="Filter commands by category">
+                    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" aria-controls="commandsGrid">All</button>
+                    <button class="filter-btn" data-filter="workflow" role="tab" aria-selected="false" aria-controls="commandsGrid">Workflow</button>
+                    <button class="filter-btn" data-filter="quality" role="tab" aria-selected="false" aria-controls="commandsGrid">Quality</button>
+                    <button class="filter-btn" data-filter="git" role="tab" aria-selected="false" aria-controls="commandsGrid">Git</button>
+                    <button class="filter-btn" data-filter="setup" role="tab" aria-selected="false" aria-controls="commandsGrid">Setup</button>
                 </div>
 
-                <div class="commands-grid" id="commandsGrid">
+                <div class="commands-grid" id="commandsGrid" role="tabpanel" aria-live="polite">
                     <!-- Workflow Commands -->
                     <article class="command-card" data-category="workflow" data-search="/feature implement new feature development">
                         <div class="command-header">
@@ -492,32 +520,32 @@
         </section>
 
         <!-- Workflows Section -->
-        <section class="section" id="workflows">
+        <section class="section" id="workflows" aria-labelledby="workflowsTitle" style="view-transition-name: workflows;">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Development Flow</span>
-                    <h2 class="section-title">Structured Workflows</h2>
+                    <h2 class="section-title" id="workflowsTitle">Structured Workflows</h2>
                     <p class="section-description">Every task follows a proven process with built-in checkpoints. You stay in control.</p>
                 </div>
 
-                <div class="workflow-tabs">
-                    <button class="workflow-tab active" data-workflow="feature">
-                        <span class="tab-icon">&gt;</span>
+                <div class="workflow-tabs" role="tablist" aria-label="Workflow types">
+                    <button class="workflow-tab active" data-workflow="feature" role="tab" aria-selected="true" aria-controls="workflow-feature" id="tab-feature">
+                        <span class="tab-icon" aria-hidden="true">&gt;</span>
                         Feature Development
                     </button>
-                    <button class="workflow-tab" data-workflow="bugfix">
-                        <span class="tab-icon">!</span>
+                    <button class="workflow-tab" data-workflow="bugfix" role="tab" aria-selected="false" aria-controls="workflow-bugfix" id="tab-bugfix">
+                        <span class="tab-icon" aria-hidden="true">!</span>
                         Bug Fixing
                     </button>
-                    <button class="workflow-tab" data-workflow="refactor">
-                        <span class="tab-icon">~</span>
+                    <button class="workflow-tab" data-workflow="refactor" role="tab" aria-selected="false" aria-controls="workflow-refactor" id="tab-refactor">
+                        <span class="tab-icon" aria-hidden="true">~</span>
                         Refactoring
                     </button>
                 </div>
 
                 <div class="workflow-content">
                     <!-- Feature Workflow -->
-                    <div class="workflow-panel active" id="workflow-feature">
+                    <div class="workflow-panel active" id="workflow-feature" role="tabpanel" aria-labelledby="tab-feature">
                         <div class="workflow-header">
                             <code class="workflow-cmd">/feature "your feature description"</code>
                         </div>
@@ -589,7 +617,7 @@
                     </div>
 
                     <!-- Bugfix Workflow -->
-                    <div class="workflow-panel" id="workflow-bugfix">
+                    <div class="workflow-panel" id="workflow-bugfix" role="tabpanel" aria-labelledby="tab-bugfix" hidden>
                         <div class="workflow-header">
                             <code class="workflow-cmd">/bugfix "error description"</code>
                         </div>
@@ -642,7 +670,7 @@
                     </div>
 
                     <!-- Refactor Workflow -->
-                    <div class="workflow-panel" id="workflow-refactor">
+                    <div class="workflow-panel" id="workflow-refactor" role="tabpanel" aria-labelledby="tab-refactor" hidden>
                         <div class="workflow-header">
                             <code class="workflow-cmd">/refactor "target file or description"</code>
                         </div>
@@ -696,95 +724,95 @@
         </section>
 
         <!-- Skills Section -->
-        <section class="section section-dark" id="skills">
+        <section class="section section-dark" id="skills" aria-labelledby="skillsTitle" style="view-transition-name: skills;">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Auto-Loading</span>
-                    <h2 class="section-title">12 Specialized Skills</h2>
+                    <h2 class="section-title" id="skillsTitle">12 Specialized Skills</h2>
                     <p class="section-description">Skills load automatically based on your task context. No configuration needed.</p>
                 </div>
 
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x1F3D7;</div>
+                <div class="skills-grid" role="list">
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x1F3D7;</div>
                         <h3>architecture</h3>
                         <p>System design, patterns, and architectural decisions for any scale</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x2728;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x2728;</div>
                         <h3>code-quality</h3>
                         <p>Best practices, clean code, and naming conventions</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x1F50D;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x1F50D;</div>
                         <h3>debugging</h3>
                         <p>Root cause analysis and systematic debugging methodology</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x1F4DD;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x1F4DD;</div>
                         <h3>documentation</h3>
                         <p>Writing effective docs, comments, and API references</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x1F3A8;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x1F3A8;</div>
                         <h3>frontend-design</h3>
                         <p>Distinctive, production-grade UI design that avoids generic aesthetics</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x1F500;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x1F500;</div>
                         <h3>git-workflow</h3>
                         <p>Commits, branches, PRs, and version control best practices</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x26A1;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x26A1;</div>
                         <h3>performance</h3>
                         <p>Optimization strategies, profiling, and Core Web Vitals</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x1F9ED;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x1F9ED;</div>
                         <h3>project-analysis</h3>
                         <p>Codebase analysis for onboarding and configuration</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x1F504;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x1F504;</div>
                         <h3>refactoring</h3>
                         <p>Safe code improvement techniques without behavior changes</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x1F6E1;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x1F6E1;</div>
                         <h3>security-review</h3>
                         <p>Security auditing, vulnerability detection, OWASP guidelines</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x1F9EA;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x1F9EA;</div>
                         <h3>testing</h3>
                         <p>TDD, test strategies, coverage optimization, and frameworks</p>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon">&#x2699;</div>
+                    </article>
+                    <article class="skill-card" role="listitem">
+                        <div class="skill-icon" aria-hidden="true">&#x2699;</div>
                         <h3>skill-creator</h3>
                         <p>Create custom skills for your specific domain and workflows</p>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
         <!-- Agents Section -->
-        <section class="section" id="agents">
+        <section class="section" id="agents" aria-labelledby="agentsTitle" style="view-transition-name: agents;">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Specialized</span>
-                    <h2 class="section-title">9 Intelligent Agents</h2>
+                    <h2 class="section-title" id="agentsTitle">9 Intelligent Agents</h2>
                     <p class="section-description">Each agent is optimized for specific tasks in the workflow. The right model for the right job.</p>
                 </div>
 
                 <div class="agents-table-wrapper">
-                    <table class="agents-table">
+                    <table class="agents-table" aria-label="Agents overview">
                         <thead>
                             <tr>
-                                <th>Agent</th>
-                                <th>Model</th>
-                                <th>Purpose</th>
+                                <th scope="col">Agent</th>
+                                <th scope="col">Model</th>
+                                <th scope="col">Purpose</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -840,22 +868,22 @@
         </section>
 
         <!-- Installation Section -->
-        <section class="section section-gradient" id="installation">
+        <section class="section section-gradient" id="installation" aria-labelledby="installTitle" style="view-transition-name: installation;">
             <div class="container">
                 <div class="section-header center">
                     <span class="section-tag">Get Started</span>
-                    <h2 class="section-title">Install in 30 Seconds</h2>
+                    <h2 class="section-title" id="installTitle">Install in 30 Seconds</h2>
                     <p class="section-description">Copy the .claude directory to your project and you're ready to go. It's that simple.</p>
                 </div>
 
-                <div class="install-steps">
-                    <div class="install-step">
-                        <div class="install-number">1</div>
+                <ol class="install-steps">
+                    <li class="install-step">
+                        <div class="install-number" aria-hidden="true">1</div>
                         <div class="install-content">
                             <h3>Clone the Repository</h3>
                             <div class="code-block">
-                                <button class="copy-btn" data-code="git clone https://github.com/anthropics/claude-code-kit.git">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <button class="copy-btn" data-code="git clone https://github.com/anthropics/claude-code-kit.git" aria-label="Copy clone command">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
                                     </svg>
@@ -863,15 +891,15 @@
                                 <pre><code>git clone https://github.com/anthropics/claude-code-kit.git</code></pre>
                             </div>
                         </div>
-                    </div>
+                    </li>
 
-                    <div class="install-step">
-                        <div class="install-number">2</div>
+                    <li class="install-step">
+                        <div class="install-number" aria-hidden="true">2</div>
                         <div class="install-content">
                             <h3>Copy to Your Project</h3>
                             <div class="code-block">
-                                <button class="copy-btn" data-code="cp -r claude-code-kit/.claude /path/to/your/project/">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <button class="copy-btn" data-code="cp -r claude-code-kit/.claude /path/to/your/project/" aria-label="Copy file copy command">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
                                     </svg>
@@ -879,15 +907,15 @@
                                 <pre><code>cp -r claude-code-kit/.claude /path/to/your/project/</code></pre>
                             </div>
                         </div>
-                    </div>
+                    </li>
 
-                    <div class="install-step">
-                        <div class="install-number">3</div>
+                    <li class="install-step">
+                        <div class="install-number" aria-hidden="true">3</div>
                         <div class="install-content">
                             <h3>Run Onboarding</h3>
                             <div class="code-block">
-                                <button class="copy-btn" data-code="/onboard --apply">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <button class="copy-btn" data-code="/onboard --apply" aria-label="Copy onboard command">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
                                     </svg>
@@ -896,8 +924,8 @@
                             </div>
                             <p class="install-note">This detects your stack and creates optimized rules for your project</p>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ol>
 
                 <div class="install-requirements">
                     <h3>Requirements</h3>
@@ -912,11 +940,11 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="logo">
+                    <div class="logo" aria-hidden="true">
                         <div class="logo-mark">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="4 17 10 11 4 5"/>
@@ -927,7 +955,7 @@
                     </div>
                     <p>A comprehensive configuration for Claude Code. Open source. MIT Licensed.</p>
                 </div>
-                <div class="footer-links">
+                <nav class="footer-links" aria-label="Footer navigation">
                     <div class="footer-column">
                         <h4>Documentation</h4>
                         <a href="#commands">Commands</a>
@@ -937,11 +965,11 @@
                     </div>
                     <div class="footer-column">
                         <h4>Resources</h4>
-                        <a href="https://github.com/anthropics/claude-code-kit" target="_blank">GitHub</a>
-                        <a href="https://github.com/anthropics/claude-code-kit/issues" target="_blank">Issues</a>
-                        <a href="https://github.com/anthropics/claude-code-kit/discussions" target="_blank">Discussions</a>
+                        <a href="https://github.com/anthropics/claude-code-kit" target="_blank" rel="noopener noreferrer">GitHub<span class="visually-hidden"> (opens in new tab)</span></a>
+                        <a href="https://github.com/anthropics/claude-code-kit/issues" target="_blank" rel="noopener noreferrer">Issues<span class="visually-hidden"> (opens in new tab)</span></a>
+                        <a href="https://github.com/anthropics/claude-code-kit/discussions" target="_blank" rel="noopener noreferrer">Discussions<span class="visually-hidden"> (opens in new tab)</span></a>
                     </div>
-                </div>
+                </nav>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Anthropic. Released under MIT License.</p>
