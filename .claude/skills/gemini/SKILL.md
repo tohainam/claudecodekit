@@ -133,6 +133,59 @@ echo "$json" | jq -r '.response'
   - Batch Processing
   - CI/CD Integration
 
+## Claude Code Integration
+
+**CRITICAL: When executing Gemini commands and returning results to user:**
+
+1. **Return EXACT response** - Output the raw `.response` value from Gemini's JSON, unmodified
+2. **DO NOT interpret** - No summarizing, paraphrasing, or adding Claude's commentary
+3. **DO NOT wrap** - No "Here's what Gemini said:" or similar prefixes
+4. **Preserve formatting** - Keep markdown, code blocks, lists exactly as Gemini returned them
+
+### Correct Behavior
+
+```
+User: Use gemini to explain recursion
+Claude: [executes command, returns ONLY Gemini's response]
+
+Recursion is a programming technique where a function calls itself...
+(This is Gemini's exact output, not Claude's interpretation)
+```
+
+### Wrong Behavior
+
+```
+User: Use gemini to explain recursion
+Claude: I ran Gemini and here's what it said:
+> Recursion is...
+
+Let me also add that... ❌ WRONG - Don't add commentary
+```
+
+### Execution Pattern
+
+```bash
+# Execute and capture
+output=$(gemini "prompt" -o json 2>&1)
+json=$(echo "$output" | awk '/^{/,0')
+
+# Check for errors first
+if echo "$json" | jq -e '.error' > /dev/null 2>&1; then
+  # Report error to user
+  echo "Gemini error: $(echo "$json" | jq -r '.error.message')"
+else
+  # Return EXACT response - this goes directly to user
+  echo "$json" | jq -r '.response'
+fi
+```
+
+### When to Add Context
+
+Only add Claude's commentary when:
+- Gemini returns an error (explain how to fix)
+- User explicitly asks for Claude's opinion on Gemini's response
+- Follow-up action is needed (e.g., "Gemini suggested X, should I apply it?")
+
 ## Best Practices
 
 1. Always use `-o json` for automation
