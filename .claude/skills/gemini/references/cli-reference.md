@@ -131,16 +131,25 @@ gemini "Count to 3" -o json
 }
 ```
 
-### Parse with jq
+### Parse with Node.js (Cross-Platform)
 
-**Important**: Gemini CLI may output non-JSON text (like "Loaded cached credentials.") before the JSON response. Always use `awk '/^{/,0'` to extract the JSON portion:
+**Important**: Gemini CLI may output non-JSON text (like "Loaded cached credentials.") before the JSON response. Use Node.js to extract the JSON portion (works on macOS, Linux, Windows):
 
 ```bash
-# Standard pattern for all Gemini automation
-gemini "..." -o json 2>&1 | awk '/^{/,0' | jq -r '.response'       # Response
-gemini "..." -o json 2>&1 | awk '/^{/,0' | jq '.stats.models'      # Token stats
-gemini "..." -o json 2>&1 | awk '/^{/,0' | jq -e '.error // empty' # Check errors
+# Standard cross-platform pattern for all Gemini automation
+gemini "..." -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+
+# Get specific fields
+gemini "..." -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).stats.models"
+
+# Check for errors
+gemini "..." -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).error"
 ```
+
+**Why Node.js instead of jq/awk?**
+- ✅ Node.js is already required for Gemini CLI - no extra dependencies
+- ✅ Works identically on macOS, Linux, Windows (PowerShell)
+- ✅ No `jq`, `awk`, `sed` compatibility issues (GNU vs BSD)
 
 ---
 
@@ -148,34 +157,58 @@ gemini "..." -o json 2>&1 | awk '/^{/,0' | jq -e '.error // empty' # Check error
 
 | Error | Meaning | Solution |
 |-------|---------|----------|
-| `jq: parse error` | Non-JSON prefix in output | Use `awk '/^{/,0'` before `jq` |
+| `JSON parse error` | Non-JSON prefix in output | Use the Node.js pattern above |
 | `API key not found` | No auth | Run `gemini` to authenticate |
 | `Rate limit exceeded` | Too many requests | Wait and retry |
 | `Model not found` | Invalid model | Use `gemini-2.5-flash` |
 | `File not found` | Invalid @ path | Verify path exists |
 | `Context too long` | Input too large | Split into chunks |
 
-### Error Checking Pattern
+### Error Checking Pattern (Cross-Platform)
 
 ```bash
 #!/bin/bash
-# Capture output and extract JSON (handles "Loaded cached credentials." prefix)
-output=$(gemini "..." -o json 2>&1)
-json=$(echo "$output" | awk '/^{/,0')
+# Robust error checking with Node.js (works on macOS, Linux, Windows)
+gemini "..." -o json 2>&1 | node -e "
+  const chunks = [];
+  process.stdin.on('data', c => chunks.push(c));
+  process.stdin.on('end', () => {
+    const data = Buffer.concat(chunks).toString();
+    const idx = data.indexOf('{');
+    if (idx < 0) {
+      console.error('Fatal: No JSON found in output');
+      console.error('Raw output:', data);
+      process.exit(1);
+    }
+    try {
+      const json = JSON.parse(data.slice(idx));
+      if (json.error) {
+        console.error('Gemini error:', json.error.message);
+        process.exit(1);
+      }
+      console.log(json.response);
+    } catch (e) {
+      console.error('JSON parse error:', e.message);
+      process.exit(1);
+    }
+  });
+"
+```
 
-# Validate JSON
-if ! echo "$json" | jq . > /dev/null 2>&1; then
-  echo "Fatal: No valid JSON found in output"
-  echo "Raw output: $output"
-  exit 1
-fi
+### Shell Helper Function
 
-# Check for API errors
-if echo "$json" | jq -e '.error' > /dev/null 2>&1; then
-  echo "Error: $(echo "$json" | jq -r '.error.message')"
-  exit 1
-fi
+Add to `~/.bashrc` or `~/.zshrc` for convenience:
 
-# Success - extract response
-echo "$json" | jq -r '.response'
+```bash
+# Cross-platform Gemini wrapper
+gemi() {
+  gemini "$@" -o json 2>&1 | node -p "
+    const d=require('fs').readFileSync(0,'utf8');
+    const j=JSON.parse(d.slice(d.indexOf('{')));
+    if(j.error){console.error('Error:',j.error.message);process.exit(1)}
+    j.response
+  "
+}
+
+# Usage: gemi "Explain recursion"
 ```
