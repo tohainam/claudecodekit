@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Claude Code Kit - AI-Powered Development Toolkit with intelligent agents, skills, and automated workflows">
+    <title>Claude Code Kit - AI-Powered Development Toolkit</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-icon">&#9670;</span>
+                <span class="logo-text">Claude Code Kit</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#use-cases" class="nav-link">Use Cases</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#agents" class="nav-link">Agents</a>
+                <a href="#workflows" class="nav-link">Workflows</a>
+                <a href="#quickstart" class="nav-link">Quick Start</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="https://github.com/user/claude-code-kit" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <div class="hero-grid"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge animate-fade-in">
+                    <span class="badge-dot"></span>
+                    AI-Powered Development
+                </div>
+                <h1 class="hero-title animate-fade-in-up">
+                    <span class="gradient-text">Claude Code Kit</span>
+                </h1>
+                <p class="hero-subtitle animate-fade-in-up delay-1">
+                    Intelligent agents, extensible skills, and automated workflows
+                    for modern software development
+                </p>
+                <div class="hero-cta animate-fade-in-up delay-2">
+                    <a href="#quickstart" class="btn btn-primary btn-lg">
+                        Get Started
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="#features" class="btn btn-secondary btn-lg">
+                        Explore Features
+                    </a>
+                </div>
+                <div class="hero-code animate-fade-in-up delay-3">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                        <span class="code-title">Terminal</span>
+                    </div>
+                    <div class="code-body">
+                        <code class="typing-effect" id="heroCode"></code>
+                    </div>
+                </div>
+                <div class="hero-stats animate-fade-in-up delay-4">
+                    <div class="stat">
+                        <span class="stat-value">3</span>
+                        <span class="stat-label">Agents</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value">10</span>
+                        <span class="stat-label">Skills</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-value">7</span>
+                        <span class="stat-label">Workflows</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features</h2>
+                <p class="section-subtitle">Everything you need for AI-assisted development</p>
+            </div>
+            <div class="bento-grid">
+                <!-- Agents Card -->
+                <div class="bento-card bento-lg glass-card" data-animate>
+                    <div class="card-icon accent">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="8" r="4"></circle>
+                            <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">3 Core Agents</h3>
+                    <p class="card-desc">Specialized AI agents for research, code analysis, and review</p>
+                    <div class="card-tags">
+                        <span class="tag">Researcher</span>
+                        <span class="tag">Scouter</span>
+                        <span class="tag">Reviewer</span>
+                    </div>
+                </div>
+
+                <!-- Skills Card -->
+                <div class="bento-card bento-md glass-card" data-animate>
+                    <div class="card-icon cyan">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">10 Extensible Skills</h3>
+                    <p class="card-desc">Domain knowledge with progressive disclosure</p>
+                </div>
+
+                <!-- Workflows Card -->
+                <div class="bento-card bento-md glass-card" data-animate>
+                    <div class="card-icon purple">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">7 Workflows</h3>
+                    <p class="card-desc">Scale-adaptive routing with confirmation points</p>
+                </div>
+
+                <!-- Brainstorm Card -->
+                <div class="bento-card bento-sm glass-card" data-animate>
+                    <div class="card-icon green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">/brainstorm</h3>
+                    <p class="card-desc">Interactive spec refinement</p>
+                </div>
+
+                <!-- Run Card -->
+                <div class="bento-card bento-sm glass-card" data-animate>
+                    <div class="card-icon orange">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">/run</h3>
+                    <p class="card-desc">Execute workflows</p>
+                </div>
+
+                <!-- Document Everything -->
+                <div class="bento-card bento-wide glass-card" data-animate>
+                    <div class="card-content-row">
+                        <div>
+                            <h3 class="card-title">Document Everything</h3>
+                            <p class="card-desc">Specs, reports, and plans saved in designated folders</p>
+                        </div>
+                        <div class="folder-icons">
+                            <div class="folder-item">
+                                <span class="folder-icon">.specs/</span>
+                            </div>
+                            <div class="folder-item">
+                                <span class="folder-icon">.reports/</span>
+                            </div>
+                            <div class="folder-item">
+                                <span class="folder-icon">.plans/</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases" id="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Use Cases</h2>
+                <p class="section-subtitle">Real-world scenarios powered by Claude Code Kit</p>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="category-tabs" id="categoryTabs">
+                <button class="tab active" data-category="all">All</button>
+                <button class="tab" data-category="development">Development</button>
+                <button class="tab" data-category="quality">Quality</button>
+                <button class="tab" data-category="research">Research</button>
+                <button class="tab" data-category="ai">AI-Powered</button>
+            </div>
+
+            <div class="use-cases-grid" id="useCasesGrid">
+                <!-- Development Workflows -->
+                <div class="use-case-card glass-card" data-category="development" data-animate>
+                    <div class="use-case-number">01</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Full Feature Development</h3>
+                    <p class="use-case-desc">End-to-end development from specification to commit</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Add user authentication"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>/brainstorm auth</code>
+                        <span class="arrow">→</span>
+                        <code>/run feature auth</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Spec, plan, tests, review, commit
+                    </div>
+                </div>
+
+                <div class="use-case-card glass-card" data-category="development" data-animate>
+                    <div class="use-case-number">02</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 8v4l2 2"></path>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Bug Investigation & Fix</h3>
+                    <p class="use-case-desc">Systematic debugging with root cause analysis</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Users can't login after password reset"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>/run bugfix login-issue</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Root cause found, fix applied, tested
+                    </div>
+                </div>
+
+                <div class="use-case-card glass-card" data-category="development" data-animate>
+                    <div class="use-case-number">03</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Emergency Hotfix</h3>
+                    <p class="use-case-desc">Rapid production incident response</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Payment processing failing in production"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>/run hotfix payment-critical</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Minimal fix, smoke test, deployed
+                    </div>
+                </div>
+
+                <div class="use-case-card glass-card" data-category="development" data-animate>
+                    <div class="use-case-number">04</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Safe Refactoring</h3>
+                    <p class="use-case-desc">Continuous testing during code modernization</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Modernize legacy payment module"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>/run refactor payment-module</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Refactored with continuous testing
+                    </div>
+                </div>
+
+                <!-- Code Quality -->
+                <div class="use-case-card glass-card" data-category="quality" data-animate>
+                    <div class="use-case-number">05</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Pre-Merge Review</h3>
+                    <p class="use-case-desc">Independent code review with fresh context</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Review PR #123 before merge"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>/run review pr-123</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Detailed review with verdict
+                    </div>
+                </div>
+
+                <div class="use-case-card glass-card" data-category="quality" data-animate>
+                    <div class="use-case-number">06</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Security Audit</h3>
+                    <p class="use-case-desc">OWASP vulnerability scanning and assessment</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Check for vulnerabilities before release"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>Use security-audit skill</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> OWASP checklist, findings report
+                    </div>
+                </div>
+
+                <div class="use-case-card glass-card" data-category="quality" data-animate>
+                    <div class="use-case-number">07</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Documentation Generation</h3>
+                    <p class="use-case-desc">Auto-generate comprehensive documentation</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Generate API docs for v2.0"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>/run docs api-v2</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Complete API reference
+                    </div>
+                </div>
+
+                <!-- Research & Learning -->
+                <div class="use-case-card glass-card" data-category="research" data-animate>
+                    <div class="use-case-number">08</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Technology Comparison</h3>
+                    <p class="use-case-desc">A vs B analysis with detailed reports</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Should we use Redis or Memcached?"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>/run research caching-comparison</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Detailed comparison report
+                    </div>
+                </div>
+
+                <div class="use-case-card glass-card" data-category="research" data-animate>
+                    <div class="use-case-number">09</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Codebase Onboarding</h3>
+                    <p class="use-case-desc">New developer orientation and architecture understanding</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"New developer joining team"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>Scouter analyzes architecture</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Architecture map, key patterns
+                    </div>
+                </div>
+
+                <div class="use-case-card glass-card" data-category="research" data-animate>
+                    <div class="use-case-number">10</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Architecture Analysis</h3>
+                    <p class="use-case-desc">Deep pattern detection and dependency mapping</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Understand microservices dependencies"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>Scouter traces data flows</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Dependency graph, bottlenecks
+                    </div>
+                </div>
+
+                <!-- AI-Powered -->
+                <div class="use-case-card glass-card" data-category="ai" data-animate>
+                    <div class="use-case-number">11</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">Image/PDF Analysis</h3>
+                    <p class="use-case-desc">Process media files using Gemini integration</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Extract data from scanned receipts"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>Gemini skill processes images</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Structured data extraction
+                    </div>
+                </div>
+
+                <div class="use-case-card glass-card" data-category="ai" data-animate>
+                    <div class="use-case-number">12</div>
+                    <div class="use-case-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                            <path d="M2 2l7.586 7.586"></path>
+                            <circle cx="11" cy="11" r="2"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="use-case-title">UI/UX Design</h3>
+                    <p class="use-case-desc">Beautiful interfaces with 200+ design components</p>
+                    <div class="use-case-example">
+                        <span class="label">Scenario:</span>
+                        <span class="text">"Create beautiful dashboard"</span>
+                    </div>
+                    <div class="use-case-flow">
+                        <code>UI/UX Pro Max skill</code>
+                    </div>
+                    <div class="use-case-result">
+                        <span class="result-label">Result:</span> Modern design with components
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">10 Extensible Skills</h2>
+                <p class="section-subtitle">Domain knowledge with progressive disclosure</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon planning">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
+                            <rect x="9" y="3" width="6" height="4" rx="1"></rect>
+                            <path d="M9 12h6M9 16h6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">Planning</h3>
+                    <p class="skill-desc">Spec-Driven Development (SDD) with hierarchical plans</p>
+                    <div class="skill-trigger">When: Starting features, breaking down requirements</div>
+                </div>
+
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon implementation">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">Implementation</h3>
+                    <p class="skill-desc">Clean code best practices and SOLID principles</p>
+                    <div class="skill-trigger">When: Writing new code, refactoring</div>
+                </div>
+
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon testing">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <path d="M9 15l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">Testing</h3>
+                    <p class="skill-desc">Test pyramid, TDD/BDD, 80-90% meaningful coverage</p>
+                    <div class="skill-trigger">When: Writing tests, improving coverage</div>
+                </div>
+
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon documentation">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">Documentation</h3>
+                    <p class="skill-desc">READMEs, ADRs, API docs, changelogs</p>
+                    <div class="skill-trigger">When: Creating project documentation</div>
+                </div>
+
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon security">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">Security Audit</h3>
+                    <p class="skill-desc">OWASP Top 10, vulnerability assessment</p>
+                    <div class="skill-trigger">When: Security reviews, auth design</div>
+                </div>
+
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon git">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="18" cy="18" r="3"></circle>
+                            <circle cx="6" cy="6" r="3"></circle>
+                            <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+                            <path d="M6 9v12"></path>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">Git Workflow</h3>
+                    <p class="skill-desc">Branching strategies, conventional commits</p>
+                    <div class="skill-trigger">When: Creating PRs, code review</div>
+                </div>
+
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon patterns">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">Code Patterns</h3>
+                    <p class="skill-desc">Design patterns, CQRS, Event Sourcing</p>
+                    <div class="skill-trigger">When: Choosing architectural patterns</div>
+                </div>
+
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon gemini">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">Gemini</h3>
+                    <p class="skill-desc">AI-powered image/PDF analysis</p>
+                    <div class="skill-trigger">When: Processing media files</div>
+                </div>
+
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon uiux">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">UI/UX Pro Max</h3>
+                    <p class="skill-desc">200+ design components, 50 styles</p>
+                    <div class="skill-trigger">When: Creating beautiful interfaces</div>
+                </div>
+
+                <div class="skill-card glass-card" data-animate>
+                    <div class="skill-icon creator">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 8v8M8 12h8"></path>
+                        </svg>
+                    </div>
+                    <h3 class="skill-name">Skill Creator</h3>
+                    <p class="skill-desc">Meta-skill for creating new skills</p>
+                    <div class="skill-trigger">When: Extending capabilities</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agents Section -->
+    <section class="agents" id="agents">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">3 Core Agents</h2>
+                <p class="section-subtitle">Specialized AI agents for different tasks</p>
+            </div>
+            <div class="agents-grid">
+                <div class="agent-card glass-card" data-animate>
+                    <div class="agent-visual researcher">
+                        <div class="agent-orbit">
+                            <div class="orbit-ring"></div>
+                            <div class="orbit-dot"></div>
+                        </div>
+                        <div class="agent-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                                <path d="M11 8v6M8 11h6"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="agent-name">Researcher</h3>
+                    <p class="agent-desc">External documentation research, best practices, and technology comparisons</p>
+                    <div class="agent-tools">
+                        <span class="tool-tag">WebSearch</span>
+                        <span class="tool-tag">WebFetch</span>
+                        <span class="tool-tag">Read</span>
+                        <span class="tool-tag">Write</span>
+                    </div>
+                    <div class="agent-use-cases">
+                        <h4>Use Cases</h4>
+                        <ul>
+                            <li>Library documentation</li>
+                            <li>API references</li>
+                            <li>A vs B comparisons</li>
+                            <li>Error troubleshooting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="agent-card glass-card featured" data-animate>
+                    <div class="agent-visual scouter">
+                        <div class="agent-orbit">
+                            <div class="orbit-ring"></div>
+                            <div class="orbit-dot"></div>
+                        </div>
+                        <div class="agent-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="agent-name">Scouter</h3>
+                    <p class="agent-desc">Deep codebase analysis, pattern detection, and dependency mapping</p>
+                    <div class="agent-tools">
+                        <span class="tool-tag">Grep</span>
+                        <span class="tool-tag">Glob</span>
+                        <span class="tool-tag">Read</span>
+                        <span class="tool-tag">Bash</span>
+                    </div>
+                    <div class="agent-use-cases">
+                        <h4>Use Cases</h4>
+                        <ul>
+                            <li>Understanding implementations</li>
+                            <li>Tracing data flows</li>
+                            <li>Mapping dependencies</li>
+                            <li>Planning refactors</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="agent-card glass-card" data-animate>
+                    <div class="agent-visual reviewer">
+                        <div class="agent-orbit">
+                            <div class="orbit-ring"></div>
+                            <div class="orbit-dot"></div>
+                        </div>
+                        <div class="agent-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <path d="M9 15l2 2 4-4"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="agent-name">Reviewer</h3>
+                    <p class="agent-desc">Isolated code review with fresh context for unbiased analysis</p>
+                    <div class="agent-tools">
+                        <span class="tool-tag">Read</span>
+                        <span class="tool-tag">Grep</span>
+                        <span class="tool-tag">Glob</span>
+                        <span class="tool-tag">Edit</span>
+                    </div>
+                    <div class="agent-use-cases">
+                        <h4>Use Cases</h4>
+                        <ul>
+                            <li>Post-implementation review</li>
+                            <li>Pre-merge validation</li>
+                            <li>Security audits</li>
+                            <li>Approved/Needs Changes verdict</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflows Section -->
+    <section class="workflows" id="workflows">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">7 Automated Workflows</h2>
+                <p class="section-subtitle">Scale-adaptive routing with confirmation points</p>
+            </div>
+            <div class="workflow-visualizer">
+                <div class="workflow-tabs" id="workflowTabs">
+                    <button class="workflow-tab active" data-workflow="feature">Feature</button>
+                    <button class="workflow-tab" data-workflow="bugfix">Bugfix</button>
+                    <button class="workflow-tab" data-workflow="hotfix">Hotfix</button>
+                    <button class="workflow-tab" data-workflow="refactor">Refactor</button>
+                    <button class="workflow-tab" data-workflow="research">Research</button>
+                    <button class="workflow-tab" data-workflow="review">Review</button>
+                    <button class="workflow-tab" data-workflow="docs">Docs</button>
+                </div>
+                <div class="workflow-content glass-card" id="workflowContent">
+                    <!-- Feature Workflow -->
+                    <div class="workflow-diagram active" data-workflow="feature">
+                        <div class="workflow-info">
+                            <h4>Feature Development</h4>
+                            <p>Complete new feature development with full quality gates</p>
+                            <span class="workflow-requires">Requires: Spec file</span>
+                        </div>
+                        <div class="workflow-phases">
+                            <div class="phase">
+                                <span class="phase-icon">1</span>
+                                <span class="phase-name">Research</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">2</span>
+                                <span class="phase-name">Plan</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">3</span>
+                                <span class="phase-name">Implement</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">4</span>
+                                <span class="phase-name">Test</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">5</span>
+                                <span class="phase-name">Review</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">6</span>
+                                <span class="phase-name">Commit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bugfix Workflow -->
+                    <div class="workflow-diagram" data-workflow="bugfix">
+                        <div class="workflow-info">
+                            <h4>Bug Investigation & Fix</h4>
+                            <p>Systematic debugging with root cause analysis</p>
+                            <span class="workflow-requires">Requires: Bug description</span>
+                        </div>
+                        <div class="workflow-phases">
+                            <div class="phase">
+                                <span class="phase-icon">1</span>
+                                <span class="phase-name">Scout</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">2</span>
+                                <span class="phase-name">Analyze</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">3</span>
+                                <span class="phase-name">Plan</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">4</span>
+                                <span class="phase-name">Fix</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">5</span>
+                                <span class="phase-name">Test</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">6</span>
+                                <span class="phase-name">Commit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotfix Workflow -->
+                    <div class="workflow-diagram" data-workflow="hotfix">
+                        <div class="workflow-info">
+                            <h4>Emergency Hotfix</h4>
+                            <p>Ultra-fast fix path for production incidents</p>
+                            <span class="workflow-requires">Requires: Critical issue</span>
+                        </div>
+                        <div class="workflow-phases">
+                            <div class="phase urgent">
+                                <span class="phase-icon">1</span>
+                                <span class="phase-name">Analyze</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase urgent">
+                                <span class="phase-icon">2</span>
+                                <span class="phase-name">Fix</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase urgent">
+                                <span class="phase-icon">3</span>
+                                <span class="phase-name">Smoke Test</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase urgent">
+                                <span class="phase-icon">4</span>
+                                <span class="phase-name">Commit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Refactor Workflow -->
+                    <div class="workflow-diagram" data-workflow="refactor">
+                        <div class="workflow-info">
+                            <h4>Safe Refactoring</h4>
+                            <p>Continuous testing during code modernization</p>
+                            <span class="workflow-requires">Requires: Refactor scope</span>
+                        </div>
+                        <div class="workflow-phases">
+                            <div class="phase">
+                                <span class="phase-icon">1</span>
+                                <span class="phase-name">Scout</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">2</span>
+                                <span class="phase-name">Plan</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">3</span>
+                                <span class="phase-name">Refactor</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">4</span>
+                                <span class="phase-name">Test</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">5</span>
+                                <span class="phase-name">Review</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">6</span>
+                                <span class="phase-name">Commit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research Workflow -->
+                    <div class="workflow-diagram" data-workflow="research">
+                        <div class="workflow-info">
+                            <h4>Research & Learning</h4>
+                            <p>External research without code changes</p>
+                            <span class="workflow-requires">Requires: Topic</span>
+                        </div>
+                        <div class="workflow-phases">
+                            <div class="phase">
+                                <span class="phase-icon">1</span>
+                                <span class="phase-name">Research</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">2</span>
+                                <span class="phase-name">Scout</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">3</span>
+                                <span class="phase-name">Summarize</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Workflow -->
+                    <div class="workflow-diagram" data-workflow="review">
+                        <div class="workflow-info">
+                            <h4>Code Review</h4>
+                            <p>Independent review with fresh context</p>
+                            <span class="workflow-requires">Requires: Scope</span>
+                        </div>
+                        <div class="workflow-phases">
+                            <div class="phase">
+                                <span class="phase-icon">1</span>
+                                <span class="phase-name">Scout</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">2</span>
+                                <span class="phase-name">Review</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">3</span>
+                                <span class="phase-name">Report</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Docs Workflow -->
+                    <div class="workflow-diagram" data-workflow="docs">
+                        <div class="workflow-info">
+                            <h4>Documentation</h4>
+                            <p>Auto-generate comprehensive documentation</p>
+                            <span class="workflow-requires">Requires: Description</span>
+                        </div>
+                        <div class="workflow-phases">
+                            <div class="phase">
+                                <span class="phase-icon">1</span>
+                                <span class="phase-name">Scout</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">2</span>
+                                <span class="phase-name">Plan</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">3</span>
+                                <span class="phase-name">Generate</span>
+                            </div>
+                            <div class="phase-arrow">→</div>
+                            <div class="phase">
+                                <span class="phase-icon">4</span>
+                                <span class="phase-name">Commit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section class="quickstart" id="quickstart">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Quick Start</h2>
+                <p class="section-subtitle">Get up and running in minutes</p>
+            </div>
+            <div class="quickstart-content">
+                <div class="quickstart-steps">
+                    <div class="step glass-card" data-animate>
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Clone the Kit</h3>
+                            <div class="code-block">
+                                <button class="copy-btn" data-copy="git clone https://github.com/user/claude-code-kit">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                                <code>git clone https://github.com/user/claude-code-kit</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step glass-card" data-animate>
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Start Brainstorming</h3>
+                            <div class="code-block">
+                                <button class="copy-btn" data-copy="/brainstorm my-feature">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                                <code>/brainstorm my-feature</code>
+                            </div>
+                            <p class="step-desc">Interactive spec refinement through conversation</p>
+                        </div>
+                    </div>
+
+                    <div class="step glass-card" data-animate>
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Run Workflow</h3>
+                            <div class="code-block">
+                                <button class="copy-btn" data-copy="/run feature my-feature">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                                <code>/run feature my-feature</code>
+                            </div>
+                            <p class="step-desc">Execute full development workflow</p>
+                        </div>
+                    </div>
+
+                    <div class="step glass-card" data-animate>
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Check Results</h3>
+                            <div class="folder-list">
+                                <div class="folder-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                                    </svg>
+                                    <span>.specs/</span> - Finalized specifications
+                                </div>
+                                <div class="folder-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                                    </svg>
+                                    <span>.reports/</span> - Research & analysis
+                                </div>
+                                <div class="folder-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                                    </svg>
+                                    <span>.plans/</span> - Implementation plans
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quickstart-cta glass-card" data-animate>
+                    <h3>Ready to get started?</h3>
+                    <p>Clone the repository and start building with AI-powered workflows</p>
+                    <a href="https://github.com/user/claude-code-kit" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">&#9670;</span>
+                    <span class="logo-text">Claude Code Kit</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#features">Features</a>
+                    <a href="#use-cases">Use Cases</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#agents">Agents</a>
+                    <a href="https://github.com/user/claude-code-kit" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+                <div class="footer-info">
+                    <p>Made with Claude Code</p>
+                    <p class="footer-version">v1.0.0</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
