@@ -87,9 +87,19 @@ When the first word of input is NOT a known workflow name (feature, bugfix, hotf
 
 **Condition**: If workflow `requires-spec="true"`
 
-**Action**: Check `.claude/.specs/{name}.md` exists
+**Action**: Check `.claude/.specs/{name}.md` exists and contains required sections
+
+**Spec Format** (created by `/brainstorm`):
+- Section 1: Original Requirements
+- Section 2: Analysis (Codebase Impact, Gaps, Questions)
+- Section 3: Approach Options (with SELECTED marker)
+- Section 4: Technical Decisions table
+- Section 5: Final Spec (Objective, Requirements, Technical Approach, Acceptance Criteria)
+- Status: Must be "Final" (not "Draft")
 
 **On Missing**: Tell user: "Spec required. Run /brainstorm {name} first." then STOP
+
+**On Draft Status**: Tell user: "Spec is still in Draft status. Complete /brainstorm {name} and finalize it first." then STOP
 
 ### Step 3: Initialize
 
@@ -107,8 +117,9 @@ For each phase in workflow.phases:
    Phase {N}/{total}: {phase_name}
    ═══════════════════════════════════════════════════════════════
    ```
-3. Execute phase using exact tool from Phase Details table (`Task`, `Skill`, or `Bash`)
-4. If confirmation required:
+3. **Load artifacts from previous phases** (see Artifact Ingestion table below)
+4. Execute phase using exact tool from Phase Details table (`Task`, `Skill`, or `Bash`)
+5. If confirmation required:
    ```
    AskUserQuestion(questions: [{
      question: "Phase complete. How to proceed?",
@@ -121,8 +132,46 @@ For each phase in workflow.phases:
      multiSelect: false
    }])
    ```
-5. `TodoWrite(todos: [mark current phase "completed"])`
-6. `Write(file_path: ".claude/.state/{name}.json", content: updated_state)`
+6. `TodoWrite(todos: [mark current phase "completed"])`
+7. `Write(file_path: ".claude/.state/{name}.json", content: updated_state)`
+
+### Artifact Ingestion
+
+**Before executing a phase, read relevant artifacts from previous phases:**
+
+| Current Phase | Read These Artifacts | Purpose |
+|---------------|---------------------|---------|
+| **plan** | `.reports/{name}-*.md` | Incorporate research/scout findings into plan |
+| **implement** | `.plans/{name}/_master.md` | Follow the approved implementation plan |
+| **fix/refactor** | `.plans/{name}/_master.md` | Follow the fix/refactor plan |
+| **test** | `.plans/{name}/_master.md` | Know what to test based on plan |
+| **review** | `.plans/{name}/_master.md`, `.reports/{name}-*.md` | Context for reviewing changes |
+| **commit** | `.plans/{name}/_master.md` | Reference plan for commit message |
+| **summarize** | `.reports/{name}-*.md` | Synthesize all research findings |
+
+**Ingestion Protocol:**
+
+```
+# At start of phase (after displaying header)
+reports = Glob(pattern: ".claude/.reports/{name}-*.md")
+plans = Glob(pattern: ".claude/.plans/{name}/*.md")
+
+# Read relevant artifacts based on Current Phase table
+for artifact in relevant_artifacts:
+    Read(file_path: artifact)
+```
+
+**Agent Prompts Must Reference Artifacts:**
+
+When spawning agents for phases that follow research/planning, include artifact paths in the prompt:
+
+```
+Task(subagent_type: "reviewer", prompt: "Review implementation for {name}.
+Refer to:
+- Plan: .claude/.plans/{name}/_master.md
+- Research: .claude/.reports/{name}-research.md
+- Scout: .claude/.reports/{name}-scout.md")
+```
 
 ### Step 5: Complete
 

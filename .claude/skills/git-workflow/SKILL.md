@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: Git conventions, branching strategies, and commit practices. Use when: Choosing a branching strategy, Writing commit messages, Creating pull requests, Reviewing code.
+description: "Git conventions, branching strategies, and commit practices. Use when: Choosing a branching strategy, Writing commit messages, Creating pull requests, Reviewing code."
 ---
 
 # Git Workflow

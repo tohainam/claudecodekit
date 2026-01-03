@@ -1,6 +1,6 @@
 ---
 name: implementation
-description: Code writing best practices for clean, maintainable software. Use when: Writing new code or features, Reviewing code quality, Refactoring existing code, Pair programming with AI.
+description: "Code writing best practices for clean, maintainable software. Use when: Writing new code or features, Reviewing code quality, Refactoring existing code, Pair programming with AI."
 ---
 
 # Implementation

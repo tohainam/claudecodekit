@@ -1,6 +1,6 @@
 ---
 name: security-audit
-description: Security review checklist and vulnerability assessment. Use when: Reviewing code for security issues, Designing authentication/authorization, Handling user input or external data, Auditing dependencies.
+description: "Security review checklist and vulnerability assessment. Use when: Reviewing code for security issues, Designing authentication/authorization, Handling user input or external data, Auditing dependencies."
 ---
 
 # Security Audit

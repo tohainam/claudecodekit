@@ -2,7 +2,7 @@
 
 ## Protected Files
 
-Never modify without explicit confirmation:
+Never modify without explicit confirmation using the `AskUserQuestion` tool:
 
 - `.env`, `.env.*` - Environment configuration
 - `package-lock.json`, `yarn.lock` - Lock files
@@ -12,7 +12,7 @@ Never modify without explicit confirmation:
 
 ## Dangerous Commands
 
-Always warn before executing:
+Always warn using `AskUserQuestion` before executing:
 
 - `rm -rf` - Recursive deletion
 - `git push --force` - Force push

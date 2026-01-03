@@ -1,6 +1,6 @@
 ---
 name: documentation
-description: Documentation writing guidelines and templates. Use when: Creating project documentation, Documenting architecture decisions, Writing API documentation, Maintaining changelogs.
+description: "Documentation writing guidelines and templates. Use when: Creating project documentation, Documenting architecture decisions, Writing API documentation, Maintaining changelogs."
 ---
 
 # Documentation

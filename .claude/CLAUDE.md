@@ -22,8 +22,7 @@ Claude Code Kit provides automated workflows, intelligent orchestration, and a h
 - `rules/_global/` - Always-loaded guidelines
 - `agents/` - Subagent definitions
 - `skills/` - Multi-file skills
-- `commands/` - Slash commands
-- `workflows/` - Workflow definitions
+- `commands/` - Slash commands (includes workflow orchestration via `/run`)
 
 ## Key Principles
 

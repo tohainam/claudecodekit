@@ -1,6 +1,6 @@
 ---
 name: planning
-description: Implementation planning with Spec-Driven Development (SDD). Use when: Starting new feature development, Breaking down complex requirements, Estimating AI-assisted development tasks, Creating hierarchical project plans.
+description: "Implementation planning with Spec-Driven Development (SDD). Use when: Starting new feature development, Breaking down complex requirements, Estimating AI-assisted development tasks, Creating hierarchical project plans."
 ---
 
 # Planning

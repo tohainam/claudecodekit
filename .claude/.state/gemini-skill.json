@@ -1,0 +1,16 @@
+{
+  "workflow": "feature",
+  "name": "gemini-skill",
+  "status": "completed",
+  "current_phase": "commit",
+  "phases": [
+    { "name": "research", "status": "completed" },
+    { "name": "plan", "status": "completed" },
+    { "name": "implement", "status": "completed" },
+    { "name": "test", "status": "completed" },
+    { "name": "review", "status": "completed" },
+    { "name": "commit", "status": "skipped" }
+  ],
+  "started_at": "2026-01-03T09:45:00Z",
+  "spec_path": ".claude/.specs/gemini-skill.md"
+}

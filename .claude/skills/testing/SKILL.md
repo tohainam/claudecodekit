@@ -1,6 +1,6 @@
 ---
 name: testing
-description: Testing patterns, strategies, and best practices. Use when: Writing tests for new code, Reviewing test coverage, Choosing testing approach (TDD, BDD), Setting up test infrastructure.
+description: "Testing patterns, strategies, and best practices. Use when: Writing tests for new code, Reviewing test coverage, Choosing testing approach (TDD, BDD), Setting up test infrastructure."
 ---
 
 # Testing
