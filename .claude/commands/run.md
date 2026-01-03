@@ -23,8 +23,8 @@ through defined phases with human confirmation points.
 | Workflow   | Requires Spec | Phases                                               | Description                                     |
 | ---------- | ------------- | ---------------------------------------------------- | ----------------------------------------------- |
 | `feature`  | Yes           | research → plan → implement → test → review → commit | Complete workflow for new feature development   |
-| `bugfix`   | No            | scout → analyze → plan → fix → test → commit         | Bug investigation and fixing                    |
-| `hotfix`   | No            | analyze → fix → test → commit                        | Urgent production fix with minimal ceremony     |
+| `bugfix`   | No            | scout → debug → plan → fix → test → commit           | Bug investigation and fixing                    |
+| `hotfix`   | No            | debug → fix → test → commit                          | Urgent production fix with minimal ceremony     |
 | `refactor` | No            | scout → plan → refactor → test → review → commit     | Safe code refactoring with continuous testing   |
 | `research` | No            | research → scout → summarize                         | Research and documentation without code changes |
 | `review`   | No            | scout → review → report                              | Independent code review                         |
@@ -42,6 +42,7 @@ through defined phases with human confirmation points.
 
 | Skill            | Use For                         | Invocation                       |
 | ---------------- | ------------------------------- | -------------------------------- |
+| `debug`          | analyze, investigate phases     | `Skill(skill: "debug")`          |
 | `planning`       | plan phases                     | `Skill(skill: "planning")`       |
 | `implementation` | implement, fix, refactor phases | `Skill(skill: "implementation")` |
 | `testing`        | test phases                     | `Skill(skill: "testing")`        |
@@ -197,7 +198,7 @@ Refer to:
 | Phase       | Tasks                                                                                                      | Confirmation              |
 | ----------- | ---------------------------------------------------------------------------------------------------------- | ------------------------- |
 | **scout**   | `Task(subagent_type: "scouter", prompt: "locate bug, find related code, check recent changes for {name}")` | -                         |
-| **analyze** | Determine root cause, expected vs actual behavior, minimal fix approach (inline analysis)                  | -                         |
+| **debug**   | `Skill(skill: "debug")` - systematic root cause analysis (Investigate → Analyze → Hypothesize)             | Confirm root cause        |
 | **plan**    | `Skill(skill: "planning")` - create simple fix plan                                                        | Confirm fix approach      |
 | **fix**     | `Skill(skill: "implementation")` - minimal change, no unrelated refactoring                                | -                         |
 | **test**    | `Skill(skill: "testing")` - add regression test, then `Bash` to run test command                           | -                         |
@@ -207,10 +208,10 @@ Refer to:
 
 | Phase       | Tasks                                                                                   | Confirmation              |
 | ----------- | --------------------------------------------------------------------------------------- | ------------------------- |
-| **analyze** | Quick inline analysis: what is broken, immediate impact, fastest safe fix (5 min limit) | -                         |
-| **fix**     | `Skill(skill: "implementation")` - MINIMAL fix, add TODO comment for proper fix later   | -                         |
-| **test**    | `Bash` - smoke test only (not full suite): verify issue resolved                        | -                         |
-| **commit**  | `Skill(skill: "git-workflow")` - type: fix, scope: hotfix                               | Confirm before committing |
+| **debug**   | `Skill(skill: "debug")` - fast mode: 5 min max, identify what's broken and fastest fix | -                         |
+| **fix**     | `Skill(skill: "implementation")` - MINIMAL fix, add TODO comment for proper fix later  | -                         |
+| **test**    | `Bash` - smoke test only (not full suite): verify issue resolved                       | -                         |
+| **commit**  | `Skill(skill: "git-workflow")` - type: fix, scope: hotfix                              | Confirm before committing |
 
 ### Workflow: Refactor
 

@@ -15,7 +15,11 @@
       "Read(docs/**)",
       "Read(.claude/**)",
       "Edit(src/**)",
-      "Edit(docs/**)"
+      "Edit(docs/**)",
+      "Edit(.claude/.plans/**)",
+      "Edit(.claude/.reports/**)",
+      "Edit(.claude/.specs/**)",
+      "Edit(.claude/.state/**)"
     ],
     "deny": [
       "Read(.env)",
@@ -39,5 +43,17 @@
     "commit": "Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
     "pr": "Generated with [Claude Code](https://claude.com/claude-code)"
   },
-  "hooks": {}
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/inject-settings.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
 }

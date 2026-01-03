@@ -1,5 +1,6 @@
 # Claude Code Kit
 .claude/settings.local.json
+.claude/cck.local.json
 CLAUDE.local.md
 
 # Python

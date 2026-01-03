@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Claude Code Kit - AI-Powered Development Toolkit with intelligent agents, skills, and automated workflows">
-    <title>Claude Code Kit - AI-Powered Development Toolkit</title>
+    <meta name="description" content="Claude Code Kit - AI-Powered Development Toolkit Documentation">
+    <title>Claude Code Kit - Documentation</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,1125 +13,2362 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <div class="nav-container">
-            <a href="#hero" class="nav-logo">
+    <!-- Top Navigation -->
+    <header class="top-nav">
+        <div class="nav-left">
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18"></path>
+                </svg>
+            </button>
+            <a href="#" class="logo">
                 <span class="logo-icon">&#9670;</span>
                 <span class="logo-text">Claude Code Kit</span>
             </a>
-            <div class="nav-links">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#use-cases" class="nav-link">Use Cases</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#agents" class="nav-link">Agents</a>
-                <a href="#workflows" class="nav-link">Workflows</a>
-                <a href="#quickstart" class="nav-link">Quick Start</a>
+            <span class="version-badge">v1.0.0</span>
+        </div>
+        <div class="nav-center">
+            <div class="search-wrapper">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search documentation..." id="searchInput">
+                <kbd class="search-shortcut">Ctrl+K</kbd>
             </div>
-            <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
-                    </svg>
-                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
-                <a href="https://github.com/user/claude-code-kit" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    GitHub
-                </a>
-            </div>
-            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
+        </div>
+        <div class="nav-right">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                </svg>
+                <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
             </button>
+            <a href="https://github.com/user/claude-code-kit" class="github-link" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-bg">
-            <div class="hero-gradient"></div>
-            <div class="hero-grid"></div>
-        </div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge animate-fade-in">
-                    <span class="badge-dot"></span>
-                    AI-Powered Development
+    <!-- Layout Container -->
+    <div class="layout">
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <!-- Getting Started -->
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Getting Started</h3>
+                    <ul class="nav-list">
+                        <li><a href="#introduction" class="nav-item active" data-section="introduction">Introduction</a></li>
+                        <li><a href="#quick-start" class="nav-item" data-section="quick-start">Quick Start</a></li>
+                        <li><a href="#architecture" class="nav-item" data-section="architecture">Architecture</a></li>
+                    </ul>
                 </div>
-                <h1 class="hero-title animate-fade-in-up">
-                    <span class="gradient-text">Claude Code Kit</span>
-                </h1>
-                <p class="hero-subtitle animate-fade-in-up delay-1">
-                    Intelligent agents, extensible skills, and automated workflows
-                    for modern software development
-                </p>
-                <div class="hero-cta animate-fade-in-up delay-2">
-                    <a href="#quickstart" class="btn btn-primary btn-lg">
-                        Get Started
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+
+                <!-- Commands -->
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Commands</h3>
+                    <ul class="nav-list">
+                        <li><a href="#cmd-brainstorm" class="nav-item" data-section="cmd-brainstorm">/brainstorm</a></li>
+                        <li><a href="#cmd-run" class="nav-item" data-section="cmd-run">/run</a></li>
+                    </ul>
+                </div>
+
+                <!-- Workflows -->
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Workflows</h3>
+                    <ul class="nav-list">
+                        <li><a href="#wf-feature" class="nav-item" data-section="wf-feature">Feature</a></li>
+                        <li><a href="#wf-bugfix" class="nav-item" data-section="wf-bugfix">Bugfix</a></li>
+                        <li><a href="#wf-hotfix" class="nav-item" data-section="wf-hotfix">Hotfix</a></li>
+                        <li><a href="#wf-refactor" class="nav-item" data-section="wf-refactor">Refactor</a></li>
+                        <li><a href="#wf-research" class="nav-item" data-section="wf-research">Research</a></li>
+                        <li><a href="#wf-review" class="nav-item" data-section="wf-review">Review</a></li>
+                        <li><a href="#wf-docs" class="nav-item" data-section="wf-docs">Docs</a></li>
+                    </ul>
+                </div>
+
+                <!-- Agents -->
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Agents</h3>
+                    <ul class="nav-list">
+                        <li><a href="#agent-researcher" class="nav-item" data-section="agent-researcher">Researcher</a></li>
+                        <li><a href="#agent-scouter" class="nav-item" data-section="agent-scouter">Scouter</a></li>
+                        <li><a href="#agent-reviewer" class="nav-item" data-section="agent-reviewer">Reviewer</a></li>
+                    </ul>
+                </div>
+
+                <!-- Skills -->
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Skills</h3>
+                    <ul class="nav-list">
+                        <li><a href="#skill-debug" class="nav-item" data-section="skill-debug">Debug</a></li>
+                        <li><a href="#skill-planning" class="nav-item" data-section="skill-planning">Planning</a></li>
+                        <li><a href="#skill-implementation" class="nav-item" data-section="skill-implementation">Implementation</a></li>
+                        <li><a href="#skill-testing" class="nav-item" data-section="skill-testing">Testing</a></li>
+                        <li><a href="#skill-documentation" class="nav-item" data-section="skill-documentation">Documentation</a></li>
+                        <li><a href="#skill-security" class="nav-item" data-section="skill-security">Security Audit</a></li>
+                        <li><a href="#skill-git" class="nav-item" data-section="skill-git">Git Workflow</a></li>
+                        <li><a href="#skill-gemini" class="nav-item" data-section="skill-gemini">Gemini</a></li>
+                        <li><a href="#skill-creator" class="nav-item" data-section="skill-creator">Skill Creator</a></li>
+                    </ul>
+                </div>
+
+                <!-- Examples -->
+                <div class="nav-section">
+                    <h3 class="nav-section-title">Examples</h3>
+                    <ul class="nav-list">
+                        <li><a href="#example-auth" class="nav-item" data-section="example-auth">User Authentication</a></li>
+                        <li><a href="#example-api" class="nav-item" data-section="example-api">REST API</a></li>
+                        <li><a href="#example-refactor" class="nav-item" data-section="example-refactor">Legacy Refactor</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Introduction Section -->
+            <section class="doc-section" id="introduction">
+                <div class="section-header">
+                    <span class="section-badge">Overview</span>
+                    <h1>Claude Code Kit</h1>
+                    <p class="section-lead">AI-Powered Development Toolkit with intelligent agents, extensible skills, and automated workflows for modern software development.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon agents">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="4"></circle>
+                                <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path>
+                            </svg>
+                        </div>
+                        <h3>3 Core Agents</h3>
+                        <p>Researcher, Scouter, Reviewer - specialized AI agents for different tasks</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon skills">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3>8 Extensible Skills</h3>
+                        <p>Domain knowledge with progressive disclosure design</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon workflows">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </div>
+                        <h3>7 Workflows</h3>
+                        <p>Scale-adaptive routing with human confirmation points</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4M12 8h.01"></path>
                         </svg>
-                    </a>
-                    <a href="#features" class="btn btn-secondary btn-lg">
-                        Explore Features
-                    </a>
+                    </div>
+                    <div class="info-content">
+                        <strong>Key Principle:</strong> Brainstorm Before Automate - Interactive specification refinement through conversation before workflow execution.
+                    </div>
                 </div>
-                <div class="hero-code animate-fade-in-up delay-3">
+
+                <h2>Directory Structure</h2>
+                <div class="code-block">
                     <div class="code-header">
-                        <span class="code-dot red"></span>
-                        <span class="code-dot yellow"></span>
-                        <span class="code-dot green"></span>
-                        <span class="code-title">Terminal</span>
-                    </div>
-                    <div class="code-body">
-                        <code class="typing-effect" id="heroCode"></code>
-                    </div>
-                </div>
-                <div class="hero-stats animate-fade-in-up delay-4">
-                    <div class="stat">
-                        <span class="stat-value">3</span>
-                        <span class="stat-label">Agents</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat">
-                        <span class="stat-value">10</span>
-                        <span class="stat-label">Skills</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat">
-                        <span class="stat-value">7</span>
-                        <span class="stat-label">Workflows</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Powerful Features</h2>
-                <p class="section-subtitle">Everything you need for AI-assisted development</p>
-            </div>
-            <div class="bento-grid">
-                <!-- Agents Card -->
-                <div class="bento-card bento-lg glass-card" data-animate>
-                    <div class="card-icon accent">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="8" r="4"></circle>
-                            <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">3 Core Agents</h3>
-                    <p class="card-desc">Specialized AI agents for research, code analysis, and review</p>
-                    <div class="card-tags">
-                        <span class="tag">Researcher</span>
-                        <span class="tag">Scouter</span>
-                        <span class="tag">Reviewer</span>
-                    </div>
-                </div>
-
-                <!-- Skills Card -->
-                <div class="bento-card bento-md glass-card" data-animate>
-                    <div class="card-icon cyan">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5"></path>
-                            <path d="M2 12l10 5 10-5"></path>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">10 Extensible Skills</h3>
-                    <p class="card-desc">Domain knowledge with progressive disclosure</p>
-                </div>
-
-                <!-- Workflows Card -->
-                <div class="bento-card bento-md glass-card" data-animate>
-                    <div class="card-icon purple">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">7 Workflows</h3>
-                    <p class="card-desc">Scale-adaptive routing with confirmation points</p>
-                </div>
-
-                <!-- Brainstorm Card -->
-                <div class="bento-card bento-sm glass-card" data-animate>
-                    <div class="card-icon green">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">/brainstorm</h3>
-                    <p class="card-desc">Interactive spec refinement</p>
-                </div>
-
-                <!-- Run Card -->
-                <div class="bento-card bento-sm glass-card" data-animate>
-                    <div class="card-icon orange">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">/run</h3>
-                    <p class="card-desc">Execute workflows</p>
-                </div>
-
-                <!-- Document Everything -->
-                <div class="bento-card bento-wide glass-card" data-animate>
-                    <div class="card-content-row">
-                        <div>
-                            <h3 class="card-title">Document Everything</h3>
-                            <p class="card-desc">Specs, reports, and plans saved in designated folders</p>
-                        </div>
-                        <div class="folder-icons">
-                            <div class="folder-item">
-                                <span class="folder-icon">.specs/</span>
-                            </div>
-                            <div class="folder-item">
-                                <span class="folder-icon">.reports/</span>
-                            </div>
-                            <div class="folder-item">
-                                <span class="folder-icon">.plans/</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Use Cases Section -->
-    <section class="use-cases" id="use-cases">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Use Cases</h2>
-                <p class="section-subtitle">Real-world scenarios powered by Claude Code Kit</p>
-            </div>
-
-            <!-- Category Tabs -->
-            <div class="category-tabs" id="categoryTabs">
-                <button class="tab active" data-category="all">All</button>
-                <button class="tab" data-category="development">Development</button>
-                <button class="tab" data-category="quality">Quality</button>
-                <button class="tab" data-category="research">Research</button>
-                <button class="tab" data-category="ai">AI-Powered</button>
-            </div>
-
-            <div class="use-cases-grid" id="useCasesGrid">
-                <!-- Development Workflows -->
-                <div class="use-case-card glass-card" data-category="development" data-animate>
-                    <div class="use-case-number">01</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2v20M2 12h20"></path>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Full Feature Development</h3>
-                    <p class="use-case-desc">End-to-end development from specification to commit</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Add user authentication"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>/brainstorm auth</code>
-                        <span class="arrow">→</span>
-                        <code>/run feature auth</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Spec, plan, tests, review, commit
-                    </div>
-                </div>
-
-                <div class="use-case-card glass-card" data-category="development" data-animate>
-                    <div class="use-case-number">02</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 8v4l2 2"></path>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Bug Investigation & Fix</h3>
-                    <p class="use-case-desc">Systematic debugging with root cause analysis</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Users can't login after password reset"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>/run bugfix login-issue</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Root cause found, fix applied, tested
-                    </div>
-                </div>
-
-                <div class="use-case-card glass-card" data-category="development" data-animate>
-                    <div class="use-case-number">03</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Emergency Hotfix</h3>
-                    <p class="use-case-desc">Rapid production incident response</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Payment processing failing in production"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>/run hotfix payment-critical</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Minimal fix, smoke test, deployed
-                    </div>
-                </div>
-
-                <div class="use-case-card glass-card" data-category="development" data-animate>
-                    <div class="use-case-number">04</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Safe Refactoring</h3>
-                    <p class="use-case-desc">Continuous testing during code modernization</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Modernize legacy payment module"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>/run refactor payment-module</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Refactored with continuous testing
-                    </div>
-                </div>
-
-                <!-- Code Quality -->
-                <div class="use-case-card glass-card" data-category="quality" data-animate>
-                    <div class="use-case-number">05</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Pre-Merge Review</h3>
-                    <p class="use-case-desc">Independent code review with fresh context</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Review PR #123 before merge"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>/run review pr-123</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Detailed review with verdict
-                    </div>
-                </div>
-
-                <div class="use-case-card glass-card" data-category="quality" data-animate>
-                    <div class="use-case-number">06</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Security Audit</h3>
-                    <p class="use-case-desc">OWASP vulnerability scanning and assessment</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Check for vulnerabilities before release"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>Use security-audit skill</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> OWASP checklist, findings report
-                    </div>
-                </div>
-
-                <div class="use-case-card glass-card" data-category="quality" data-animate>
-                    <div class="use-case-number">07</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Documentation Generation</h3>
-                    <p class="use-case-desc">Auto-generate comprehensive documentation</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Generate API docs for v2.0"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>/run docs api-v2</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Complete API reference
-                    </div>
-                </div>
-
-                <!-- Research & Learning -->
-                <div class="use-case-card glass-card" data-category="research" data-animate>
-                    <div class="use-case-number">08</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="14" width="7" height="7"></rect>
-                            <rect x="3" y="14" width="7" height="7"></rect>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Technology Comparison</h3>
-                    <p class="use-case-desc">A vs B analysis with detailed reports</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Should we use Redis or Memcached?"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>/run research caching-comparison</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Detailed comparison report
-                    </div>
-                </div>
-
-                <div class="use-case-card glass-card" data-category="research" data-animate>
-                    <div class="use-case-number">09</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Codebase Onboarding</h3>
-                    <p class="use-case-desc">New developer orientation and architecture understanding</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"New developer joining team"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>Scouter analyzes architecture</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Architecture map, key patterns
-                    </div>
-                </div>
-
-                <div class="use-case-card glass-card" data-category="research" data-animate>
-                    <div class="use-case-number">10</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Architecture Analysis</h3>
-                    <p class="use-case-desc">Deep pattern detection and dependency mapping</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Understand microservices dependencies"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>Scouter traces data flows</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Dependency graph, bottlenecks
-                    </div>
-                </div>
-
-                <!-- AI-Powered -->
-                <div class="use-case-card glass-card" data-category="ai" data-animate>
-                    <div class="use-case-number">11</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">Image/PDF Analysis</h3>
-                    <p class="use-case-desc">Process media files using Gemini integration</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Extract data from scanned receipts"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>Gemini skill processes images</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Structured data extraction
-                    </div>
-                </div>
-
-                <div class="use-case-card glass-card" data-category="ai" data-animate>
-                    <div class="use-case-number">12</div>
-                    <div class="use-case-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                            <path d="M2 2l7.586 7.586"></path>
-                            <circle cx="11" cy="11" r="2"></circle>
-                        </svg>
-                    </div>
-                    <h3 class="use-case-title">UI/UX Design</h3>
-                    <p class="use-case-desc">Beautiful interfaces with 200+ design components</p>
-                    <div class="use-case-example">
-                        <span class="label">Scenario:</span>
-                        <span class="text">"Create beautiful dashboard"</span>
-                    </div>
-                    <div class="use-case-flow">
-                        <code>UI/UX Pro Max skill</code>
-                    </div>
-                    <div class="use-case-result">
-                        <span class="result-label">Result:</span> Modern design with components
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section class="skills" id="skills">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">10 Extensible Skills</h2>
-                <p class="section-subtitle">Domain knowledge with progressive disclosure</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon planning">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
-                            <rect x="9" y="3" width="6" height="4" rx="1"></rect>
-                            <path d="M9 12h6M9 16h6"></path>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">Planning</h3>
-                    <p class="skill-desc">Spec-Driven Development (SDD) with hierarchical plans</p>
-                    <div class="skill-trigger">When: Starting features, breaking down requirements</div>
-                </div>
-
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon implementation">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="16 18 22 12 16 6"></polyline>
-                            <polyline points="8 6 2 12 8 18"></polyline>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">Implementation</h3>
-                    <p class="skill-desc">Clean code best practices and SOLID principles</p>
-                    <div class="skill-trigger">When: Writing new code, refactoring</div>
-                </div>
-
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon testing">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <path d="M9 15l2 2 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">Testing</h3>
-                    <p class="skill-desc">Test pyramid, TDD/BDD, 80-90% meaningful coverage</p>
-                    <div class="skill-trigger">When: Writing tests, improving coverage</div>
-                </div>
-
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon documentation">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">Documentation</h3>
-                    <p class="skill-desc">READMEs, ADRs, API docs, changelogs</p>
-                    <div class="skill-trigger">When: Creating project documentation</div>
-                </div>
-
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon security">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">Security Audit</h3>
-                    <p class="skill-desc">OWASP Top 10, vulnerability assessment</p>
-                    <div class="skill-trigger">When: Security reviews, auth design</div>
-                </div>
-
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon git">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="18" cy="18" r="3"></circle>
-                            <circle cx="6" cy="6" r="3"></circle>
-                            <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
-                            <path d="M6 9v12"></path>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">Git Workflow</h3>
-                    <p class="skill-desc">Branching strategies, conventional commits</p>
-                    <div class="skill-trigger">When: Creating PRs, code review</div>
-                </div>
-
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon patterns">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="14" width="7" height="7"></rect>
-                            <rect x="3" y="14" width="7" height="7"></rect>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">Code Patterns</h3>
-                    <p class="skill-desc">Design patterns, CQRS, Event Sourcing</p>
-                    <div class="skill-trigger">When: Choosing architectural patterns</div>
-                </div>
-
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon gemini">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">Gemini</h3>
-                    <p class="skill-desc">AI-powered image/PDF analysis</p>
-                    <div class="skill-trigger">When: Processing media files</div>
-                </div>
-
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon uiux">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">UI/UX Pro Max</h3>
-                    <p class="skill-desc">200+ design components, 50 styles</p>
-                    <div class="skill-trigger">When: Creating beautiful interfaces</div>
-                </div>
-
-                <div class="skill-card glass-card" data-animate>
-                    <div class="skill-icon creator">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M12 8v8M8 12h8"></path>
-                        </svg>
-                    </div>
-                    <h3 class="skill-name">Skill Creator</h3>
-                    <p class="skill-desc">Meta-skill for creating new skills</p>
-                    <div class="skill-trigger">When: Extending capabilities</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Agents Section -->
-    <section class="agents" id="agents">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">3 Core Agents</h2>
-                <p class="section-subtitle">Specialized AI agents for different tasks</p>
-            </div>
-            <div class="agents-grid">
-                <div class="agent-card glass-card" data-animate>
-                    <div class="agent-visual researcher">
-                        <div class="agent-orbit">
-                            <div class="orbit-ring"></div>
-                            <div class="orbit-dot"></div>
-                        </div>
-                        <div class="agent-icon-wrapper">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="m21 21-4.35-4.35"></path>
-                                <path d="M11 8v6M8 11h6"></path>
+                        <span class="code-lang">Project Structure</span>
+                        <button class="copy-btn" data-copy=".claude/
+├── .specs/          # Finalized specifications
+├── .reports/        # Research & analysis reports
+├── .plans/          # Implementation plans
+├── .state/          # Workflow execution state
+├── agents/          # Agent definitions
+├── skills/          # Skill modules
+├── commands/        # Slash commands
+└── rules/           # Global guidelines">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
-                        </div>
+                        </button>
                     </div>
-                    <h3 class="agent-name">Researcher</h3>
-                    <p class="agent-desc">External documentation research, best practices, and technology comparisons</p>
-                    <div class="agent-tools">
-                        <span class="tool-tag">WebSearch</span>
-                        <span class="tool-tag">WebFetch</span>
-                        <span class="tool-tag">Read</span>
-                        <span class="tool-tag">Write</span>
-                    </div>
-                    <div class="agent-use-cases">
-                        <h4>Use Cases</h4>
-                        <ul>
-                            <li>Library documentation</li>
-                            <li>API references</li>
-                            <li>A vs B comparisons</li>
-                            <li>Error troubleshooting</li>
-                        </ul>
-                    </div>
+                    <pre><code>.claude/
+├── .specs/          # Finalized specifications
+├── .reports/        # Research & analysis reports
+├── .plans/          # Implementation plans
+├── .state/          # Workflow execution state
+├── agents/          # Agent definitions
+├── skills/          # Skill modules
+├── commands/        # Slash commands
+└── rules/           # Global guidelines</code></pre>
                 </div>
+            </section>
 
-                <div class="agent-card glass-card featured" data-animate>
-                    <div class="agent-visual scouter">
-                        <div class="agent-orbit">
-                            <div class="orbit-ring"></div>
-                            <div class="orbit-dot"></div>
-                        </div>
-                        <div class="agent-icon-wrapper">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <h3 class="agent-name">Scouter</h3>
-                    <p class="agent-desc">Deep codebase analysis, pattern detection, and dependency mapping</p>
-                    <div class="agent-tools">
-                        <span class="tool-tag">Grep</span>
-                        <span class="tool-tag">Glob</span>
-                        <span class="tool-tag">Read</span>
-                        <span class="tool-tag">Bash</span>
-                    </div>
-                    <div class="agent-use-cases">
-                        <h4>Use Cases</h4>
-                        <ul>
-                            <li>Understanding implementations</li>
-                            <li>Tracing data flows</li>
-                            <li>Mapping dependencies</li>
-                            <li>Planning refactors</li>
-                        </ul>
-                    </div>
-                </div>
+            <!-- Quick Start Section -->
+            <section class="doc-section" id="quick-start">
+                <h1>Quick Start</h1>
+                <p class="section-lead">Get up and running with Claude Code Kit in minutes.</p>
 
-                <div class="agent-card glass-card" data-animate>
-                    <div class="agent-visual reviewer">
-                        <div class="agent-orbit">
-                            <div class="orbit-ring"></div>
-                            <div class="orbit-dot"></div>
-                        </div>
-                        <div class="agent-icon-wrapper">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <path d="M9 15l2 2 4-4"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <h3 class="agent-name">Reviewer</h3>
-                    <p class="agent-desc">Isolated code review with fresh context for unbiased analysis</p>
-                    <div class="agent-tools">
-                        <span class="tool-tag">Read</span>
-                        <span class="tool-tag">Grep</span>
-                        <span class="tool-tag">Glob</span>
-                        <span class="tool-tag">Edit</span>
-                    </div>
-                    <div class="agent-use-cases">
-                        <h4>Use Cases</h4>
-                        <ul>
-                            <li>Post-implementation review</li>
-                            <li>Pre-merge validation</li>
-                            <li>Security audits</li>
-                            <li>Approved/Needs Changes verdict</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Workflows Section -->
-    <section class="workflows" id="workflows">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">7 Automated Workflows</h2>
-                <p class="section-subtitle">Scale-adaptive routing with confirmation points</p>
-            </div>
-            <div class="workflow-visualizer">
-                <div class="workflow-tabs" id="workflowTabs">
-                    <button class="workflow-tab active" data-workflow="feature">Feature</button>
-                    <button class="workflow-tab" data-workflow="bugfix">Bugfix</button>
-                    <button class="workflow-tab" data-workflow="hotfix">Hotfix</button>
-                    <button class="workflow-tab" data-workflow="refactor">Refactor</button>
-                    <button class="workflow-tab" data-workflow="research">Research</button>
-                    <button class="workflow-tab" data-workflow="review">Review</button>
-                    <button class="workflow-tab" data-workflow="docs">Docs</button>
-                </div>
-                <div class="workflow-content glass-card" id="workflowContent">
-                    <!-- Feature Workflow -->
-                    <div class="workflow-diagram active" data-workflow="feature">
-                        <div class="workflow-info">
-                            <h4>Feature Development</h4>
-                            <p>Complete new feature development with full quality gates</p>
-                            <span class="workflow-requires">Requires: Spec file</span>
-                        </div>
-                        <div class="workflow-phases">
-                            <div class="phase">
-                                <span class="phase-icon">1</span>
-                                <span class="phase-name">Research</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">2</span>
-                                <span class="phase-name">Plan</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">3</span>
-                                <span class="phase-name">Implement</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">4</span>
-                                <span class="phase-name">Test</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">5</span>
-                                <span class="phase-name">Review</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">6</span>
-                                <span class="phase-name">Commit</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bugfix Workflow -->
-                    <div class="workflow-diagram" data-workflow="bugfix">
-                        <div class="workflow-info">
-                            <h4>Bug Investigation & Fix</h4>
-                            <p>Systematic debugging with root cause analysis</p>
-                            <span class="workflow-requires">Requires: Bug description</span>
-                        </div>
-                        <div class="workflow-phases">
-                            <div class="phase">
-                                <span class="phase-icon">1</span>
-                                <span class="phase-name">Scout</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">2</span>
-                                <span class="phase-name">Analyze</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">3</span>
-                                <span class="phase-name">Plan</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">4</span>
-                                <span class="phase-name">Fix</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">5</span>
-                                <span class="phase-name">Test</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">6</span>
-                                <span class="phase-name">Commit</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Hotfix Workflow -->
-                    <div class="workflow-diagram" data-workflow="hotfix">
-                        <div class="workflow-info">
-                            <h4>Emergency Hotfix</h4>
-                            <p>Ultra-fast fix path for production incidents</p>
-                            <span class="workflow-requires">Requires: Critical issue</span>
-                        </div>
-                        <div class="workflow-phases">
-                            <div class="phase urgent">
-                                <span class="phase-icon">1</span>
-                                <span class="phase-name">Analyze</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase urgent">
-                                <span class="phase-icon">2</span>
-                                <span class="phase-name">Fix</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase urgent">
-                                <span class="phase-icon">3</span>
-                                <span class="phase-name">Smoke Test</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase urgent">
-                                <span class="phase-icon">4</span>
-                                <span class="phase-name">Commit</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Refactor Workflow -->
-                    <div class="workflow-diagram" data-workflow="refactor">
-                        <div class="workflow-info">
-                            <h4>Safe Refactoring</h4>
-                            <p>Continuous testing during code modernization</p>
-                            <span class="workflow-requires">Requires: Refactor scope</span>
-                        </div>
-                        <div class="workflow-phases">
-                            <div class="phase">
-                                <span class="phase-icon">1</span>
-                                <span class="phase-name">Scout</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">2</span>
-                                <span class="phase-name">Plan</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">3</span>
-                                <span class="phase-name">Refactor</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">4</span>
-                                <span class="phase-name">Test</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">5</span>
-                                <span class="phase-name">Review</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">6</span>
-                                <span class="phase-name">Commit</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Research Workflow -->
-                    <div class="workflow-diagram" data-workflow="research">
-                        <div class="workflow-info">
-                            <h4>Research & Learning</h4>
-                            <p>External research without code changes</p>
-                            <span class="workflow-requires">Requires: Topic</span>
-                        </div>
-                        <div class="workflow-phases">
-                            <div class="phase">
-                                <span class="phase-icon">1</span>
-                                <span class="phase-name">Research</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">2</span>
-                                <span class="phase-name">Scout</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">3</span>
-                                <span class="phase-name">Summarize</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Review Workflow -->
-                    <div class="workflow-diagram" data-workflow="review">
-                        <div class="workflow-info">
-                            <h4>Code Review</h4>
-                            <p>Independent review with fresh context</p>
-                            <span class="workflow-requires">Requires: Scope</span>
-                        </div>
-                        <div class="workflow-phases">
-                            <div class="phase">
-                                <span class="phase-icon">1</span>
-                                <span class="phase-name">Scout</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">2</span>
-                                <span class="phase-name">Review</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">3</span>
-                                <span class="phase-name">Report</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Docs Workflow -->
-                    <div class="workflow-diagram" data-workflow="docs">
-                        <div class="workflow-info">
-                            <h4>Documentation</h4>
-                            <p>Auto-generate comprehensive documentation</p>
-                            <span class="workflow-requires">Requires: Description</span>
-                        </div>
-                        <div class="workflow-phases">
-                            <div class="phase">
-                                <span class="phase-icon">1</span>
-                                <span class="phase-name">Scout</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">2</span>
-                                <span class="phase-name">Plan</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">3</span>
-                                <span class="phase-name">Generate</span>
-                            </div>
-                            <div class="phase-arrow">→</div>
-                            <div class="phase">
-                                <span class="phase-icon">4</span>
-                                <span class="phase-name">Commit</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quick Start Section -->
-    <section class="quickstart" id="quickstart">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Quick Start</h2>
-                <p class="section-subtitle">Get up and running in minutes</p>
-            </div>
-            <div class="quickstart-content">
-                <div class="quickstart-steps">
-                    <div class="step glass-card" data-animate>
+                <div class="steps">
+                    <div class="step">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3>Clone the Kit</h3>
+                            <h3>Clone the Repository</h3>
                             <div class="code-block">
-                                <button class="copy-btn" data-copy="git clone https://github.com/user/claude-code-kit">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                </button>
-                                <code>git clone https://github.com/user/claude-code-kit</code>
+                                <div class="code-header">
+                                    <span class="code-lang">bash</span>
+                                    <button class="copy-btn" data-copy="git clone https://github.com/user/claude-code-kit
+cd claude-code-kit">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <pre><code>git clone https://github.com/user/claude-code-kit
+cd claude-code-kit</code></pre>
                             </div>
                         </div>
                     </div>
 
-                    <div class="step glass-card" data-animate>
+                    <div class="step">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3>Start Brainstorming</h3>
+                            <h3>Start a Brainstorm Session</h3>
+                            <p>Begin by creating a specification for your feature through interactive conversation:</p>
                             <div class="code-block">
-                                <button class="copy-btn" data-copy="/brainstorm my-feature">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                </button>
-                                <code>/brainstorm my-feature</code>
+                                <div class="code-header">
+                                    <span class="code-lang">Claude Code</span>
+                                    <button class="copy-btn" data-copy="/brainstorm user-authentication">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <pre><code>/brainstorm user-authentication</code></pre>
                             </div>
-                            <p class="step-desc">Interactive spec refinement through conversation</p>
+                            <p class="step-note">This creates a spec file at <code>.claude/.specs/user-authentication.md</code> and starts an interactive session to refine requirements.</p>
                         </div>
                     </div>
 
-                    <div class="step glass-card" data-animate>
+                    <div class="step">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h3>Run Workflow</h3>
+                            <h3>Execute the Workflow</h3>
+                            <p>Once your spec is finalized, run the full development workflow:</p>
                             <div class="code-block">
-                                <button class="copy-btn" data-copy="/run feature my-feature">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                </button>
-                                <code>/run feature my-feature</code>
+                                <div class="code-header">
+                                    <span class="code-lang">Claude Code</span>
+                                    <button class="copy-btn" data-copy="/run feature user-authentication">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <pre><code>/run feature user-authentication</code></pre>
                             </div>
-                            <p class="step-desc">Execute full development workflow</p>
                         </div>
                     </div>
 
-                    <div class="step glass-card" data-animate>
+                    <div class="step">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <h3>Check Results</h3>
+                            <h3>Review Generated Artifacts</h3>
+                            <p>Check the output in designated folders:</p>
                             <div class="folder-list">
                                 <div class="folder-item">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                                     </svg>
-                                    <span>.specs/</span> - Finalized specifications
+                                    <code>.specs/</code>
+                                    <span>Finalized feature specifications</span>
                                 </div>
                                 <div class="folder-item">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                                     </svg>
-                                    <span>.reports/</span> - Research & analysis
+                                    <code>.reports/</code>
+                                    <span>Research and analysis reports</span>
                                 </div>
                                 <div class="folder-item">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                                     </svg>
-                                    <span>.plans/</span> - Implementation plans
+                                    <code>.plans/</code>
+                                    <span>Hierarchical implementation plans</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="quickstart-cta glass-card" data-animate>
-                    <h3>Ready to get started?</h3>
-                    <p>Clone the repository and start building with AI-powered workflows</p>
-                    <a href="https://github.com/user/claude-code-kit" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            <!-- Architecture Section -->
+            <section class="doc-section" id="architecture">
+                <h1>Architecture</h1>
+                <p class="section-lead">Understanding the layered architecture of Claude Code Kit.</p>
+
+                <div class="architecture-diagram">
+                    <div class="arch-layer">
+                        <div class="arch-label">Command Layer</div>
+                        <div class="arch-items">
+                            <span class="arch-item">/brainstorm</span>
+                            <span class="arch-item">/run</span>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">&#8595;</div>
+                    <div class="arch-layer">
+                        <div class="arch-label">Orchestration Layer</div>
+                        <div class="arch-items">
+                            <span class="arch-item">Workflow Engine</span>
+                            <span class="arch-item">Phase Management</span>
+                            <span class="arch-item">Confirmation Points</span>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">&#8595;</div>
+                    <div class="arch-layer">
+                        <div class="arch-label">Agent Layer</div>
+                        <div class="arch-items">
+                            <span class="arch-item agent">Researcher</span>
+                            <span class="arch-item agent">Scouter</span>
+                            <span class="arch-item agent">Reviewer</span>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">&#8595;</div>
+                    <div class="arch-layer">
+                        <div class="arch-label">Skill Layer</div>
+                        <div class="arch-items">
+                            <span class="arch-item skill">Planning</span>
+                            <span class="arch-item skill">Implementation</span>
+                            <span class="arch-item skill">Testing</span>
+                            <span class="arch-item skill">+5 more</span>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">&#8595;</div>
+                    <div class="arch-layer">
+                        <div class="arch-label">Artifact Layer</div>
+                        <div class="arch-items">
+                            <span class="arch-item artifact">.specs/</span>
+                            <span class="arch-item artifact">.reports/</span>
+                            <span class="arch-item artifact">.plans/</span>
+                            <span class="arch-item artifact">.state/</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Command: /brainstorm -->
+            <section class="doc-section" id="cmd-brainstorm">
+                <div class="section-header">
+                    <span class="section-badge command">/brainstorm</span>
+                    <h1>Brainstorm Command</h1>
+                    <p class="section-lead">Interactive specification refinement through conversation with the developer.</p>
+                </div>
+
+                <h2>Usage</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Claude Code</span>
+                        <button class="copy-btn" data-copy="/brainstorm <feature-name>">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <pre><code>/brainstorm &lt;feature-name&gt;</code></pre>
+                </div>
+
+                <h2>How It Works</h2>
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="process-number">1</div>
+                        <div class="process-content">
+                            <h4>Initialize Spec File</h4>
+                            <p>Creates spec at <code>.claude/.specs/{feature}.md</code></p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">2</div>
+                        <div class="process-content">
+                            <h4>Analyze Codebase</h4>
+                            <p>Spawns Scouter agent to find integration points</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">3</div>
+                        <div class="process-content">
+                            <h4>Identify Gaps</h4>
+                            <p>Lists missing information and open questions</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">4</div>
+                        <div class="process-content">
+                            <h4>Conversation Loop</h4>
+                            <p>Interactive Q&A until all gaps resolved</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">5</div>
+                        <div class="process-content">
+                            <h4>Finalize Spec</h4>
+                            <p>Generate final specification with acceptance criteria</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Example Session</h2>
+                <div class="code-block terminal">
+                    <div class="code-header">
+                        <span class="code-lang">Terminal</span>
+                    </div>
+                    <pre><code><span class="prompt">$</span> /brainstorm user-authentication
+
+<span class="output">Creating spec file: .claude/.specs/user-authentication.md</span>
+
+<span class="output">Analyzing codebase for integration points...</span>
+<span class="output">Found: src/routes/, src/middleware/, src/models/</span>
+
+<span class="output">Identified Gaps:</span>
+<span class="output">[ ] Authentication method (JWT, Session, OAuth)</span>
+<span class="output">[ ] Password requirements</span>
+<span class="output">[ ] Session duration</span>
+
+<span class="output">Questions:</span>
+<span class="output">1. Which authentication method do you prefer?</span>
+<span class="output">2. Do you need social login (Google, GitHub)?</span>
+
+<span class="comment"># Developer answers questions...</span>
+
+<span class="output">Spec finalized!</span>
+<span class="output">Next step: /run feature user-authentication</span></code></pre>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
                         </svg>
-                        View on GitHub
-                    </a>
+                    </div>
+                    <div class="warning-content">
+                        <strong>Important:</strong> This is a CONVERSATION, not automation. Claude will always wait for your feedback before proceeding.
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <span class="logo-icon">&#9670;</span>
-                    <span class="logo-text">Claude Code Kit</span>
+            <!-- Command: /run -->
+            <section class="doc-section" id="cmd-run">
+                <div class="section-header">
+                    <span class="section-badge command">/run</span>
+                    <h1>Run Command</h1>
+                    <p class="section-lead">Execute development workflows with scale-adaptive routing and confirmation points.</p>
                 </div>
-                <div class="footer-links">
-                    <a href="#features">Features</a>
-                    <a href="#use-cases">Use Cases</a>
-                    <a href="#skills">Skills</a>
-                    <a href="#agents">Agents</a>
-                    <a href="https://github.com/user/claude-code-kit" target="_blank" rel="noopener noreferrer">GitHub</a>
+
+                <h2>Usage</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Claude Code</span>
+                        <button class="copy-btn" data-copy="/run <workflow> <name>">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <pre><code>/run &lt;workflow&gt; &lt;name&gt;</code></pre>
                 </div>
-                <div class="footer-info">
-                    <p>Made with Claude Code</p>
-                    <p class="footer-version">v1.0.0</p>
+
+                <h2>Available Workflows</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Workflow</th>
+                                <th>Requires Spec</th>
+                                <th>Phases</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>feature</code></td>
+                                <td><span class="badge yes">Yes</span></td>
+                                <td>research → plan → implement → test → review → commit</td>
+                                <td>Complete new feature development</td>
+                            </tr>
+                            <tr>
+                                <td><code>bugfix</code></td>
+                                <td><span class="badge no">No</span></td>
+                                <td>scout → debug → plan → fix → test → commit</td>
+                                <td>Bug investigation and fixing</td>
+                            </tr>
+                            <tr>
+                                <td><code>hotfix</code></td>
+                                <td><span class="badge no">No</span></td>
+                                <td>debug → fix → test → commit</td>
+                                <td>Urgent production fix</td>
+                            </tr>
+                            <tr>
+                                <td><code>refactor</code></td>
+                                <td><span class="badge no">No</span></td>
+                                <td>scout → plan → refactor → test → review → commit</td>
+                                <td>Safe code refactoring</td>
+                            </tr>
+                            <tr>
+                                <td><code>research</code></td>
+                                <td><span class="badge no">No</span></td>
+                                <td>research → scout → summarize</td>
+                                <td>Research without code changes</td>
+                            </tr>
+                            <tr>
+                                <td><code>review</code></td>
+                                <td><span class="badge no">No</span></td>
+                                <td>scout → review → report</td>
+                                <td>Independent code review</td>
+                            </tr>
+                            <tr>
+                                <td><code>docs</code></td>
+                                <td><span class="badge no">No</span></td>
+                                <td>scout → plan → generate → commit</td>
+                                <td>Documentation generation</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
+                <h2>Auto-Detection</h2>
+                <p>If you don't specify a workflow, Claude will auto-detect based on your intent:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Examples</span>
+                    </div>
+                    <pre><code><span class="comment"># These are equivalent:</span>
+/run Add user authentication     <span class="comment"># → feature workflow</span>
+/run Fix login bug               <span class="comment"># → bugfix workflow</span>
+/run URGENT payment failing      <span class="comment"># → hotfix workflow</span>
+/run Improve code quality        <span class="comment"># → refactor workflow</span>
+/run Compare Redis vs Memcached  <span class="comment"># → research workflow</span></code></pre>
+                </div>
+
+                <h2>Special Commands</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Claude Code</span>
+                    </div>
+                    <pre><code>/run status &lt;name&gt;   <span class="comment"># Check workflow state</span>
+/run resume &lt;name&gt;   <span class="comment"># Resume paused workflow</span></code></pre>
+                </div>
+
+                <h2>Phase → Tool Mapping</h2>
+                <p>Every phase uses either a <strong>Skill</strong> (domain knowledge) or an <strong>Agent</strong> (specialized worker):</p>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Phase</th>
+                                <th>Tool</th>
+                                <th>Invocation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>research</strong></td>
+                                <td><span class="badge agent">Agent</span></td>
+                                <td><code>Task(subagent_type: "researcher")</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>scout</strong></td>
+                                <td><span class="badge agent">Agent</span></td>
+                                <td><code>Task(subagent_type: "scouter")</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>review</strong></td>
+                                <td><span class="badge agent">Agent</span></td>
+                                <td><code>Task(subagent_type: "reviewer")</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>debug</strong></td>
+                                <td><span class="badge skill">Skill</span></td>
+                                <td><code>Skill(skill: "debug")</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>plan</strong></td>
+                                <td><span class="badge skill">Skill</span></td>
+                                <td><code>Skill(skill: "planning")</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>implement / fix / refactor</strong></td>
+                                <td><span class="badge skill">Skill</span></td>
+                                <td><code>Skill(skill: "implementation")</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>test</strong></td>
+                                <td><span class="badge skill">Skill</span></td>
+                                <td><code>Skill(skill: "testing")</code> + <code>Bash</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>commit</strong></td>
+                                <td><span class="badge skill">Skill</span></td>
+                                <td><code>Skill(skill: "git-workflow")</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>summarize / generate / report</strong></td>
+                                <td><span class="badge skill">Skill</span></td>
+                                <td><code>Skill(skill: "documentation")</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>security (optional)</strong></td>
+                                <td><span class="badge skill">Skill</span></td>
+                                <td><code>Skill(skill: "security-audit")</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Skills Reference</h2>
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <span class="tool-name">debug</span>
+                        <span class="tool-desc">Root cause analysis, 5-phase debugging, hypothesis testing</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">planning</span>
+                        <span class="tool-desc">Hierarchical plans, T-shirt sizing, phase breakdown</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">implementation</span>
+                        <span class="tool-desc">Clean code, error handling, SOLID principles</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">testing</span>
+                        <span class="tool-desc">Test pyramid, coverage, TDD/BDD patterns</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">documentation</span>
+                        <span class="tool-desc">API docs, changelogs, README templates</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">git-workflow</span>
+                        <span class="tool-desc">Conventional commits, branching, PR templates</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">security-audit</span>
+                        <span class="tool-desc">OWASP, input validation, auth checks</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Workflow: Feature -->
+            <section class="doc-section" id="wf-feature">
+                <div class="section-header">
+                    <span class="section-badge workflow">Workflow</span>
+                    <h1>Feature Workflow</h1>
+                    <p class="section-lead">Complete new feature development with full quality gates.</p>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4M12 8h.01"></path>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <strong>Requires:</strong> Finalized spec file from <code>/brainstorm</code>
+                    </div>
+                </div>
+
+                <h2>Phases</h2>
+                <div class="workflow-phases-detail">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Research</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Researcher + Scouter agents run in parallel to gather best practices and analyze integration points.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(researcher)</span>
+                            <span class="tool">Task(scouter)</span>
+                        </div>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Plan</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Creates hierarchical implementation plan at <code>.plans/{name}/_master.md</code></p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(planning)</span>
+                        </div>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Implement</h3>
+                        </div>
+                        <p>Executes each phase in the plan using implementation best practices.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(implementation)</span>
+                        </div>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">4</span>
+                            <h3>Test</h3>
+                        </div>
+                        <p>Writes and runs tests following testing pyramid guidelines.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(testing)</span>
+                            <span class="tool">Bash</span>
+                        </div>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">5</span>
+                            <h3>Review</h3>
+                        </div>
+                        <p>Independent code review with fresh context.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(reviewer)</span>
+                        </div>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">6</span>
+                            <h3>Commit</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Creates conventional commit with proper message format.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(git-workflow)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Example</h2>
+                <div class="code-block terminal">
+                    <div class="code-header">
+                        <span class="code-lang">Terminal</span>
+                    </div>
+                    <pre><code><span class="prompt">$</span> /brainstorm user-authentication
+<span class="comment"># ... interactive session to create spec ...</span>
+
+<span class="prompt">$</span> /run feature user-authentication
+
+<span class="output">Phase 1/6: Research</span>
+<span class="output">  ├─ Researcher: JWT best practices, OAuth 2.0 patterns</span>
+<span class="output">  └─ Scouter: Found src/middleware/, src/models/User.ts</span>
+<span class="output">  → Confirm findings? [y/n]</span>
+
+<span class="output">Phase 2/6: Plan</span>
+<span class="output">  └─ Created .plans/user-authentication/_master.md</span>
+<span class="output">  → Approve plan? [y/n]</span>
+
+<span class="output">Phase 3/6: Implement</span>
+<span class="output">  ├─ Created src/middleware/auth.ts</span>
+<span class="output">  ├─ Created src/routes/auth.ts</span>
+<span class="output">  └─ Updated src/models/User.ts</span>
+
+<span class="output">Phase 4/6: Test</span>
+<span class="output">  └─ Created tests/auth.test.ts (15 tests, all passing)</span>
+
+<span class="output">Phase 5/6: Review</span>
+<span class="output">  └─ Verdict: Approved (0 critical, 2 suggestions)</span>
+
+<span class="output">Phase 6/6: Commit</span>
+<span class="output">  → Create commit? [y/n]</span>
+<span class="output">  └─ feat(auth): add JWT-based user authentication</span>
+
+<span class="success">Workflow completed successfully!</span></code></pre>
+                </div>
+            </section>
+
+            <!-- Workflow: Bugfix -->
+            <section class="doc-section" id="wf-bugfix">
+                <div class="section-header">
+                    <span class="section-badge workflow">Workflow</span>
+                    <h1>Bugfix Workflow</h1>
+                    <p class="section-lead">Systematic debugging with root cause analysis.</p>
+                </div>
+
+                <h2>Phases</h2>
+                <div class="workflow-phases-detail">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Scout</h3>
+                        </div>
+                        <p>Locate bug location, find related code, check recent changes.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(scouter)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Debug</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Systematic root cause analysis: Investigate → Analyze → Hypothesize.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(debug)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Plan</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Create minimal fix plan - no unrelated refactoring.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(planning)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">4</span>
+                            <h3>Fix</h3>
+                        </div>
+                        <p>Apply the fix with minimal changes.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(implementation)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">5</span>
+                            <h3>Test</h3>
+                        </div>
+                        <p>Add regression test + run test suite.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(testing)</span>
+                            <span class="tool">Bash</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">6</span>
+                            <h3>Commit</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Commit with <code>fix:</code> type.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(git-workflow)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Example</h2>
+                <div class="code-block terminal">
+                    <div class="code-header">
+                        <span class="code-lang">Terminal</span>
+                    </div>
+                    <pre><code><span class="prompt">$</span> /run bugfix login-password-reset
+
+<span class="comment"># Result:</span>
+<span class="comment"># - Root cause: Password hash comparison failing after reset</span>
+<span class="comment"># - Fix: Update hash in database after password change</span>
+<span class="comment"># - Test: Added regression test for password reset flow</span>
+<span class="comment"># - Commit: fix(auth): update password hash after reset</span></code></pre>
+                </div>
+            </section>
+
+            <!-- Workflow: Hotfix -->
+            <section class="doc-section" id="wf-hotfix">
+                <div class="section-header">
+                    <span class="section-badge workflow urgent">Workflow</span>
+                    <h1>Hotfix Workflow</h1>
+                    <p class="section-lead">Ultra-fast fix path for production incidents. Minimal ceremony.</p>
+                </div>
+
+                <div class="warning-box urgent">
+                    <div class="warning-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                    </div>
+                    <div class="warning-content">
+                        <strong>5-Minute Analysis Limit:</strong> Quick assessment of impact and fastest fix. Adds TODO for proper fix later.
+                    </div>
+                </div>
+
+                <h2>Phases (Minimal)</h2>
+                <div class="workflow-phases-detail compact">
+                    <div class="phase-card urgent">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Debug</h3>
+                        </div>
+                        <p>5-min max: Fast root cause analysis - what's broken? Impact? Fastest fix?</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(debug)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card urgent">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Fix</h3>
+                        </div>
+                        <p>MINIMAL fix. Add TODO for proper fix.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(implementation)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card urgent">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Smoke Test</h3>
+                        </div>
+                        <p>Quick verification only. No full test suite.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Bash</span>
+                        </div>
+                    </div>
+                    <div class="phase-card urgent">
+                        <div class="phase-header">
+                            <span class="phase-num">4</span>
+                            <h3>Commit</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p><code>fix(hotfix): ...</code></p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(git-workflow)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Example</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Claude Code</span>
+                    </div>
+                    <pre><code>/run hotfix payment-critical
+
+<span class="comment"># Analysis: Stripe webhook signature validation failing</span>
+<span class="comment"># Impact: All payments rejected</span>
+<span class="comment"># Fix: Update webhook secret from env (was hardcoded)</span>
+<span class="comment"># TODO: Add secret rotation mechanism</span>
+<span class="comment"># Commit: fix(hotfix): use env var for Stripe webhook secret</span></code></pre>
+                </div>
+            </section>
+
+            <!-- Workflow: Refactor -->
+            <section class="doc-section" id="wf-refactor">
+                <div class="section-header">
+                    <span class="section-badge workflow">Workflow</span>
+                    <h1>Refactor Workflow</h1>
+                    <p class="section-lead">Safe code refactoring with continuous testing.</p>
+                </div>
+
+                <h2>Key Principles</h2>
+                <ul class="feature-list">
+                    <li>One change at a time</li>
+                    <li>Test after each change</li>
+                    <li>Rollback points at each step</li>
+                    <li>Low-risk changes first</li>
+                    <li>No behavior changes (verified by tests)</li>
+                </ul>
+
+                <h2>Phases</h2>
+                <div class="workflow-phases-detail">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Scout</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Analyze dependencies, test coverage, impact scope.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(scouter)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Plan</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Atomic changes, rollback points, low-risk-first order.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(planning)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Refactor</h3>
+                        </div>
+                        <p>Apply changes one at a time, test after each.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(implementation)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">4</span>
+                            <h3>Test</h3>
+                        </div>
+                        <p>Full test suite with coverage report.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Bash</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">5</span>
+                            <h3>Review</h3>
+                        </div>
+                        <p>Verify quality improved, no behavior changes.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(reviewer)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">6</span>
+                            <h3>Commit</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p><code>refactor:</code> type. Optional squash.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(git-workflow)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Example</h2>
+                <div class="code-block terminal">
+                    <div class="code-header">
+                        <span class="code-lang">Terminal</span>
+                    </div>
+                    <pre><code><span class="prompt">$</span> /run refactor payment-module
+
+<span class="comment"># Scout: 15 files, 87% test coverage</span>
+<span class="comment"># Plan:</span>
+<span class="comment">#   1. Extract PaymentGateway interface</span>
+<span class="comment">#   2. Move Stripe logic to StripeGateway</span>
+<span class="comment">#   3. Add PayPal gateway implementation</span>
+<span class="comment"># Each step: Apply → Test → Verify</span>
+<span class="comment"># Result: Cleaner separation, same behavior</span></code></pre>
+                </div>
+            </section>
+
+            <!-- Workflow: Research -->
+            <section class="doc-section" id="wf-research">
+                <div class="section-header">
+                    <span class="section-badge workflow">Workflow</span>
+                    <h1>Research Workflow</h1>
+                    <p class="section-lead">External research and documentation without code changes.</p>
+                </div>
+
+                <h2>Phases</h2>
+                <div class="workflow-phases-detail compact">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Research</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Researcher + Scouter agents run in parallel to gather external docs and codebase patterns.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(researcher)</span>
+                            <span class="tool">Task(scouter)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Scout</h3>
+                        </div>
+                        <p>Deep analysis of codebase implications.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(scouter)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Summarize</h3>
+                        </div>
+                        <p>Generate executive summary with recommendations.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(documentation)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Use Cases</h2>
+                <ul class="feature-list">
+                    <li>Technology comparisons (Redis vs Memcached)</li>
+                    <li>Library evaluation</li>
+                    <li>Architecture research</li>
+                    <li>Error troubleshooting</li>
+                </ul>
+
+                <h2>Example</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Claude Code</span>
+                    </div>
+                    <pre><code>/run research caching-comparison
+
+<span class="comment"># Output: .reports/2026-01-03-1430-comparison-caching.md</span>
+<span class="comment"># Contents:</span>
+<span class="comment">#   - Executive Summary</span>
+<span class="comment">#   - Redis vs Memcached comparison table</span>
+<span class="comment">#   - Pros/Cons for each</span>
+<span class="comment">#   - Recommendation based on codebase analysis</span></code></pre>
+                </div>
+            </section>
+
+            <!-- Workflow: Review -->
+            <section class="doc-section" id="wf-review">
+                <div class="section-header">
+                    <span class="section-badge workflow">Workflow</span>
+                    <h1>Review Workflow</h1>
+                    <p class="section-lead">Independent code review with fresh context for unbiased analysis.</p>
+                </div>
+
+                <h2>Phases</h2>
+                <div class="workflow-phases-detail compact">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Scout</h3>
+                        </div>
+                        <p>Analyze changes, dependencies, test coverage.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(scouter)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Review</h3>
+                        </div>
+                        <p>Security, performance, quality checklist.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(reviewer)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Report</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Format findings with verdict: APPROVED or NEEDS_CHANGES.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(documentation)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Severity Levels</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Examples</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="severity critical">Critical</span></td>
+                                <td>Security vulnerabilities, data loss, broken functionality</td>
+                                <td>Must fix</td>
+                            </tr>
+                            <tr>
+                                <td><span class="severity warning">Warning</span></td>
+                                <td>Code smells, performance issues, missing error handling</td>
+                                <td>Should fix</td>
+                            </tr>
+                            <tr>
+                                <td><span class="severity suggestion">Suggestion</span></td>
+                                <td>Style improvements, refactoring opportunities</td>
+                                <td>Optional</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Verdicts</h2>
+                <div class="verdict-cards">
+                    <div class="verdict-card approved">
+                        <div class="verdict-icon">&#10003;</div>
+                        <h4>Approved</h4>
+                        <p>No Critical issues, minor Warnings only</p>
+                    </div>
+                    <div class="verdict-card needs-changes">
+                        <div class="verdict-icon">&#10007;</div>
+                        <h4>Needs Changes</h4>
+                        <p>Critical issues or multiple Warnings</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Workflow: Docs -->
+            <section class="doc-section" id="wf-docs">
+                <div class="section-header">
+                    <span class="section-badge workflow">Workflow</span>
+                    <h1>Docs Workflow</h1>
+                    <p class="section-lead">Auto-generate comprehensive documentation.</p>
+                </div>
+
+                <h2>Phases</h2>
+                <div class="workflow-phases-detail compact">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Scout</h3>
+                        </div>
+                        <p>Analyze code for documentation needs.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Task(scouter)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Plan</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p>Plan structure, select template.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(documentation)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Generate</h3>
+                        </div>
+                        <p>Write content with examples.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(documentation)</span>
+                        </div>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">4</span>
+                            <h3>Commit</h3>
+                            <span class="phase-confirm">Confirmation</span>
+                        </div>
+                        <p><code>docs:</code> type.</p>
+                        <div class="phase-tools">
+                            <span class="tool">Skill(git-workflow)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Example</h2>
+                <div class="code-block terminal">
+                    <div class="code-header">
+                        <span class="code-lang">Terminal</span>
+                    </div>
+                    <pre><code><span class="prompt">$</span> /run docs api-v2
+
+<span class="comment"># Generates:</span>
+<span class="comment">#   - docs/api/README.md</span>
+<span class="comment">#   - docs/api/endpoints/</span>
+<span class="comment">#   - docs/api/examples/</span>
+<span class="comment"># Commit: docs(api): generate v2 API documentation</span></code></pre>
+                </div>
+            </section>
+
+            <!-- Agent: Researcher -->
+            <section class="doc-section" id="agent-researcher">
+                <div class="section-header">
+                    <span class="section-badge agent">Agent</span>
+                    <h1>Researcher</h1>
+                    <p class="section-lead">External research specialist for documentation, best practices, and technology comparisons.</p>
+                </div>
+
+                <h2>Capabilities</h2>
+                <ul class="feature-list">
+                    <li>Library and framework documentation research</li>
+                    <li>Technology comparison analysis</li>
+                    <li>Error troubleshooting and solution research</li>
+                    <li>Best practices identification</li>
+                    <li>API reference gathering</li>
+                </ul>
+
+                <h2>Tools</h2>
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <span class="tool-name">WebSearch</span>
+                        <span class="tool-desc">Search the web for current information</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">WebFetch</span>
+                        <span class="tool-desc">Fetch and analyze web pages</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">Read</span>
+                        <span class="tool-desc">Read local documentation files</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">Write</span>
+                        <span class="tool-desc">Write research reports</span>
+                    </div>
+                </div>
+
+                <h2>Research Depth</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Depth</th>
+                                <th>When to Use</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Quick</strong></td>
+                                <td>Simple lookup, single source sufficient</td>
+                                <td>~1 min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Standard</strong></td>
+                                <td>Most research tasks, multiple sources</td>
+                                <td>~5 min</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deep</strong></td>
+                                <td>Critical decisions, comprehensive analysis</td>
+                                <td>~15 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Report Format</h2>
+                <p>Reports are saved to: <code>.claude/.reports/{YYYY-MM-DD-HHMM}-research-{topic}.md</code></p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Report Structure</span>
+                    </div>
+                    <pre><code># Research: {Topic}
+
+## Executive Summary
+Brief overview of findings
+
+## Key Findings
+1. Finding one
+2. Finding two
+
+## Official Documentation
+- Source 1 [High Trust]
+- Source 2 [Medium Trust]
+
+## Best Practices
+- Practice 1
+- Practice 2
+
+## Code Examples
+```language
+// Example code
+```
+
+## Recommendations
+Based on research, recommend...</code></pre>
+                </div>
+            </section>
+
+            <!-- Agent: Scouter -->
+            <section class="doc-section" id="agent-scouter">
+                <div class="section-header">
+                    <span class="section-badge agent">Agent</span>
+                    <h1>Scouter</h1>
+                    <p class="section-lead">Deep codebase analysis specialist for patterns, dependencies, and architecture.</p>
+                </div>
+
+                <h2>Capabilities</h2>
+                <ul class="feature-list">
+                    <li>Architecture discovery</li>
+                    <li>Data flow tracing</li>
+                    <li>Dependency mapping (internal and external)</li>
+                    <li>Technical debt identification</li>
+                    <li>Pattern recognition</li>
+                </ul>
+
+                <h2>Tools</h2>
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <span class="tool-name">Grep</span>
+                        <span class="tool-desc">Search code content</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">Glob</span>
+                        <span class="tool-desc">Find files by pattern</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">Read</span>
+                        <span class="tool-desc">Read source files</span>
+                    </div>
+                    <div class="tool-card">
+                        <span class="tool-name">Bash</span>
+                        <span class="tool-desc">Run analysis commands</span>
+                    </div>
+                </div>
+
+                <h2>Analysis Process</h2>
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="process-number">1</div>
+                        <div class="process-content">
+                            <h4>Broad Search</h4>
+                            <p>Initial sweep to understand scope</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">2</div>
+                        <div class="process-content">
+                            <h4>Deep Analysis</h4>
+                            <p>Focus on 10-15 key files</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">3</div>
+                        <div class="process-content">
+                            <h4>Synthesis</h4>
+                            <p>Map relationships, not just files</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-number">4</div>
+                        <div class="process-content">
+                            <h4>Report</h4>
+                            <p>Generate findings with file:line refs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Report Format</h2>
+                <p>Reports are saved to: <code>.claude/.reports/{YYYY-MM-DD-HHMM}-codebase-{area}.md</code></p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Scouter Report Structure</span>
+                    </div>
+                    <pre><code># Codebase Analysis: {Area}
+
+## Executive Summary
+Brief overview of what was analyzed and key findings
+
+## Architecture Overview
+```
+src/
+├── services/       # Business logic (12 files)
+│   ├── auth.ts     # Authentication - JWT, sessions
+│   └── user.ts     # User CRUD operations
+├── controllers/    # HTTP handlers (8 files)
+└── models/         # Data models (5 files)
+```
+
+## Key Components
+| Component | Location | Purpose | Dependencies |
+|-----------|----------|---------|--------------|
+| AuthService | src/services/auth.ts:15 | JWT handling | bcrypt, jsonwebtoken |
+| UserController | src/controllers/user.ts:8 | User API | AuthService, UserModel |
+
+## Data Flow
+1. Request → Controller (validation)
+2. Controller → Service (business logic)
+3. Service → Model (data access)
+4. Response ← Controller (formatting)
+
+## Patterns Identified
+- **Repository Pattern**: Used for data access layer
+- **Dependency Injection**: Services injected via constructor
+- **Middleware Chain**: Auth → Rate Limit → Handler
+
+## Integration Points
+- **Database**: PostgreSQL via Prisma ORM
+- **Cache**: Redis for session storage
+- **External APIs**: Stripe, SendGrid
+
+## Technical Debt
+| Issue | Location | Severity | Recommendation |
+|-------|----------|----------|----------------|
+| No error handling | src/services/payment.ts:45 | High | Add try-catch |
+| Hardcoded config | src/config.ts:12 | Medium | Use env vars |
+
+## Recommendations
+1. Refactor auth middleware for reusability
+2. Add integration tests for payment flow
+3. Implement proper logging strategy</code></pre>
+                </div>
+            </section>
+
+            <!-- Agent: Reviewer -->
+            <section class="doc-section" id="agent-reviewer">
+                <div class="section-header">
+                    <span class="section-badge agent">Agent</span>
+                    <h1>Reviewer</h1>
+                    <p class="section-lead">Isolated code review specialist with fresh context for unbiased analysis.</p>
+                </div>
+
+                <h2>Capabilities</h2>
+                <ul class="feature-list">
+                    <li>Security vulnerability detection</li>
+                    <li>Code quality assessment</li>
+                    <li>Performance analysis</li>
+                    <li>Test coverage evaluation</li>
+                    <li>Maintainability review</li>
+                </ul>
+
+                <h2>Review Checklist</h2>
+                <div class="checklist-grid">
+                    <div class="checklist-card">
+                        <h4>Security</h4>
+                        <ul>
+                            <li>No exposed secrets</li>
+                            <li>Input validation</li>
+                            <li>SQL injection prevention</li>
+                            <li>XSS prevention</li>
+                            <li>Auth checks</li>
+                        </ul>
+                    </div>
+                    <div class="checklist-card">
+                        <h4>Code Quality</h4>
+                        <ul>
+                            <li>Readability</li>
+                            <li>Single responsibility</li>
+                            <li>No duplication</li>
+                            <li>Consistent naming</li>
+                            <li>Error handling</li>
+                        </ul>
+                    </div>
+                    <div class="checklist-card">
+                        <h4>Performance</h4>
+                        <ul>
+                            <li>N+1 queries</li>
+                            <li>Caching opportunities</li>
+                            <li>Memory leaks</li>
+                            <li>Algorithm efficiency</li>
+                        </ul>
+                    </div>
+                    <div class="checklist-card">
+                        <h4>Testing</h4>
+                        <ul>
+                            <li>Coverage adequate</li>
+                            <li>Edge cases covered</li>
+                            <li>Test quality</li>
+                            <li>Mocking appropriate</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>Report Format</h2>
+                <p>Reports are saved to: <code>.claude/.reports/{YYYY-MM-DD-HHMM}-review-{scope}.md</code></p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Reviewer Report Structure</span>
+                    </div>
+                    <pre><code># Code Review: {Scope}
+
+## Verdict: ✅ Approved / ⚠️ Approved with Comments / ❌ Needs Changes
+
+## Summary
+Brief overview of what was reviewed and overall assessment
+
+## Files Reviewed
+| File | Lines Changed | Assessment |
+|------|---------------|------------|
+| src/auth/login.ts | +45 -12 | ✅ Good |
+| src/utils/validate.ts | +23 -5 | ⚠️ Minor issues |
+| src/api/users.ts | +67 -20 | ❌ Security concern |
+
+## Critical Issues (Must Fix)
+### 1. SQL Injection Vulnerability
+**Location**: `src/api/users.ts:45`
+**Severity**: 🔴 Critical
+```typescript
+// ❌ Current (vulnerable)
+const query = `SELECT * FROM users WHERE id = ${userId}`;
+
+// ✅ Fixed (parameterized)
+const query = 'SELECT * FROM users WHERE id = $1';
+const result = await db.query(query, [userId]);
+```
+
+### 2. Missing Authentication Check
+**Location**: `src/api/admin.ts:23`
+**Severity**: 🔴 Critical
+```typescript
+// ❌ Missing auth middleware
+router.delete('/users/:id', deleteUser);
+
+// ✅ With auth
+router.delete('/users/:id', requireAdmin, deleteUser);
+```
+
+## Warnings (Should Fix)
+### 1. Inefficient Query Pattern
+**Location**: `src/services/order.ts:78`
+**Severity**: 🟡 Medium
+```typescript
+// ⚠️ N+1 query problem
+for (const order of orders) {
+    const items = await getItems(order.id);
+}
+
+// ✅ Single query with join
+const ordersWithItems = await getOrdersWithItems(orderIds);
+```
+
+## Suggestions (Nice to Have)
+- Consider adding JSDoc to exported functions
+- Extract magic numbers to constants
+- Add error boundary for component
+
+## Test Coverage
+| Area | Coverage | Status |
+|------|----------|--------|
+| Auth module | 85% | ✅ Good |
+| API endpoints | 62% | ⚠️ Needs improvement |
+| Utils | 95% | ✅ Excellent |
+
+## Checklist
+- [x] No secrets in code
+- [x] Error handling present
+- [ ] All new code has tests
+- [x] No console.log statements
+- [x] Follows project conventions
+
+## Action Items
+1. **MUST**: Fix SQL injection in users.ts:45
+2. **MUST**: Add auth check to admin routes
+3. **SHOULD**: Optimize N+1 query in order.ts
+4. **COULD**: Add missing type annotations</code></pre>
+                </div>
+            </section>
+
+            <!-- Skills Section (Summary) -->
+            <section class="doc-section" id="skill-debug">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Debug</h1>
+                    <p class="section-lead">Systematic debugging and root cause analysis with 5-phase methodology.</p>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                    <div class="warning-content">
+                        <strong>Iron Law:</strong> NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST. Systematic debugging (15-30 min, 95% success) beats random fixes (2-3 hours, 40% success).
+                    </div>
+                </div>
+
+                <h2>5-Phase Process</h2>
+                <div class="workflow-phases-detail compact">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Investigate</h3>
+                        </div>
+                        <p>Reproduce, gather evidence, check recent changes</p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Analyze</h3>
+                        </div>
+                        <p>Find patterns, compare working vs broken code</p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Hypothesize</h3>
+                        </div>
+                        <p>Form single hypothesis, test with minimal change</p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">4</span>
+                            <h3>Fix</h3>
+                        </div>
+                        <p>Write failing test first, implement minimal fix</p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">5</span>
+                            <h3>Document</h3>
+                        </div>
+                        <p>Record root cause, add regression test</p>
+                    </div>
+                </div>
+
+                <h2>Key Techniques</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Technique</th>
+                                <th>Use When</th>
+                                <th>How</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Git Bisect</strong></td>
+                                <td>Regression bugs</td>
+                                <td><code>git bisect start && git bisect bad HEAD && git bisect good v1.0</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>5 Whys</strong></td>
+                                <td>Root cause discovery</td>
+                                <td>Ask "Why?" 5 times until systemic issue found</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Binary Search</strong></td>
+                                <td>Large codebases</td>
+                                <td>Comment out half, test, repeat on failing half</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Delta Debugging</strong></td>
+                                <td>Minimize reproducer</td>
+                                <td>Remove code until minimal failing case</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Stop Signals</h2>
+                <p>These thoughts indicate deviation from systematic process:</p>
+                <ul class="feature-list warning">
+                    <li>"Quick fix for now, investigate later"</li>
+                    <li>"Just try changing X and see"</li>
+                    <li>"Add multiple changes, run tests"</li>
+                    <li>"3+ failed fix attempts" → Escalate to architecture review</li>
+                </ul>
+            </section>
+
+            <section class="doc-section" id="skill-planning">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Planning</h1>
+                    <p class="section-lead">Spec-Driven Development (SDD) with hierarchical plans.</p>
+                </div>
+
+                <h2>When to Use</h2>
+                <ul class="feature-list">
+                    <li>Starting a new feature or project</li>
+                    <li>Breaking down epics into tasks</li>
+                    <li>Creating AI-assisted development estimates</li>
+                </ul>
+
+                <h2>Key Concept: SDD</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Spec-Driven Development</span>
+                    </div>
+                    <pre><code>Spec → Plan → Execute
+
+<span class="comment"># Outperforms unstructured prompting by 8x for accuracy</span></code></pre>
+                </div>
+
+                <h2>Plan Structure</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Directory Structure</span>
+                    </div>
+                    <pre><code>.plans/{feature}/
+├── _master.md          # Overview, phases, status
+├── phase-1-setup.md    # Detailed phase plan
+├── phase-2-core.md     # Each phase self-contained
+└── phase-3-polish.md</code></pre>
+                </div>
+
+                <h2>T-Shirt Sizing</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Size</th>
+                                <th>Effort</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>XS</td><td>&lt; 2 hours</td><td>Single function, config change</td></tr>
+                            <tr><td>S</td><td>2-4 hours</td><td>Single component, simple endpoint</td></tr>
+                            <tr><td>M</td><td>4-8 hours</td><td>Feature slice, multiple components</td></tr>
+                            <tr><td>L</td><td>1-3 days</td><td>Complex feature, multiple integrations</td></tr>
+                            <tr><td>XL</td><td>3-5 days</td><td>Major feature, architectural changes</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- More Skills... (abbreviated for space) -->
+            <section class="doc-section" id="skill-implementation">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Implementation</h1>
+                    <p class="section-lead">Clean code best practices and SOLID principles.</p>
+                </div>
+
+                <h2>Core Principles</h2>
+                <div class="principle-cards">
+                    <div class="principle-card">
+                        <span class="principle-number">1</span>
+                        <span class="principle-text">Readable > Clever</span>
+                    </div>
+                    <div class="principle-card">
+                        <span class="principle-number">2</span>
+                        <span class="principle-text">Simple > Complex</span>
+                    </div>
+                    <div class="principle-card">
+                        <span class="principle-number">3</span>
+                        <span class="principle-text">Explicit > Implicit</span>
+                    </div>
+                    <div class="principle-card">
+                        <span class="principle-number">4</span>
+                        <span class="principle-text">Consistent > Perfect</span>
+                    </div>
+                </div>
+
+                <h2>Function Design</h2>
+                <p>Target: Under 20 lines, 0-3 parameters</p>
+
+                <h2>SOLID Quick Reference</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Principle</th>
+                                <th>Meaning</th>
+                                <th>Violation Sign</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>S</strong>ingle Responsibility</td><td>One reason to change</td><td>"...and..." in description</td></tr>
+                            <tr><td><strong>O</strong>pen/Closed</td><td>Extend, don't modify</td><td>Switch statements everywhere</td></tr>
+                            <tr><td><strong>L</strong>iskov Substitution</td><td>Subtypes replaceable</td><td><code>instanceof</code> checks</td></tr>
+                            <tr><td><strong>I</strong>nterface Segregation</td><td>Small, focused interfaces</td><td>Implementing unused methods</td></tr>
+                            <tr><td><strong>D</strong>ependency Inversion</td><td>Depend on abstractions</td><td>Direct <code>new</code> of dependencies</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="doc-section" id="skill-testing">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Testing</h1>
+                    <p class="section-lead">Test pyramid, TDD/BDD, and coverage strategies.</p>
+                </div>
+
+                <h2>Testing Philosophy</h2>
+                <blockquote class="philosophy-quote">
+                    Tests are documentation that never lies.<br>
+                    Tests are a safety net for refactoring.<br>
+                    Tests give confidence to ship.
+                </blockquote>
+
+                <h2>Test Types</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Scope</th>
+                                <th>Speed</th>
+                                <th>When to Use</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Unit</strong></td><td>Single function/class</td><td>Fast</td><td>Pure logic, algorithms</td></tr>
+                            <tr><td><strong>Integration</strong></td><td>Multiple components</td><td>Medium</td><td>Features, user flows</td></tr>
+                            <tr><td><strong>E2E</strong></td><td>Entire system</td><td>Slow</td><td>Critical paths</td></tr>
+                            <tr><td><strong>Contract</strong></td><td>API boundaries</td><td>Fast</td><td>Microservices</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Coverage Target</h2>
+                <p><strong>80-90% meaningful coverage</strong> - Focus on business logic, not getters/setters.</p>
+            </section>
+
+            <section class="doc-section" id="skill-documentation">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Documentation</h1>
+                    <p class="section-lead">READMEs, ADRs, API docs, and changelogs.</p>
+                </div>
+
+                <h2>Templates Available</h2>
+                <ul class="feature-list">
+                    <li><code>templates/readme.md</code> - Project README</li>
+                    <li><code>templates/adr.md</code> - Architecture Decision Record</li>
+                    <li><code>templates/changelog.md</code> - Keep a Changelog format</li>
+                    <li><code>templates/api-docs.md</code> - API documentation</li>
+                </ul>
+
+                <h2>Key Principle</h2>
+                <div class="info-box">
+                    <div class="info-content">
+                        Document the <strong>"why"</strong> not the <strong>"what"</strong>. Code shows what happens; docs explain why.
+                    </div>
+                </div>
+            </section>
+
+            <section class="doc-section" id="skill-security">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Security Audit</h1>
+                    <p class="section-lead">OWASP Top 10 and vulnerability assessment.</p>
+                </div>
+
+                <h2>Review Checklist</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Security Checklist</span>
+                    </div>
+                    <pre><code>□ Input Validation     - All external data validated
+□ Output Encoding      - Context-appropriate escaping
+□ Authentication       - Strong, properly implemented
+□ Authorization        - Least privilege enforced
+□ Data Protection      - Encryption at rest/transit
+□ Error Handling       - No sensitive data leaked
+□ Logging              - Security events captured
+□ Dependencies         - No known vulnerabilities</code></pre>
+                </div>
+
+                <h2>OWASP Top 10 (2021)</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Vulnerability</th>
+                                <th>Quick Fix</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>Broken Access Control</td><td>Deny by default, enforce server-side</td></tr>
+                            <tr><td>2</td><td>Cryptographic Failures</td><td>Use standard algorithms, protect keys</td></tr>
+                            <tr><td>3</td><td>Injection</td><td>Parameterized queries, validate input</td></tr>
+                            <tr><td>4</td><td>Insecure Design</td><td>Threat model, secure patterns</td></tr>
+                            <tr><td>5</td><td>Security Misconfiguration</td><td>Harden defaults, minimal install</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="doc-section" id="skill-git">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Git Workflow</h1>
+                    <p class="section-lead">Branching strategies and conventional commits.</p>
+                </div>
+
+                <h2>Branching Strategy</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Situation</th>
+                                <th>Strategy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>CI/CD, frequent deploys</td><td>Trunk-based development</td></tr>
+                            <tr><td>Multiple release versions</td><td>GitFlow</td></tr>
+                            <tr><td>Small team, single product</td><td>GitHub Flow</td></tr>
+                            <tr><td>Open source project</td><td>Fork & Pull Request</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Conventional Commits</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Format</span>
+                    </div>
+                    <pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;description&gt;
+
+[optional body]
+
+[optional footer(s)]</code></pre>
+                </div>
+
+                <h2>Commit Types</h2>
+                <div class="tag-grid">
+                    <span class="commit-type feat">feat</span>
+                    <span class="commit-type fix">fix</span>
+                    <span class="commit-type docs">docs</span>
+                    <span class="commit-type style">style</span>
+                    <span class="commit-type refactor">refactor</span>
+                    <span class="commit-type perf">perf</span>
+                    <span class="commit-type test">test</span>
+                    <span class="commit-type chore">chore</span>
+                </div>
+            </section>
+
+            <section class="doc-section" id="skill-gemini">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Gemini</h1>
+                    <p class="section-lead">AI-powered image/PDF analysis with 1M token context.</p>
+                </div>
+
+                <h2>Use Cases</h2>
+                <ul class="feature-list">
+                    <li>Image analysis (screenshots, diagrams)</li>
+                    <li>Large file analysis</li>
+                    <li>Codebase-wide scans</li>
+                    <li>Quick stateless queries</li>
+                </ul>
+
+                <h2>Common Patterns</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">bash</span>
+                    </div>
+                    <pre><code><span class="comment"># Image analysis</span>
+gemini "Describe this UI" @screenshot.png
+
+<span class="comment"># Git commit message</span>
+git diff --cached | gemini "Write commit message"
+
+<span class="comment"># Code review</span>
+git diff | gemini "Review for bugs"
+
+<span class="comment"># Codebase analysis</span>
+gemini "List all API endpoints" --all-files</code></pre>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-content">
+                        <strong>Fallback:</strong> If Gemini fails, Claude automatically falls back to its own capabilities.
+                    </div>
+                </div>
+            </section>
+
+            <section class="doc-section" id="skill-creator">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Skill Creator</h1>
+                    <p class="section-lead">Meta-skill for creating new skills.</p>
+                </div>
+
+                <h2>Skill Anatomy</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Structure</span>
+                    </div>
+                    <pre><code>skill-name/
+├── SKILL.md (required)
+│   ├── YAML frontmatter (name + description)
+│   └── Markdown instructions
+└── Bundled Resources (optional)
+    ├── scripts/      # Executable code
+    ├── references/   # Documentation
+    └── assets/       # Templates, icons</code></pre>
+                </div>
+
+                <h2>Key Principle</h2>
+                <div class="principle-cards">
+                    <div class="principle-card wide">
+                        <span class="principle-text">Concise is Key: Only add context Claude doesn't already have</span>
+                    </div>
+                </div>
+
+                <h2>Progressive Disclosure</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Content</th>
+                                <th>Size</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Metadata</td><td>Name + description (always in context)</td><td>~100 words</td></tr>
+                            <tr><td>2. SKILL.md</td><td>Main instructions (when skill triggers)</td><td>&lt;5k words</td></tr>
+                            <tr><td>3. Resources</td><td>References, scripts (as needed)</td><td>Unlimited</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Example: User Authentication -->
+            <section class="doc-section" id="example-auth">
+                <div class="section-header">
+                    <span class="section-badge example">Example</span>
+                    <h1>User Authentication</h1>
+                    <p class="section-lead">Complete walkthrough: JWT-based authentication from spec to commit.</p>
+                </div>
+
+                <h2>Step 1: Brainstorm</h2>
+                <div class="code-block terminal">
+                    <div class="code-header">
+                        <span class="code-lang">Terminal</span>
+                    </div>
+                    <pre><code><span class="prompt">$</span> /brainstorm user-authentication
+
+<span class="output">Creating spec: .claude/.specs/user-authentication.md</span>
+
+<span class="output">Analyzing codebase...</span>
+<span class="output">Found existing:</span>
+<span class="output">  - src/models/User.ts (user model exists)</span>
+<span class="output">  - src/routes/index.ts (route structure)</span>
+<span class="output">  - package.json (express, no auth packages)</span>
+
+<span class="output">Gaps identified:</span>
+<span class="output">[ ] Auth method (JWT vs Session)?</span>
+<span class="output">[ ] Password requirements?</span>
+<span class="output">[ ] Social login needed?</span>
+
+<span class="comment"># You answer: JWT, 8+ chars with number, no social</span>
+
+<span class="output">Approaches:</span>
+<span class="output">1. JWT with refresh tokens (Recommended)</span>
+<span class="output">2. JWT with sliding expiry</span>
+<span class="output">3. Session-based with Redis</span>
+
+<span class="comment"># You select: Option 1</span>
+
+<span class="output">Spec finalized!</span></code></pre>
+                </div>
+
+                <h2>Step 2: Run Feature Workflow</h2>
+                <div class="code-block terminal">
+                    <div class="code-header">
+                        <span class="code-lang">Terminal</span>
+                    </div>
+                    <pre><code><span class="prompt">$</span> /run feature user-authentication
+
+<span class="output">Phase 1/6: Research ━━━━━━━━━━━━━━━━━━━━ 100%</span>
+<span class="output">  Researcher: JWT best practices, bcrypt, refresh tokens</span>
+<span class="output">  Scouter: Integration points identified</span>
+<span class="output">  → Report: .reports/2026-01-03-research-auth.md</span>
+
+<span class="output">Phase 2/6: Plan ━━━━━━━━━━━━━━━━━━━━━━━━ 100%</span>
+<span class="output">  Created: .plans/user-authentication/_master.md</span>
+<span class="output">  Phases:</span>
+<span class="output">    1. Setup (dependencies, config)</span>
+<span class="output">    2. Core (models, middleware)</span>
+<span class="output">    3. Routes (register, login, refresh)</span>
+<span class="output">    4. Polish (rate limiting, logging)</span>
+<span class="output">  → Approve? [y]</span>
+
+<span class="output">Phase 3/6: Implement ━━━━━━━━━━━━━━━━━━━ 100%</span>
+<span class="output">  Created:</span>
+<span class="output">    - src/middleware/auth.ts</span>
+<span class="output">    - src/routes/auth.ts</span>
+<span class="output">    - src/services/token.ts</span>
+<span class="output">  Modified:</span>
+<span class="output">    - src/models/User.ts (added password hash)</span>
+<span class="output">    - package.json (added bcrypt, jsonwebtoken)</span>
+
+<span class="output">Phase 4/6: Test ━━━━━━━━━━━━━━━━━━━━━━━━ 100%</span>
+<span class="output">  Created: tests/auth.test.ts</span>
+<span class="output">  Results: 18 tests, 18 passed, 0 failed</span>
+<span class="output">  Coverage: 94%</span>
+
+<span class="output">Phase 5/6: Review ━━━━━━━━━━━━━━━━━━━━━━ 100%</span>
+<span class="output">  Verdict: Approved</span>
+<span class="output">  - 0 Critical</span>
+<span class="output">  - 1 Warning: Consider adding rate limiting</span>
+<span class="output">  - 2 Suggestions: Minor style improvements</span>
+
+<span class="output">Phase 6/6: Commit ━━━━━━━━━━━━━━━━━━━━━━ 100%</span>
+<span class="output">  → Create commit? [y]</span>
+<span class="output">  Committed: feat(auth): add JWT-based user authentication</span>
+
+<span class="success">✓ Workflow completed successfully!</span></code></pre>
+                </div>
+
+                <h2>Generated Files</h2>
+                <div class="file-tree">
+                    <div class="file-item folder">.claude/</div>
+                    <div class="file-item sub">.specs/user-authentication.md</div>
+                    <div class="file-item sub">.reports/2026-01-03-research-auth.md</div>
+                    <div class="file-item sub">.plans/user-authentication/_master.md</div>
+                    <div class="file-item folder">src/</div>
+                    <div class="file-item sub new">middleware/auth.ts</div>
+                    <div class="file-item sub new">routes/auth.ts</div>
+                    <div class="file-item sub new">services/token.ts</div>
+                    <div class="file-item sub modified">models/User.ts</div>
+                    <div class="file-item folder">tests/</div>
+                    <div class="file-item sub new">auth.test.ts</div>
+                </div>
+            </section>
+
+            <!-- Example: REST API -->
+            <section class="doc-section" id="example-api">
+                <div class="section-header">
+                    <span class="section-badge example">Example</span>
+                    <h1>REST API Development</h1>
+                    <p class="section-lead">Building a complete CRUD API with the feature workflow.</p>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Claude Code</span>
+                    </div>
+                    <pre><code><span class="comment"># Step 1: Create spec through brainstorm</span>
+/brainstorm products-api
+
+<span class="comment"># Answer questions about:</span>
+<span class="comment"># - CRUD operations needed</span>
+<span class="comment"># - Pagination requirements</span>
+<span class="comment"># - Filtering/sorting needs</span>
+<span class="comment"># - Validation rules</span>
+
+<span class="comment"># Step 2: Execute workflow</span>
+/run feature products-api
+
+<span class="comment"># Result:</span>
+<span class="comment"># - GET /api/products (list with pagination)</span>
+<span class="comment"># - GET /api/products/:id (single product)</span>
+<span class="comment"># - POST /api/products (create)</span>
+<span class="comment"># - PUT /api/products/:id (update)</span>
+<span class="comment"># - DELETE /api/products/:id (delete)</span>
+<span class="comment"># - Full test coverage</span>
+<span class="comment"># - API documentation generated</span></code></pre>
+                </div>
+            </section>
+
+            <!-- Example: Legacy Refactor -->
+            <section class="doc-section" id="example-refactor">
+                <div class="section-header">
+                    <span class="section-badge example">Example</span>
+                    <h1>Legacy Code Refactor</h1>
+                    <p class="section-lead">Safely modernizing legacy code with continuous testing.</p>
+                </div>
+
+                <div class="code-block terminal">
+                    <div class="code-header">
+                        <span class="code-lang">Terminal</span>
+                    </div>
+                    <pre><code><span class="prompt">$</span> /run refactor payment-module
+
+<span class="output">Phase 1/6: Scout</span>
+<span class="output">  Analyzing: src/services/payment/</span>
+<span class="output">  Files: 12 | Lines: 2,847 | Test Coverage: 67%</span>
+<span class="output">  Dependencies: stripe, paypal-sdk</span>
+<span class="output">  Issues found:</span>
+<span class="output">    - God class: PaymentService (1,200 lines)</span>
+<span class="output">    - Hardcoded credentials (2 instances)</span>
+<span class="output">    - Missing error handling (5 locations)</span>
+<span class="output">  → Confirm scope? [y]</span>
+
+<span class="output">Phase 2/6: Plan</span>
+<span class="output">  Refactoring steps (low-risk first):</span>
+<span class="output">    1. Extract PaymentGateway interface</span>
+<span class="output">    2. Create StripeGateway implementation</span>
+<span class="output">    3. Create PayPalGateway implementation</span>
+<span class="output">    4. Add error handling wrapper</span>
+<span class="output">    5. Move credentials to environment</span>
+<span class="output">  Each step: Apply → Test → Verify</span>
+<span class="output">  → Approve plan? [y]</span>
+
+<span class="output">Phase 3/6: Refactor</span>
+<span class="output">  Step 1/5: Extract interface ━━━━━━━━━━ ✓ Tests pass</span>
+<span class="output">  Step 2/5: StripeGateway ━━━━━━━━━━━━━ ✓ Tests pass</span>
+<span class="output">  Step 3/5: PayPalGateway ━━━━━━━━━━━━━ ✓ Tests pass</span>
+<span class="output">  Step 4/5: Error handling ━━━━━━━━━━━━ ✓ Tests pass</span>
+<span class="output">  Step 5/5: Env credentials ━━━━━━━━━━━ ✓ Tests pass</span>
+
+<span class="output">Phase 4/6: Test</span>
+<span class="output">  Coverage: 67% → 89%</span>
+<span class="output">  All tests passing</span>
+
+<span class="output">Phase 5/6: Review</span>
+<span class="output">  Verdict: Approved</span>
+<span class="output">  Quality improvements:</span>
+<span class="output">    - Lines per file: 1,200 → 180 avg</span>
+<span class="output">    - Cyclomatic complexity: 45 → 8</span>
+<span class="output">    - No security issues</span>
+
+<span class="output">Phase 6/6: Commit</span>
+<span class="output">  Committed: refactor(payment): extract gateway pattern</span>
+
+<span class="success">✓ Refactor completed. Behavior unchanged, quality improved.</span></code></pre>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="doc-footer">
+                <div class="footer-content">
+                    <p>Claude Code Kit &copy; 2026 | Made with Claude Code</p>
+                    <div class="footer-links">
+                        <a href="https://github.com/user/claude-code-kit">GitHub</a>
+                        <span class="divider">|</span>
+                        <a href="#introduction">Back to Top</a>
+                    </div>
+                </div>
+            </footer>
+        </main>
+
+        <!-- Right Sidebar (TOC) -->
+        <aside class="toc-sidebar" id="tocSidebar">
+            <div class="toc-header">On this page</div>
+            <nav class="toc-nav" id="tocNav">
+                <!-- Dynamically populated -->
+            </nav>
+        </aside>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-content">
+            <div class="search-modal-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-modal-input" placeholder="Search documentation..." id="searchModalInput">
+                <kbd>ESC</kbd>
+            </div>
+            <div class="search-results" id="searchResults">
+                <div class="search-hint">Start typing to search...</div>
             </div>
         </div>
-    </footer>
+    </div>
 
     <!-- Scripts -->
-    <script src="js/theme.js"></script>
-    <script src="js/animations.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

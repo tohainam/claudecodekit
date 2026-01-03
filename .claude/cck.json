@@ -1,0 +1,10 @@
+{
+  "language": {
+    "think": "en",
+    "response": "en",
+    "document": "en"
+  },
+  "features": {
+    "gemini": false
+  }
+}
