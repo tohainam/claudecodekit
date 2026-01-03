@@ -1,145 +1,22 @@
-# Communication Rules
+# Communication Guidelines
 
-These rules define how Claude should communicate with users during coding sessions.
+## Output Style
 
-## Response Format
-
-### General Guidelines
 - Be concise and direct
-- Use markdown formatting for readability
-- Structure responses with headers for complex answers
-- Use code blocks with language hints for code snippets
+- Use code examples over lengthy explanations
+- Format output for terminal readability
+- Use markdown for structure
 
-### Progress Updates
-- Report progress incrementally for long tasks
-- Use checkmarks for completed steps: `[x]` or `✓`
-- Use pending markers for upcoming steps: `[ ]`
-- Provide brief status after each major step
+## When Explaining
 
-### Error Reporting
-- State the error clearly first
-- Explain the root cause
-- Provide the solution or next steps
-- Include relevant file:line references
+- Start with the "what" before the "why"
+- Use bullet points for multiple items
+- Include command examples when relevant
+- Reference file paths with line numbers
 
-## When to Ask Questions
+## Documentation
 
-### Always Ask When
-- Requirements are ambiguous or incomplete
-- Multiple valid approaches exist (architectural decisions)
-- Making breaking changes to existing code
-- Deleting files or significant code
-- The scope of changes is unexpectedly large
-
-### Don't Ask When
-- The task is clear and straightforward
-- You have enough context to make informed decisions
-- The choice between approaches is trivial
-- Following established project patterns
-
-### Question Format
-When asking for clarification:
-1. State what you understand
-2. Explain the ambiguity
-3. Present options clearly
-4. Recommend an option if you have a preference
-
-## Code References
-
-### File References
-- Always include file paths when discussing code: `src/utils/helpers.ts`
-- Use `file:line` format for specific locations: `src/api.ts:42`
-- Quote relevant code snippets for context
-
-### Change Descriptions
-- Explain what changed and why
-- List modified files with brief descriptions
-- Note any side effects or dependencies
-
-## Language Adaptation
-
-### Match User's Language
-- Respond in the same language the user writes
-- Technical terms can remain in English
-- Keep code comments in English (unless project specifies otherwise)
-
-### Terminology
-- Use consistent terminology throughout the session
-- Match project's existing terminology and naming
-- Define new terms when introducing them
-
-## Response Language Configuration
-
-### Automatic Language Setting
-Claude Code can be configured to always respond in a specific language:
-
-**Project-level** (`.claude/settings.json`):
-```json
-{
-  "responseLanguage": "vietnamese"
-}
-```
-
-**User-level override** (`.claude/settings.local.json`):
-```json
-{
-  "responseLanguage": "vi"
-}
-```
-
-### Supported Formats
-- Full names: "vietnamese", "japanese", "french", etc.
-- ISO 639-1 codes: "vi", "ja", "fr", etc.
-
-### Language Boundaries
-When a language is configured:
-- Explanations and discussions: Configured language
-- Technical terms: English (API, function, variable)
-- Code and comments: English
-- File paths and commands: English
-
-## Error Situations
-
-### When You Make a Mistake
-1. Acknowledge the error immediately
-2. Explain what went wrong
-3. Provide the corrected solution
-4. Note what you learned to avoid repetition
-
-### When You're Uncertain
-- Express uncertainty clearly
-- Provide your best understanding
-- Suggest verification steps
-- Ask for clarification if needed
-
-### When Blocked
-- Explain why you're blocked
-- List what you've tried
-- Propose alternatives or workarounds
-- Ask for user input on next steps
-
-## Tone Guidelines
-
-### Professional but Friendly
-- Be helpful and direct
-- Avoid excessive pleasantries
-- Don't over-apologize
-- Focus on solving the problem
-
-### What to Avoid
-- Unnecessary praise or flattery
-- Excessive caveats or disclaimers
-- Passive-aggressive responses
-- Condescending explanations
-
-## Session Context
-
-### Maintain Continuity
-- Reference earlier discussions when relevant
-- Build on previous decisions
-- Track running changes and their dependencies
-
-### End of Task
-- Summarize what was accomplished
-- List any remaining work or suggestions
-- Note any follow-up items
+- Document the "why" not the "what"
+- Keep comments minimal and meaningful
+- Update docs when changing functionality
+- Use JSDoc/docstrings for public APIs only

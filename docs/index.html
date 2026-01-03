@@ -1,982 +1,2188 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Claude Code Kit - A comprehensive, production-ready configuration for Claude Code. 14 commands, 12 skills, 9 agents.">
-    <meta name="keywords" content="claude code, ai coding, documentation, commands, skills, agents, anthropic">
-    <meta name="theme-color" content="#0D0D0D" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
-    <meta name="color-scheme" content="dark light">
-    <title>Claude Code Kit - Documentation</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- View Transitions styles -->
-    <style>
-        @view-transition {
-            navigation: auto;
-        }
-        ::view-transition-old(root),
-        ::view-transition-new(root) {
-            animation-duration: 0.25s;
-        }
-        ::view-transition-old(theme-toggle),
-        ::view-transition-new(theme-toggle) {
-            animation: none;
-            mix-blend-mode: normal;
-        }
-        [data-theme="light"]::view-transition-old(root) {
-            animation: none;
-        }
-        [data-theme="dark"]::view-transition-new(root) {
-            animation: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Claude Code Kit - Framework-agnostic development toolkit for Claude Code with agents, skills, and workflows">
+  <meta name="keywords" content="Claude Code, AI Development, Developer Tools, Agents, Skills, Workflows">
+  <title>Claude Code Kit - Documentation</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%233B82F6' rx='20' width='100' height='100'/><text y='.9em' x='50%' text-anchor='middle' font-size='70'>C</text></svg>">
 </head>
 <body>
-    <!-- Skip link for keyboard users -->
-    <a href="#hero" class="skip-link">Skip to main content</a>
+  <!-- Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Command Palette -->
-    <div class="command-palette" id="commandPalette" role="dialog" aria-modal="true" aria-labelledby="paletteLabel" aria-describedby="paletteHint">
-        <div class="palette-backdrop"></div>
-        <div class="palette-container">
-            <h2 id="paletteLabel" class="visually-hidden">Command Palette</h2>
-            <div class="palette-header">
-                <div class="palette-search">
-                    <svg class="palette-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                    </svg>
-                    <input type="text" id="paletteInput" placeholder="Search commands, sections..." autocomplete="off" aria-label="Search" aria-controls="paletteResults" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-haspopup="listbox">
-                    <kbd class="palette-esc" aria-hidden="true">ESC</kbd>
-                </div>
-                <p id="paletteHint" class="visually-hidden">Use arrow keys to navigate, Enter to select, Escape to close</p>
-            </div>
-            <div class="palette-results" id="paletteResults" role="listbox" aria-live="polite">
-                <div class="palette-group" role="group" aria-labelledby="quickActionsLabel">
-                    <div class="palette-group-title" id="quickActionsLabel">Quick Actions</div>
-                    <button class="palette-item" data-action="section" data-target="commands" role="option">
-                        <span class="palette-item-icon" aria-hidden="true">/</span>
-                        <span class="palette-item-text">Browse Commands</span>
-                        <span class="palette-item-hint">14 available</span>
-                    </button>
-                    <button class="palette-item" data-action="section" data-target="workflows" role="option">
-                        <span class="palette-item-icon" aria-hidden="true">~</span>
-                        <span class="palette-item-text">View Workflows</span>
-                        <span class="palette-item-hint">4 workflows</span>
-                    </button>
-                    <button class="palette-item" data-action="section" data-target="skills" role="option">
-                        <span class="palette-item-icon" aria-hidden="true">*</span>
-                        <span class="palette-item-text">Explore Skills</span>
-                        <span class="palette-item-hint">12 skills</span>
-                    </button>
-                </div>
-            </div>
-            <div class="palette-footer">
-                <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> Navigate</span>
-                <span><kbd>&crarr;</kbd> Select</span>
-                <span><kbd>ESC</kbd> Close</span>
-            </div>
-        </div>
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">
+        <div class="nav-brand-icon">C</div>
+        <span>Claude Code Kit</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#getting-started">Getting Started</a></li>
+        <li><a href="#agents">Agents</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#commands">Commands</a></li>
+        <li><a href="#rules">Rules</a></li>
+      </ul>
+
+      <div class="nav-search">
+        <svg class="nav-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" placeholder="Search documentation..." aria-label="Search">
+        <div class="search-results"></div>
+      </div>
+
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12h18M3 6h18M3 18h18"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" role="complementary" aria-label="Documentation navigation">
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Overview</h3>
+      <ul class="sidebar-nav">
+        <li><a href="#hero">Introduction</a></li>
+        <li><a href="#getting-started">Getting Started</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+      </ul>
     </div>
 
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
-
-    <!-- Header -->
-    <header class="header" style="view-transition-name: header;">
-        <div class="header-inner">
-            <a href="#" class="logo" aria-label="Claude Code Kit - Home">
-                <div class="logo-mark" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="4 17 10 11 4 5"/>
-                        <line x1="12" y1="19" x2="20" y2="19"/>
-                    </svg>
-                </div>
-                <span class="logo-text">Claude Code Kit</span>
-            </a>
-
-            <nav class="nav" aria-label="Main navigation">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#commands" class="nav-link">Commands</a>
-                <a href="#workflows" class="nav-link">Workflows</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#agents" class="nav-link">Agents</a>
-            </nav>
-
-            <div class="header-actions">
-                <button class="cmd-trigger" id="cmdTrigger" aria-label="Open command palette" aria-keyshortcuts="Control+K Meta+K">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                    </svg>
-                    <span>Search</span>
-                    <kbd aria-hidden="true">&#x2318;K</kbd>
-                </button>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-keyshortcuts="t" style="view-transition-name: theme-toggle;">
-                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                    </svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </button>
-                <a href="https://github.com/anthropics/claude-code" class="github-link" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub (opens in new tab)">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-                    </svg>
-                </a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobileNav">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Nav -->
-    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-        <nav class="mobile-nav-links" aria-label="Mobile navigation">
-            <a href="#features">Features</a>
-            <a href="#commands">Commands</a>
-            <a href="#workflows">Workflows</a>
-            <a href="#skills">Skills</a>
-            <a href="#agents">Agents</a>
-            <a href="#installation">Get Started</a>
-        </nav>
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Agents</h3>
+      <ul class="sidebar-nav">
+        <li><a href="#agents">Overview</a></li>
+        <li><a href="#agent-researcher">Researcher <span class="sidebar-badge badge-purple">External</span></a></li>
+        <li><a href="#agent-scouter">Scouter <span class="sidebar-badge badge-blue">Codebase</span></a></li>
+        <li><a href="#agent-reviewer">Reviewer <span class="sidebar-badge badge-green">Review</span></a></li>
+      </ul>
     </div>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero" id="hero" aria-labelledby="heroTitle" style="view-transition-name: hero;">
-            <div class="hero-bg" aria-hidden="true">
-                <div class="hero-gradient"></div>
-                <div class="hero-grid"></div>
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Skills</h3>
+      <ul class="sidebar-nav">
+        <li><a href="#skills">Overview</a></li>
+        <li><a href="#skill-planning">Planning</a></li>
+        <li><a href="#skill-implementation">Implementation</a></li>
+        <li><a href="#skill-testing">Testing</a></li>
+        <li><a href="#skill-documentation">Documentation</a></li>
+        <li><a href="#skill-security">Security Audit</a></li>
+        <li><a href="#skill-git">Git Workflow</a></li>
+        <li><a href="#skill-patterns">Code Patterns</a></li>
+        <li><a href="#skill-gemini">Gemini</a></li>
+        <li><a href="#skill-uiux">UI/UX Pro Max</a></li>
+        <li><a href="#skill-creator">Skill Creator</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Commands</h3>
+      <ul class="sidebar-nav">
+        <li><a href="#commands">Overview</a></li>
+        <li><a href="#cmd-brainstorm">/brainstorm</a></li>
+        <li><a href="#cmd-run">/run</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Rules</h3>
+      <ul class="sidebar-nav">
+        <li><a href="#rules">Overview</a></li>
+        <li><a href="#rule-code-quality">Code Quality</a></li>
+        <li><a href="#rule-communication">Communication</a></li>
+        <li><a href="#rule-knowledge">Knowledge Freshness</a></li>
+        <li><a href="#rule-safety">Safety</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Configuration</h3>
+      <ul class="sidebar-nav">
+        <li><a href="#config">Settings</a></li>
+        <li><a href="#permissions">Permissions</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main" id="main-content" role="main">
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <h1>Claude Code Kit</h1>
+      <p class="hero-subtitle">Framework-agnostic development toolkit with automated workflows, intelligent orchestration, and hybrid agent-skill architecture.</p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value">3</div>
+          <div class="hero-stat-label">Agents</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">10</div>
+          <div class="hero-stat-label">Skills</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">7</div>
+          <div class="hero-stat-label">Workflows</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">4</div>
+          <div class="hero-stat-label">Rules</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="content">
+      <!-- Getting Started -->
+      <section class="section" id="getting-started">
+        <div class="section-header">
+          <div class="section-icon icon-cyan">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+            </svg>
+          </div>
+          <h2>Getting Started</h2>
+        </div>
+
+        <p>Claude Code Kit provides automated workflows that coordinate agents and skills to complete software engineering tasks through defined phases with human confirmation points.</p>
+
+        <h3>Key Principles</h3>
+        <ul class="list">
+          <li><strong>Brainstorm Before Automate</strong> - Interactive refinement before workflow execution</li>
+          <li><strong>Hierarchical Planning</strong> - Master plan + sub-plans for complex features</li>
+          <li><strong>Document Everything</strong> - Specs, reports, plans in designated folders</li>
+          <li><strong>Confirmation Points</strong> - Human validation at key stages</li>
+        </ul>
+
+        <h3>Directory Structure</h3>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Project Structure</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre><code>.claude/
+├── CLAUDE.md                 # Main project configuration
+├── settings.json             # Permissions and environment
+├── agents/                   # Subagent definitions (3 agents)
+│   ├── researcher.md
+│   ├── scouter.md
+│   └── reviewer.md
+├── skills/                   # Multi-file skills (10 skills)
+├── commands/                 # Slash commands (2 commands)
+│   ├── brainstorm.md
+│   └── run.md
+├── rules/_global/            # Always-loaded guidelines (4 rules)
+├── .specs/                   # Finalized specifications
+├── .reports/                 # Research/scout reports
+├── .plans/                   # Implementation plans
+└── .state/                   # Workflow state</code></pre>
+        </div>
+
+        <h3>Quick Start</h3>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Example Usage</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre><code># Start brainstorming a new feature
+/brainstorm user-authentication
+
+# Run a feature workflow
+/run feature user-auth
+
+# Run a bug fix
+/run bugfix login-button-broken
+
+# Run code review
+/run review</code></pre>
+        </div>
+      </section>
+
+      <!-- Architecture -->
+      <section class="section" id="architecture">
+        <div class="section-header">
+          <div class="section-icon icon-blue">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </div>
+          <h2>Architecture</h2>
+        </div>
+
+        <h3>Execution Flow</h3>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>Flow Diagram</span>
+          </div>
+          <pre><code>User Request → Command Parser → Workflow Detection → Agent Orchestration → Skill Application → Output
+                    ↓                    ↓                    ↓                    ↓
+              /brainstorm          Auto-detect          researcher          planning
+                 /run              or explicit           scouter        implementation
+                                                        reviewer            testing
+                                                                         git-workflow</code></pre>
+        </div>
+
+        <h3>Available Workflows</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Workflow</th>
+                <th>Requires Spec</th>
+                <th>Phases</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>feature</code></td>
+                <td>Yes</td>
+                <td>research → plan → implement → test → review → commit</td>
+                <td>Complete workflow for new features</td>
+              </tr>
+              <tr>
+                <td><code>bugfix</code></td>
+                <td>No</td>
+                <td>scout → analyze → plan → fix → test → commit</td>
+                <td>Bug investigation and fixing</td>
+              </tr>
+              <tr>
+                <td><code>hotfix</code></td>
+                <td>No</td>
+                <td>analyze → fix → test → commit</td>
+                <td>Urgent production fix</td>
+              </tr>
+              <tr>
+                <td><code>refactor</code></td>
+                <td>No</td>
+                <td>scout → plan → refactor → test → review → commit</td>
+                <td>Safe code refactoring</td>
+              </tr>
+              <tr>
+                <td><code>research</code></td>
+                <td>No</td>
+                <td>research → scout → summarize</td>
+                <td>Research without code changes</td>
+              </tr>
+              <tr>
+                <td><code>review</code></td>
+                <td>No</td>
+                <td>scout → review → report</td>
+                <td>Independent code review</td>
+              </tr>
+              <tr>
+                <td><code>docs</code></td>
+                <td>No</td>
+                <td>scout → plan → generate → commit</td>
+                <td>Documentation generation</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Agents Section -->
+      <section class="section" id="agents">
+        <div class="section-header">
+          <div class="section-icon icon-purple">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h2>Agents</h2>
+        </div>
+
+        <p>Agents are specialized subprocesses that handle complex, focused tasks autonomously. Each agent has specific tools and produces structured reports.</p>
+
+        <!-- Researcher Agent -->
+        <div class="card" id="agent-researcher">
+          <div class="card-header">
+            <div class="section-icon icon-purple" style="width:32px;height:32px;font-size:1rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
             </div>
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-dot" aria-hidden="true"></span>
-                    Open Source // MIT License
-                </div>
-                <h1 class="hero-title" id="heroTitle">
-                    <span class="title-line title-gradient">Supercharge</span>
-                    <span class="title-line">Claude Code<span class="cursor" aria-hidden="true"></span></span>
-                </h1>
-                <p class="hero-description">
-                    Production-ready configuration with intelligent workflows, auto-loading skills, and specialized agents. Copy the .claude directory and start coding.
-                </p>
-                <div class="hero-stats" role="list" aria-label="Kit statistics">
-                    <div class="stat" role="listitem">
-                        <span class="stat-value" aria-hidden="true">14</span>
-                        <span class="stat-label"><span class="visually-hidden">14 </span>Commands</span>
-                    </div>
-                    <div class="stat" role="listitem">
-                        <span class="stat-value" aria-hidden="true">12</span>
-                        <span class="stat-label"><span class="visually-hidden">12 </span>Skills</span>
-                    </div>
-                    <div class="stat" role="listitem">
-                        <span class="stat-value" aria-hidden="true">9</span>
-                        <span class="stat-label"><span class="visually-hidden">9 </span>Agents</span>
-                    </div>
-                    <div class="stat" role="listitem">
-                        <span class="stat-value" aria-hidden="true">7</span>
-                        <span class="stat-label"><span class="visually-hidden">7 </span>Rules</span>
-                    </div>
-                </div>
-                <div class="hero-actions">
-                    <a href="#installation" class="btn btn-primary">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                            <polyline points="7 10 12 15 17 10"/>
-                            <line x1="12" y1="15" x2="12" y2="3"/>
-                        </svg>
-                        Get Started
-                    </a>
-                    <a href="#commands" class="btn btn-secondary">
-                        Browse Commands
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class="hero-hint">
-                    Press <kbd aria-label="Command">&#x2318;</kbd><kbd aria-label="K">K</kbd> to search anything
-                </div>
+            <h3 class="card-title">Researcher Agent</h3>
+            <span class="card-badge badge-purple">External</span>
+          </div>
+          <p class="card-description">Research external documentation, best practices, and technology comparisons. Produces structured markdown reports with citations.</p>
+
+          <h4>Tools Available</h4>
+          <p><code>WebSearch</code>, <code>WebFetch</code>, <code>Bash</code>, <code>Read</code>, <code>Grep</code>, <code>Glob</code>, <code>Edit</code>, <code>Write</code></p>
+
+          <h4>Use Cases</h4>
+          <ul class="list">
+            <li>Library documentation lookup</li>
+            <li>API references</li>
+            <li>Architecture patterns</li>
+            <li>Error troubleshooting</li>
+            <li>"A vs B" comparisons</li>
+          </ul>
+
+          <h4>Research Depth Levels</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Depth</th>
+                  <th>Searches</th>
+                  <th>Triggers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>quick</code></td>
+                  <td>2-3</td>
+                  <td>"quick", "briefly", simple lookups</td>
+                </tr>
+                <tr>
+                  <td><code>standard</code></td>
+                  <td>4-6</td>
+                  <td>Default - feature research, best practices</td>
+                </tr>
+                <tr>
+                  <td><code>deep</code></td>
+                  <td>8-12</td>
+                  <td>"deep dive", "thorough", architecture decisions</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Example Invocation</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Task Tool</span>
+              <button class="copy-btn">Copy</button>
             </div>
-        </section>
+            <pre><code>Task(
+  subagent_type: "researcher",
+  prompt: "Research best practices for implementing JWT authentication in Node.js",
+  description: "Research JWT auth best practices"
+)</code></pre>
+          </div>
 
-        <!-- Features Bento Grid -->
-        <section class="section" id="features" aria-labelledby="featuresTitle" style="view-transition-name: features;">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Why Claude Code Kit?</span>
-                    <h2 class="section-title" id="featuresTitle">Everything You Need</h2>
-                    <p class="section-description">A complete toolkit that makes Claude Code smarter, faster, and more consistent.</p>
-                </div>
+          <h4>Output Format</h4>
+          <p>Structured markdown report saved to <code>.claude/.reports/{YYYY-MM-DD-HHMM}-{type}-{topic}.md</code></p>
+        </div>
 
-                <div class="bento-grid" role="list">
-                    <article class="bento-card bento-large" role="listitem">
-                        <div class="bento-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <path d="m9 12 2 2 4-4"/>
-                            </svg>
-                        </div>
-                        <h3>Auto-Loading Skills</h3>
-                        <p>Skills are automatically loaded based on semantic understanding of your task. Working on tests? Testing skill loads. Debugging? Debugging skill activates. No manual configuration needed.</p>
-                        <div class="bento-visual skills-visual" aria-hidden="true">
-                            <div class="skill-tag" style="--delay: 0s">testing</div>
-                            <div class="skill-tag" style="--delay: 0.1s">security</div>
-                            <div class="skill-tag" style="--delay: 0.2s">performance</div>
-                            <div class="skill-tag" style="--delay: 0.3s">refactoring</div>
-                        </div>
-                    </article>
-
-                    <article class="bento-card" role="listitem">
-                        <div class="bento-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                            </svg>
-                        </div>
-                        <h3>Structured Workflows</h3>
-                        <p>Plan &rarr; Implement &rarr; Test &rarr; Review. Built-in checkpoints keep you in control.</p>
-                    </article>
-
-                    <article class="bento-card" role="listitem">
-                        <div class="bento-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="3"/>
-                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-                            </svg>
-                        </div>
-                        <h3>9 Specialized Agents</h3>
-                        <p>Planner, Implementer, Debugger, and more. Each optimized for specific tasks in your workflow.</p>
-                    </article>
-
-                    <article class="bento-card" role="listitem">
-                        <div class="bento-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                            </svg>
-                        </div>
-                        <h3>Safety Rules</h3>
-                        <p>Protected files, confirmation prompts, and rollback strategies keep your code safe.</p>
-                    </article>
-
-                    <article class="bento-card bento-wide" role="listitem">
-                        <div class="bento-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="4 17 10 11 4 5"/>
-                                <line x1="12" y1="19" x2="20" y2="19"/>
-                            </svg>
-                        </div>
-                        <h3>14 Powerful Commands</h3>
-                        <p>From <code>/feature</code> to <code>/bugfix</code> to <code>/pr</code> &mdash; every command you need for the complete development lifecycle. One command to rule them all.</p>
-                        <div class="command-preview">
-                            <code>/feature "Add user authentication with OAuth"</code>
-                        </div>
-                    </article>
-                </div>
+        <!-- Scouter Agent -->
+        <div class="card" id="agent-scouter">
+          <div class="card-header">
+            <div class="section-icon icon-blue" style="width:32px;height:32px;font-size:1rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
             </div>
-        </section>
+            <h3 class="card-title">Scouter Agent</h3>
+            <span class="card-badge badge-blue">Codebase</span>
+          </div>
+          <p class="card-description">Deep codebase analysis specialist for patterns, dependencies, and architecture. Produces structured reports with file:line references.</p>
 
-        <!-- Commands Section -->
-        <section class="section section-dark" id="commands" aria-labelledby="commandsTitle" style="view-transition-name: commands;">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Reference</span>
-                    <h2 class="section-title" id="commandsTitle">All Commands</h2>
-                    <p class="section-description">14 commands to handle any development task. Filter by category or search with &#x2318;K.</p>
-                </div>
+          <h4>Tools Available</h4>
+          <p><code>Bash</code>, <code>Read</code>, <code>Grep</code>, <code>Glob</code>, <code>Edit</code>, <code>Write</code></p>
 
-                <div class="commands-filter" role="tablist" aria-label="Filter commands by category">
-                    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" aria-controls="commandsGrid">All</button>
-                    <button class="filter-btn" data-filter="workflow" role="tab" aria-selected="false" aria-controls="commandsGrid">Workflow</button>
-                    <button class="filter-btn" data-filter="quality" role="tab" aria-selected="false" aria-controls="commandsGrid">Quality</button>
-                    <button class="filter-btn" data-filter="git" role="tab" aria-selected="false" aria-controls="commandsGrid">Git</button>
-                    <button class="filter-btn" data-filter="setup" role="tab" aria-selected="false" aria-controls="commandsGrid">Setup</button>
-                </div>
+          <h4>Use Cases</h4>
+          <ul class="list">
+            <li>Understanding existing implementations</li>
+            <li>Tracing data flows</li>
+            <li>Mapping dependencies</li>
+            <li>Planning refactors</li>
+          </ul>
 
-                <div class="commands-grid" id="commandsGrid" role="tabpanel" aria-live="polite">
-                    <!-- Workflow Commands -->
-                    <article class="command-card" data-category="workflow" data-search="/feature implement new feature development">
-                        <div class="command-header">
-                            <code class="command-name">/feature</code>
-                            <span class="command-badge workflow">Workflow</span>
-                        </div>
-                        <p class="command-desc">Implement a new feature with full workflow support</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/feature "Add user authentication"</code>
-                            </div>
-                            <div class="command-flow">
-                                <span class="flow-step">Plan</span>
-                                <span class="flow-arrow">&rarr;</span>
-                                <span class="flow-step">Implement</span>
-                                <span class="flow-arrow">&rarr;</span>
-                                <span class="flow-step optional">Test</span>
-                                <span class="flow-arrow">&rarr;</span>
-                                <span class="flow-step">Review</span>
-                            </div>
-                        </div>
-                    </article>
+          <h4>Execution Phases</h4>
+          <ol class="list">
+            <li><strong>Broad Search</strong> - Find all potentially relevant files using Glob and Grep</li>
+            <li><strong>Deep Analysis</strong> - Read and analyze key files (max 10-15)</li>
+            <li><strong>Synthesis</strong> - Synthesize findings into structured report</li>
+            <li><strong>Report</strong> - Save report using template</li>
+          </ol>
 
-                    <article class="command-card" data-category="workflow" data-search="/bugfix fix bug debug error">
-                        <div class="command-header">
-                            <code class="command-name">/bugfix</code>
-                            <span class="command-badge workflow">Workflow</span>
-                        </div>
-                        <p class="command-desc">Fix a bug with diagnosis and structured workflow</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/bugfix "API returns 500 on checkout"</code>
-                            </div>
-                            <div class="command-flow">
-                                <span class="flow-step">Debug</span>
-                                <span class="flow-arrow">&rarr;</span>
-                                <span class="flow-step optional">Test</span>
-                                <span class="flow-arrow">&rarr;</span>
-                                <span class="flow-step">Fix</span>
-                                <span class="flow-arrow">&rarr;</span>
-                                <span class="flow-step">Verify</span>
-                            </div>
-                        </div>
-                    </article>
+          <h4>Search Patterns</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Target</th>
+                  <th>Search Approach</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Architecture</td>
+                  <td>Config files, main entry points, module boundaries</td>
+                </tr>
+                <tr>
+                  <td>Data Flow</td>
+                  <td>Routes, handlers, state management, DB queries</td>
+                </tr>
+                <tr>
+                  <td>Dependencies</td>
+                  <td>Import statements, package files, external API calls</td>
+                </tr>
+                <tr>
+                  <td>Patterns</td>
+                  <td>Factory, repository, service, controller classes</td>
+                </tr>
+                <tr>
+                  <td>Tests</td>
+                  <td>Test files, fixtures, mocks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-                    <article class="command-card" data-category="workflow" data-search="/plan create implementation plan design">
-                        <div class="command-header">
-                            <code class="command-name">/plan</code>
-                            <span class="command-badge workflow">Workflow</span>
-                        </div>
-                        <p class="command-desc">Create implementation plan only (no coding)</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/plan "Refactor auth module"</code>
-                            </div>
-                            <div class="command-output">
-                                <span class="label">Output:</span>
-                                <code>.claude/.plans/[datetime]-plan.md</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="command-card" data-category="workflow" data-search="/implement execute plan">
-                        <div class="command-header">
-                            <code class="command-name">/implement</code>
-                            <span class="command-badge workflow">Workflow</span>
-                        </div>
-                        <p class="command-desc">Execute an existing implementation plan</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/implement .claude/.plans/plan.md</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="command-card" data-category="workflow" data-search="/discuss requirements gathering decision">
-                        <div class="command-header">
-                            <code class="command-name">/discuss</code>
-                            <span class="command-badge workflow">Workflow</span>
-                        </div>
-                        <p class="command-desc">Structured discussion for requirements and decisions</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/discuss "REST vs GraphQL for API?"</code>
-                            </div>
-                            <div class="command-output">
-                                <span class="label">Output:</span>
-                                <code>Discussion Summary + ADR</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Quality Commands -->
-                    <article class="command-card" data-category="quality" data-search="/review code review quality security">
-                        <div class="command-header">
-                            <code class="command-name">/review</code>
-                            <span class="command-badge quality">Quality</span>
-                        </div>
-                        <p class="command-desc">Review code changes for quality and security</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/review src/auth/</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="command-card" data-category="quality" data-search="/test write tests tdd unit integration">
-                        <div class="command-header">
-                            <code class="command-name">/test</code>
-                            <span class="command-badge quality">Quality</span>
-                        </div>
-                        <p class="command-desc">Write tests for specified code</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/test src/services/user.ts</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="command-card" data-category="quality" data-search="/debug diagnose root cause">
-                        <div class="command-header">
-                            <code class="command-name">/debug</code>
-                            <span class="command-badge quality">Quality</span>
-                        </div>
-                        <p class="command-desc">Debug issue and find root cause (diagnosis only)</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/debug "Memory leak in dashboard"</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="command-card" data-category="quality" data-search="/refactor improve code structure cleanup">
-                        <div class="command-header">
-                            <code class="command-name">/refactor</code>
-                            <span class="command-badge quality">Quality</span>
-                        </div>
-                        <p class="command-desc">Refactor code safely without changing behavior</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/refactor src/utils/helpers.ts</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="command-card" data-category="quality" data-search="/check lint typecheck tests validate">
-                        <div class="command-header">
-                            <code class="command-name">/check</code>
-                            <span class="command-badge quality">Quality</span>
-                        </div>
-                        <p class="command-desc">Run lint, typecheck, and tests</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/check --fix</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Git Commands -->
-                    <article class="command-card" data-category="git" data-search="/commit git commit conventional">
-                        <div class="command-header">
-                            <code class="command-name">/commit</code>
-                            <span class="command-badge git">Git</span>
-                        </div>
-                        <p class="command-desc">Create a git commit with conventional message</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/commit</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="command-card" data-category="git" data-search="/pr pull request github">
-                        <div class="command-header">
-                            <code class="command-name">/pr</code>
-                            <span class="command-badge git">Git</span>
-                        </div>
-                        <p class="command-desc">Create a pull request with proper description</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/pr "Add authentication"</code>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Setup Commands -->
-                    <article class="command-card" data-category="setup" data-search="/onboard setup configure project">
-                        <div class="command-header">
-                            <code class="command-name">/onboard</code>
-                            <span class="command-badge setup">Setup</span>
-                        </div>
-                        <p class="command-desc">Analyze project and recommend Claude Code setup</p>
-                        <div class="command-details">
-                            <div class="command-example">
-                                <span class="label">Example:</span>
-                                <code>/onboard --apply</code>
-                            </div>
-                            <div class="command-output">
-                                <span class="label">Detects:</span>
-                                <code>Languages, frameworks, databases, CI/CD</code>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+          <h4>Example Invocation</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Task Tool</span>
+              <button class="copy-btn">Copy</button>
             </div>
-        </section>
+            <pre><code>Task(
+  subagent_type: "scouter",
+  prompt: "Analyze the authentication module - find all auth-related files, trace the login flow, and identify dependencies",
+  description: "Scout auth module"
+)</code></pre>
+          </div>
+        </div>
 
-        <!-- Workflows Section -->
-        <section class="section" id="workflows" aria-labelledby="workflowsTitle" style="view-transition-name: workflows;">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Development Flow</span>
-                    <h2 class="section-title" id="workflowsTitle">Structured Workflows</h2>
-                    <p class="section-description">Every task follows a proven process with built-in checkpoints. You stay in control.</p>
-                </div>
-
-                <div class="workflow-tabs" role="tablist" aria-label="Workflow types">
-                    <button class="workflow-tab active" data-workflow="feature" role="tab" aria-selected="true" aria-controls="workflow-feature" id="tab-feature">
-                        <span class="tab-icon" aria-hidden="true">&gt;</span>
-                        Feature Development
-                    </button>
-                    <button class="workflow-tab" data-workflow="bugfix" role="tab" aria-selected="false" aria-controls="workflow-bugfix" id="tab-bugfix">
-                        <span class="tab-icon" aria-hidden="true">!</span>
-                        Bug Fixing
-                    </button>
-                    <button class="workflow-tab" data-workflow="refactor" role="tab" aria-selected="false" aria-controls="workflow-refactor" id="tab-refactor">
-                        <span class="tab-icon" aria-hidden="true">~</span>
-                        Refactoring
-                    </button>
-                </div>
-
-                <div class="workflow-content">
-                    <!-- Feature Workflow -->
-                    <div class="workflow-panel active" id="workflow-feature" role="tabpanel" aria-labelledby="tab-feature">
-                        <div class="workflow-header">
-                            <code class="workflow-cmd">/feature "your feature description"</code>
-                        </div>
-                        <div class="workflow-steps">
-                            <div class="workflow-step optional">
-                                <div class="step-marker">0</div>
-                                <div class="step-content">
-                                    <h4>Discuss <span class="optional-tag">Optional</span></h4>
-                                    <p>Clarify requirements and architectural decisions</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">facilitator</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step">
-                                <div class="step-marker">1</div>
-                                <div class="step-content">
-                                    <h4>Plan</h4>
-                                    <p>Create detailed implementation plan with steps</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">planner</span>
-                                        <span class="checkpoint">User approval required</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step">
-                                <div class="step-marker">2</div>
-                                <div class="step-content">
-                                    <h4>Implement</h4>
-                                    <p>Execute plan step-by-step with validation</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">implementer</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step optional">
-                                <div class="step-marker">3</div>
-                                <div class="step-content">
-                                    <h4>Test <span class="optional-tag">Optional</span></h4>
-                                    <p>Write comprehensive tests for new code</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">test-writer</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step">
-                                <div class="step-marker">4</div>
-                                <div class="step-content">
-                                    <h4>Review</h4>
-                                    <p>Check code quality, security, and best practices</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">code-reviewer</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step optional">
-                                <div class="step-marker">5</div>
-                                <div class="step-content">
-                                    <h4>Commit & PR <span class="optional-tag">Optional</span></h4>
-                                    <p>Create commit and optionally open PR</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bugfix Workflow -->
-                    <div class="workflow-panel" id="workflow-bugfix" role="tabpanel" aria-labelledby="tab-bugfix" hidden>
-                        <div class="workflow-header">
-                            <code class="workflow-cmd">/bugfix "error description"</code>
-                        </div>
-                        <div class="workflow-steps">
-                            <div class="workflow-step">
-                                <div class="step-marker">1</div>
-                                <div class="step-content">
-                                    <h4>Debug</h4>
-                                    <p>Analyze symptoms, trace execution, find root cause</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">debugger</span>
-                                        <span class="checkpoint">Approve diagnosis</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step optional">
-                                <div class="step-marker">2</div>
-                                <div class="step-content">
-                                    <h4>Write Failing Test <span class="optional-tag">TDD</span></h4>
-                                    <p>Create test that reproduces the bug</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">test-writer</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step">
-                                <div class="step-marker">3</div>
-                                <div class="step-content">
-                                    <h4>Fix</h4>
-                                    <p>Implement the fix based on diagnosis</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">implementer</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step">
-                                <div class="step-marker">4</div>
-                                <div class="step-content">
-                                    <h4>Verify</h4>
-                                    <p>Run tests, confirm fix works</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">code-reviewer</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Refactor Workflow -->
-                    <div class="workflow-panel" id="workflow-refactor" role="tabpanel" aria-labelledby="tab-refactor" hidden>
-                        <div class="workflow-header">
-                            <code class="workflow-cmd">/refactor "target file or description"</code>
-                        </div>
-                        <div class="workflow-steps">
-                            <div class="workflow-step">
-                                <div class="step-marker">1</div>
-                                <div class="step-content">
-                                    <h4>Analyze</h4>
-                                    <p>Identify code smells and improvement opportunities</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">refactorer</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step">
-                                <div class="step-marker">2</div>
-                                <div class="step-content">
-                                    <h4>Plan Changes</h4>
-                                    <p>Create step-by-step refactoring plan</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">planner</span>
-                                        <span class="checkpoint">Approve plan</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step highlight">
-                                <div class="step-marker">3</div>
-                                <div class="step-content">
-                                    <h4>Implement in Small Steps</h4>
-                                    <p>Make atomic changes, run tests after each</p>
-                                    <div class="step-meta">
-                                        <span class="agent-tag">refactorer</span>
-                                        <span class="safety-note">Tests run after each change</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="workflow-connector"></div>
-                            <div class="workflow-step">
-                                <div class="step-marker">4</div>
-                                <div class="step-content">
-                                    <h4>Verify Behavior</h4>
-                                    <p>Ensure all tests pass, behavior unchanged</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Reviewer Agent -->
+        <div class="card" id="agent-reviewer">
+          <div class="card-header">
+            <div class="section-icon icon-green" style="width:32px;height:32px;font-size:1rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 11l3 3L22 4"></path>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
             </div>
-        </section>
+            <h3 class="card-title">Reviewer Agent</h3>
+            <span class="card-badge badge-green">Review</span>
+          </div>
+          <p class="card-description">Isolated code review specialist with fresh context for unbiased analysis. Produces structured reports with verdict (Approved/Needs Changes).</p>
 
-        <!-- Skills Section -->
-        <section class="section section-dark" id="skills" aria-labelledby="skillsTitle" style="view-transition-name: skills;">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Auto-Loading</span>
-                    <h2 class="section-title" id="skillsTitle">12 Specialized Skills</h2>
-                    <p class="section-description">Skills load automatically based on your task context. No configuration needed.</p>
-                </div>
+          <h4>Tools Available</h4>
+          <p><code>Bash</code>, <code>Read</code>, <code>Grep</code>, <code>Glob</code>, <code>Edit</code>, <code>Write</code></p>
 
-                <div class="skills-grid" role="list">
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x1F3D7;</div>
-                        <h3>architecture</h3>
-                        <p>System design, patterns, and architectural decisions for any scale</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x2728;</div>
-                        <h3>code-quality</h3>
-                        <p>Best practices, clean code, and naming conventions</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x1F50D;</div>
-                        <h3>debugging</h3>
-                        <p>Root cause analysis and systematic debugging methodology</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x1F4DD;</div>
-                        <h3>documentation</h3>
-                        <p>Writing effective docs, comments, and API references</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x1F3A8;</div>
-                        <h3>frontend-design</h3>
-                        <p>Distinctive, production-grade UI design that avoids generic aesthetics</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x1F500;</div>
-                        <h3>git-workflow</h3>
-                        <p>Commits, branches, PRs, and version control best practices</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x26A1;</div>
-                        <h3>performance</h3>
-                        <p>Optimization strategies, profiling, and Core Web Vitals</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x1F9ED;</div>
-                        <h3>project-analysis</h3>
-                        <p>Codebase analysis for onboarding and configuration</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x1F504;</div>
-                        <h3>refactoring</h3>
-                        <p>Safe code improvement techniques without behavior changes</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x1F6E1;</div>
-                        <h3>security-review</h3>
-                        <p>Security auditing, vulnerability detection, OWASP guidelines</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x1F9EA;</div>
-                        <h3>testing</h3>
-                        <p>TDD, test strategies, coverage optimization, and frameworks</p>
-                    </article>
-                    <article class="skill-card" role="listitem">
-                        <div class="skill-icon" aria-hidden="true">&#x2699;</div>
-                        <h3>skill-creator</h3>
-                        <p>Create custom skills for your specific domain and workflows</p>
-                    </article>
-                </div>
+          <h4>Use Cases</h4>
+          <ul class="list">
+            <li>Post-implementation review</li>
+            <li>Pre-merge validation</li>
+            <li>Security audits</li>
+          </ul>
+
+          <h4>Severity Levels</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Level</th>
+                  <th>Definition</th>
+                  <th>Action Required</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>Critical</code></td>
+                  <td>Security vulnerabilities, data loss, broken functionality</td>
+                  <td>Must fix before merge</td>
+                </tr>
+                <tr>
+                  <td><code>Warning</code></td>
+                  <td>Code smells, performance issues, missing error handling</td>
+                  <td>Should fix</td>
+                </tr>
+                <tr>
+                  <td><code>Suggestion</code></td>
+                  <td>Style improvements, refactoring opportunities</td>
+                  <td>Optional</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Review Checklist Categories</h4>
+          <ul class="list">
+            <li><strong>Security</strong> - Exposed secrets, input validation, SQL injection, XSS, auth checks</li>
+            <li><strong>Code Quality</strong> - Readability, single responsibility, duplication, naming, error handling</li>
+            <li><strong>Performance</strong> - N+1 queries, caching, memory leaks, algorithms</li>
+            <li><strong>Testing</strong> - Coverage, edge cases, maintainability</li>
+          </ul>
+
+          <h4>Verdict Guidelines</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Verdict</th>
+                  <th>Conditions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Approved</strong></td>
+                  <td>No Critical issues, Warnings are minor</td>
+                </tr>
+                <tr>
+                  <td><strong>Needs Changes</strong></td>
+                  <td>Any Critical issues, multiple significant Warnings, or security concerns</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Example Invocation</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Task Tool</span>
+              <button class="copy-btn">Copy</button>
             </div>
-        </section>
+            <pre><code>Task(
+  subagent_type: "reviewer",
+  prompt: "Review the recent authentication implementation - check security, performance, and code quality",
+  description: "Review auth implementation"
+)</code></pre>
+          </div>
+        </div>
+      </section>
 
-        <!-- Agents Section -->
-        <section class="section" id="agents" aria-labelledby="agentsTitle" style="view-transition-name: agents;">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Specialized</span>
-                    <h2 class="section-title" id="agentsTitle">9 Intelligent Agents</h2>
-                    <p class="section-description">Each agent is optimized for specific tasks in the workflow. The right model for the right job.</p>
-                </div>
+      <!-- Skills Section -->
+      <section class="section" id="skills">
+        <div class="section-header">
+          <div class="section-icon icon-orange">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <h2>Skills</h2>
+        </div>
 
-                <div class="agents-table-wrapper">
-                    <table class="agents-table" aria-label="Agents overview">
-                        <thead>
-                            <tr>
-                                <th scope="col">Agent</th>
-                                <th scope="col">Model</th>
-                                <th scope="col">Purpose</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>facilitator</code></td>
-                                <td><span class="model-badge opus">opus</span></td>
-                                <td>Leads discussions, creates ADRs</td>
-                            </tr>
-                            <tr>
-                                <td><code>planner</code></td>
-                                <td><span class="model-badge opus">opus</span></td>
-                                <td>Creates detailed implementation plans</td>
-                            </tr>
-                            <tr>
-                                <td><code>implementer</code></td>
-                                <td><span class="model-badge sonnet">sonnet</span></td>
-                                <td>Executes plans step-by-step</td>
-                            </tr>
-                            <tr>
-                                <td><code>code-reviewer</code></td>
-                                <td><span class="model-badge sonnet">sonnet</span></td>
-                                <td>Reviews code quality and security</td>
-                            </tr>
-                            <tr>
-                                <td><code>test-writer</code></td>
-                                <td><span class="model-badge sonnet">sonnet</span></td>
-                                <td>Writes comprehensive tests</td>
-                            </tr>
-                            <tr>
-                                <td><code>debugger</code></td>
-                                <td><span class="model-badge sonnet">sonnet</span></td>
-                                <td>Finds root causes of issues</td>
-                            </tr>
-                            <tr>
-                                <td><code>refactorer</code></td>
-                                <td><span class="model-badge opus">opus</span></td>
-                                <td>Improves code structure safely</td>
-                            </tr>
-                            <tr>
-                                <td><code>doc-writer</code></td>
-                                <td><span class="model-badge sonnet">sonnet</span></td>
-                                <td>Writes clear documentation</td>
-                            </tr>
-                            <tr>
-                                <td><code>security-auditor</code></td>
-                                <td><span class="model-badge opus">opus</span></td>
-                                <td>Audits for security vulnerabilities</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <p>Skills are domain knowledge modules with progressive disclosure. They provide specialized workflows, tool integrations, and bundled resources.</p>
+
+        <!-- Planning Skill -->
+        <div class="card" id="skill-planning">
+          <div class="card-header">
+            <h3 class="card-title">Planning</h3>
+            <span class="card-badge badge-blue">Workflow</span>
+          </div>
+          <p class="card-description">Implementation planning with Spec-Driven Development (SDD). Creates hierarchical master plans with phase breakdowns.</p>
+
+          <h4>Triggers</h4>
+          <ul class="list">
+            <li>Starting new feature development</li>
+            <li>Breaking down complex requirements</li>
+            <li>Estimating AI-assisted development tasks</li>
+            <li>Creating hierarchical project plans</li>
+          </ul>
+
+          <h4>Core Concept: Spec-Driven Development</h4>
+          <div class="callout callout-info">
+            <div class="callout-title">SDD outperforms unstructured prompting by 8x for accuracy</div>
+            <code>Spec → Plan → Execute</code>
+          </div>
+
+          <h4>Hierarchical Plan Structure</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Plan Directory</span>
+              <button class="copy-btn">Copy</button>
             </div>
-        </section>
+            <pre><code>.plans/{feature}/
+├── _master.md          # Overview, phases, status
+├── phase-1-setup.md    # Detailed phase plan
+├── phase-2-core.md     # Each phase self-contained
+└── phase-3-polish.md</code></pre>
+          </div>
 
-        <!-- Installation Section -->
-        <section class="section section-gradient" id="installation" aria-labelledby="installTitle" style="view-transition-name: installation;">
-            <div class="container">
-                <div class="section-header center">
-                    <span class="section-tag">Get Started</span>
-                    <h2 class="section-title" id="installTitle">Install in 30 Seconds</h2>
-                    <p class="section-description">Copy the .claude directory to your project and you're ready to go. It's that simple.</p>
-                </div>
+          <h4>AI Augmentation Factor (AAF)</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Task Type</th>
+                  <th>AAF</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Boilerplate</td>
+                  <td>0.3-0.5</td>
+                  <td>AI excels at repetitive code</td>
+                </tr>
+                <tr>
+                  <td>Standard features</td>
+                  <td>0.5-0.7</td>
+                  <td>Well-documented patterns</td>
+                </tr>
+                <tr>
+                  <td>Complex logic</td>
+                  <td>0.8-1.0</td>
+                  <td>AI assists, human leads</td>
+                </tr>
+                <tr>
+                  <td>Novel problems</td>
+                  <td>1.0-1.2</td>
+                  <td>AI may slow down</td>
+                </tr>
+                <tr>
+                  <td>Integration work</td>
+                  <td>1.2-1.5</td>
+                  <td>Context switching overhead</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-                <ol class="install-steps">
-                    <li class="install-step">
-                        <div class="install-number" aria-hidden="true">1</div>
-                        <div class="install-content">
-                            <h3>Clone the Repository</h3>
-                            <div class="code-block">
-                                <button class="copy-btn" data-code="git clone https://github.com/anthropics/claude-code-kit.git" aria-label="Copy clone command">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                                    </svg>
-                                </button>
-                                <pre><code>git clone https://github.com/anthropics/claude-code-kit.git</code></pre>
-                            </div>
-                        </div>
-                    </li>
+          <h4>T-Shirt Sizing</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Size</th>
+                  <th>Effort</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>XS</td>
+                  <td>&lt; 2 hours</td>
+                  <td>Single function, config change</td>
+                </tr>
+                <tr>
+                  <td>S</td>
+                  <td>2-4 hours</td>
+                  <td>Single component, simple endpoint</td>
+                </tr>
+                <tr>
+                  <td>M</td>
+                  <td>4-8 hours</td>
+                  <td>Feature slice, multiple components</td>
+                </tr>
+                <tr>
+                  <td>L</td>
+                  <td>1-3 days</td>
+                  <td>Complex feature, multiple integrations</td>
+                </tr>
+                <tr>
+                  <td>XL</td>
+                  <td>3-5 days</td>
+                  <td>Major feature, architectural changes</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-                    <li class="install-step">
-                        <div class="install-number" aria-hidden="true">2</div>
-                        <div class="install-content">
-                            <h3>Copy to Your Project</h3>
-                            <div class="code-block">
-                                <button class="copy-btn" data-code="cp -r claude-code-kit/.claude /path/to/your/project/" aria-label="Copy file copy command">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                                    </svg>
-                                </button>
-                                <pre><code>cp -r claude-code-kit/.claude /path/to/your/project/</code></pre>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="install-step">
-                        <div class="install-number" aria-hidden="true">3</div>
-                        <div class="install-content">
-                            <h3>Run Onboarding</h3>
-                            <div class="code-block">
-                                <button class="copy-btn" data-code="/onboard --apply" aria-label="Copy onboard command">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                                    </svg>
-                                </button>
-                                <pre><code>/onboard --apply</code></pre>
-                            </div>
-                            <p class="install-note">This detects your stack and creates optimized rules for your project</p>
-                        </div>
-                    </li>
-                </ol>
-
-                <div class="install-requirements">
-                    <h3>Requirements</h3>
-                    <ul>
-                        <li>Claude Code (desktop or CLI)</li>
-                        <li>Git (for /commit and /pr)</li>
-                        <li>GitHub CLI (optional, for /pr)</li>
-                    </ul>
-                </div>
+          <h4>Invocation</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Skill Tool</span>
+              <button class="copy-btn">Copy</button>
             </div>
-        </section>
-    </main>
+            <pre><code>Skill(skill: "planning")</code></pre>
+          </div>
+        </div>
+
+        <!-- Implementation Skill -->
+        <div class="card" id="skill-implementation">
+          <div class="card-header">
+            <h3 class="card-title">Implementation</h3>
+            <span class="card-badge badge-green">Code</span>
+          </div>
+          <p class="card-description">Code writing best practices for clean, maintainable software. Covers SOLID principles, naming, and error handling.</p>
+
+          <h4>Triggers</h4>
+          <ul class="list">
+            <li>Writing new code or features</li>
+            <li>Reviewing code quality</li>
+            <li>Refactoring existing code</li>
+            <li>Pair programming with AI</li>
+          </ul>
+
+          <h4>Clean Code Principles</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Priority Order</span>
+            </div>
+            <pre><code>1. Readable > Clever
+2. Simple > Complex
+3. Explicit > Implicit
+4. Consistent > Perfect</code></pre>
+          </div>
+
+          <h4>Function Design Guidelines</h4>
+          <ul class="list">
+            <li>Target: Under 20 lines</li>
+            <li>Parameters: 0-3 maximum</li>
+            <li>Small, focused, clear naming</li>
+          </ul>
+
+          <h4>SOLID Principles Quick Reference</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Principle</th>
+                  <th>Meaning</th>
+                  <th>Violation Sign</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>S</strong>ingle Responsibility</td>
+                  <td>One reason to change</td>
+                  <td>"...and..." in description</td>
+                </tr>
+                <tr>
+                  <td><strong>O</strong>pen/Closed</td>
+                  <td>Extend, don't modify</td>
+                  <td>Switch statements everywhere</td>
+                </tr>
+                <tr>
+                  <td><strong>L</strong>iskov Substitution</td>
+                  <td>Subtypes replaceable</td>
+                  <td><code>instanceof</code> checks</td>
+                </tr>
+                <tr>
+                  <td><strong>I</strong>nterface Segregation</td>
+                  <td>Small, focused interfaces</td>
+                  <td>Implementing unused methods</td>
+                </tr>
+                <tr>
+                  <td><strong>D</strong>ependency Inversion</td>
+                  <td>Depend on abstractions</td>
+                  <td>Direct <code>new</code> of dependencies</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>AI-Assisted Coding Model</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>AI Task</th>
+                  <th>Human Task</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Generate boilerplate</td>
+                  <td>Review for correctness</td>
+                </tr>
+                <tr>
+                  <td>Suggest implementations</td>
+                  <td>Validate architecture</td>
+                </tr>
+                <tr>
+                  <td>Write tests</td>
+                  <td>Verify edge cases</td>
+                </tr>
+                <tr>
+                  <td>Draft documentation</td>
+                  <td>Ensure accuracy</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Invocation</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Skill Tool</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code>Skill(skill: "implementation")</code></pre>
+          </div>
+        </div>
+
+        <!-- Testing Skill -->
+        <div class="card" id="skill-testing">
+          <div class="card-header">
+            <h3 class="card-title">Testing</h3>
+            <span class="card-badge badge-green">Quality</span>
+          </div>
+          <p class="card-description">Testing patterns, strategies, and best practices. Covers TDD/BDD, test types, and coverage strategies.</p>
+
+          <h4>Testing Philosophy</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Core Beliefs</span>
+            </div>
+            <pre><code>Tests are documentation that never lies.
+Tests are a safety net for refactoring.
+Tests give confidence to ship.</code></pre>
+          </div>
+
+          <h4>Test Types</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Scope</th>
+                  <th>Speed</th>
+                  <th>Confidence</th>
+                  <th>When to Use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Unit</td>
+                  <td>Single function/class</td>
+                  <td>Fast</td>
+                  <td>Low-Medium</td>
+                  <td>Pure logic, algorithms</td>
+                </tr>
+                <tr>
+                  <td>Integration</td>
+                  <td>Multiple components</td>
+                  <td>Medium</td>
+                  <td>Medium-High</td>
+                  <td>Features, user flows</td>
+                </tr>
+                <tr>
+                  <td>E2E</td>
+                  <td>Entire system</td>
+                  <td>Slow</td>
+                  <td>High</td>
+                  <td>Critical paths</td>
+                </tr>
+                <tr>
+                  <td>Contract</td>
+                  <td>API boundaries</td>
+                  <td>Fast</td>
+                  <td>Medium</td>
+                  <td>Microservices</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>AAA Pattern</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Test Structure</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code>// Arrange: Set up test data
+const user = { name: 'Test', email: 'test@example.com' };
+
+// Act: Execute the code under test
+const result = await createUser(user);
+
+// Assert: Verify the outcome
+expect(result.id).toBeDefined();
+expect(result.name).toBe('Test');</code></pre>
+          </div>
+
+          <h4>Coverage Target</h4>
+          <p><strong>80-90% meaningful coverage</strong></p>
+
+          <h4>What to Test</h4>
+          <ul class="list">
+            <li>Business logic</li>
+            <li>Edge cases</li>
+            <li>Error handling</li>
+            <li>Integration points</li>
+            <li>User-facing features</li>
+          </ul>
+
+          <h4>What NOT to Test</h4>
+          <ul class="list">
+            <li>Framework code</li>
+            <li>Third-party libraries</li>
+            <li>Configuration files</li>
+            <li>Simple getters/setters</li>
+            <li>Generated code</li>
+          </ul>
+        </div>
+
+        <!-- Documentation Skill -->
+        <div class="card" id="skill-documentation">
+          <div class="card-header">
+            <h3 class="card-title">Documentation</h3>
+            <span class="card-badge badge-blue">Docs</span>
+          </div>
+          <p class="card-description">Documentation writing guidelines and templates. Covers README, ADR, API docs, and changelogs.</p>
+
+          <h4>Documentation Types</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Purpose</th>
+                  <th>Audience</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>README</td>
+                  <td>Project overview, setup</td>
+                  <td>All users</td>
+                </tr>
+                <tr>
+                  <td>ADR</td>
+                  <td>Architecture decisions</td>
+                  <td>Developers</td>
+                </tr>
+                <tr>
+                  <td>API Docs</td>
+                  <td>Endpoint reference</td>
+                  <td>API consumers</td>
+                </tr>
+                <tr>
+                  <td>Changelog</td>
+                  <td>Version history</td>
+                  <td>All users</td>
+                </tr>
+                <tr>
+                  <td>Guides</td>
+                  <td>How-to tutorials</td>
+                  <td>Developers</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Docs-as-Code Workflow</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Pipeline</span>
+            </div>
+            <pre><code>Write (Markdown) → Review (PR) → Build (CI) → Deploy (Static site)</code></pre>
+          </div>
+
+          <h4>When to Comment</h4>
+          <ul class="list">
+            <li>Explains WHY (non-obvious reason)</li>
+            <li>Documents gotcha or workaround</li>
+            <li>Complex algorithm reference</li>
+          </ul>
+
+          <h4>Available Templates</h4>
+          <ul class="list">
+            <li><code>templates/readme.md</code> - Project README</li>
+            <li><code>templates/adr.md</code> - Architecture Decision Record</li>
+            <li><code>templates/changelog.md</code> - Keep a Changelog format</li>
+            <li><code>templates/api-docs.md</code> - API documentation</li>
+          </ul>
+        </div>
+
+        <!-- Security Audit Skill -->
+        <div class="card" id="skill-security">
+          <div class="card-header">
+            <h3 class="card-title">Security Audit</h3>
+            <span class="card-badge badge-orange">Security</span>
+          </div>
+          <p class="card-description">Security review checklist and vulnerability assessment. Covers OWASP Top 10 and AI security considerations.</p>
+
+          <h4>Security Review Checklist</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Checklist</span>
+            </div>
+            <pre><code>[ ] Input Validation     - All external data validated
+[ ] Output Encoding      - Context-appropriate escaping
+[ ] Authentication       - Strong, properly implemented
+[ ] Authorization        - Least privilege enforced
+[ ] Data Protection      - Encryption at rest/transit
+[ ] Error Handling       - No sensitive data leaked
+[ ] Logging              - Security events captured
+[ ] Dependencies         - No known vulnerabilities</code></pre>
+          </div>
+
+          <h4>OWASP Top 10 (2021) Quick Reference</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Vulnerability</th>
+                  <th>Quick Fix</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Broken Access Control</td>
+                  <td>Deny by default, enforce server-side</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Cryptographic Failures</td>
+                  <td>Use standard algorithms, protect keys</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Injection</td>
+                  <td>Parameterized queries, validate input</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Insecure Design</td>
+                  <td>Threat model, secure patterns</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Security Misconfiguration</td>
+                  <td>Harden defaults, minimal install</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Vulnerable Components</td>
+                  <td>Audit deps, update regularly</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>Auth Failures</td>
+                  <td>MFA, rate limiting, secure sessions</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>Data Integrity Failures</td>
+                  <td>Verify signatures, trusted sources</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>Logging Failures</td>
+                  <td>Log security events, monitor</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>SSRF</td>
+                  <td>Validate URLs, blocklist internal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>LLM/AI Security (2025)</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Risk</th>
+                  <th>Mitigation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Prompt Injection</td>
+                  <td>Separate user input from instructions</td>
+                </tr>
+                <tr>
+                  <td>Data Leakage</td>
+                  <td>Don't include secrets in prompts</td>
+                </tr>
+                <tr>
+                  <td>Excessive Agency</td>
+                  <td>Limit AI capabilities, require confirmation</td>
+                </tr>
+                <tr>
+                  <td>Model Poisoning</td>
+                  <td>Validate training data sources</td>
+                </tr>
+                <tr>
+                  <td>Output Validation</td>
+                  <td>Sanitize AI-generated content</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Git Workflow Skill -->
+        <div class="card" id="skill-git">
+          <div class="card-header">
+            <h3 class="card-title">Git Workflow</h3>
+            <span class="card-badge badge-purple">Git</span>
+          </div>
+          <p class="card-description">Git conventions, branching strategies, and commit practices. Covers GitFlow, trunk-based, and GitHub Flow.</p>
+
+          <h4>Branching Strategy Selection</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Situation</th>
+                  <th>Recommended Strategy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>CI/CD, frequent deploys</td>
+                  <td>Trunk-based development</td>
+                </tr>
+                <tr>
+                  <td>Multiple release versions</td>
+                  <td>GitFlow</td>
+                </tr>
+                <tr>
+                  <td>Small team, single product</td>
+                  <td>GitHub Flow</td>
+                </tr>
+                <tr>
+                  <td>Open source project</td>
+                  <td>Fork & Pull Request</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Conventional Commits</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Format</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;description&gt;
+
+[optional body]
+
+[optional footer(s)]</code></pre>
+          </div>
+
+          <h4>Commit Types</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Use For</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>feat</code></td>
+                  <td>New feature</td>
+                </tr>
+                <tr>
+                  <td><code>fix</code></td>
+                  <td>Bug fix</td>
+                </tr>
+                <tr>
+                  <td><code>docs</code></td>
+                  <td>Documentation</td>
+                </tr>
+                <tr>
+                  <td><code>style</code></td>
+                  <td>Formatting (no code change)</td>
+                </tr>
+                <tr>
+                  <td><code>refactor</code></td>
+                  <td>Code restructure</td>
+                </tr>
+                <tr>
+                  <td><code>perf</code></td>
+                  <td>Performance improvement</td>
+                </tr>
+                <tr>
+                  <td><code>test</code></td>
+                  <td>Adding tests</td>
+                </tr>
+                <tr>
+                  <td><code>chore</code></td>
+                  <td>Maintenance</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>PR Size Recommendations</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Size</th>
+                  <th>Lines Changed</th>
+                  <th>Review Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>XS</td>
+                  <td>&lt; 50</td>
+                  <td>15 min</td>
+                </tr>
+                <tr>
+                  <td>S</td>
+                  <td>50-200</td>
+                  <td>30 min</td>
+                </tr>
+                <tr>
+                  <td>M</td>
+                  <td>200-400</td>
+                  <td>1 hour</td>
+                </tr>
+                <tr>
+                  <td>L</td>
+                  <td>400-800</td>
+                  <td>2+ hours</td>
+                </tr>
+                <tr>
+                  <td>XL</td>
+                  <td>&gt; 800</td>
+                  <td>Split it</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Code Patterns Skill -->
+        <div class="card" id="skill-patterns">
+          <div class="card-header">
+            <h3 class="card-title">Code Patterns</h3>
+            <span class="card-badge badge-cyan">Architecture</span>
+          </div>
+          <p class="card-description">Design patterns reference and selection guide. Covers creational, structural, behavioral, and architectural patterns.</p>
+
+          <h4>Pattern Selection Guide</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Problem</th>
+                  <th>Pattern</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Too many constructor params</td>
+                  <td>Builder</td>
+                </tr>
+                <tr>
+                  <td>Need single instance</td>
+                  <td>Singleton (sparingly)</td>
+                </tr>
+                <tr>
+                  <td>Create objects without specifying class</td>
+                  <td>Factory</td>
+                </tr>
+                <tr>
+                  <td>Add behavior dynamically</td>
+                  <td>Decorator</td>
+                </tr>
+                <tr>
+                  <td>Notify multiple objects of changes</td>
+                  <td>Observer/Pub-Sub</td>
+                </tr>
+                <tr>
+                  <td>Handle request through chain</td>
+                  <td>Chain of Responsibility</td>
+                </tr>
+                <tr>
+                  <td>Encapsulate algorithm variations</td>
+                  <td>Strategy</td>
+                </tr>
+                <tr>
+                  <td>Track operation history</td>
+                  <td>Command</td>
+                </tr>
+                <tr>
+                  <td>Handle async workflows</td>
+                  <td>Saga</td>
+                </tr>
+                <tr>
+                  <td>Separate read/write models</td>
+                  <td>CQRS</td>
+                </tr>
+                <tr>
+                  <td>Handle cascading failures</td>
+                  <td>Circuit Breaker</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Modern Pattern Preferences (2025)</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Preferences</span>
+            </div>
+            <pre><code>Composition > Inheritance
+Functions > Classes (where appropriate)
+Result types > Exceptions
+Dependency Injection > Global state
+Immutability > Mutability</code></pre>
+          </div>
+
+          <h4>Pattern Categories</h4>
+          <div class="accordion">
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Creational Patterns</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ul class="list">
+                  <li><strong>Factory</strong> - Create objects polymorphically</li>
+                  <li><strong>Builder</strong> - Complex object construction</li>
+                  <li><strong>Singleton</strong> - Global single instance (rarely)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Structural Patterns</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ul class="list">
+                  <li><strong>Adapter</strong> - Convert interface</li>
+                  <li><strong>Decorator</strong> - Add behavior dynamically</li>
+                  <li><strong>Facade</strong> - Simplify complex subsystem</li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Behavioral Patterns</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ul class="list">
+                  <li><strong>Strategy</strong> - Algorithm variations</li>
+                  <li><strong>Observer</strong> - Event notification</li>
+                  <li><strong>Command</strong> - Encapsulate operations</li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Architectural Patterns</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ul class="list">
+                  <li><strong>CQRS</strong> - Separate read/write</li>
+                  <li><strong>Event Sourcing</strong> - Audit trail needed</li>
+                  <li><strong>Saga</strong> - Distributed transactions</li>
+                  <li><strong>Circuit Breaker</strong> - Handle failures</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gemini Skill -->
+        <div class="card" id="skill-gemini">
+          <div class="card-header">
+            <h3 class="card-title">Gemini</h3>
+            <span class="card-badge badge-blue">AI</span>
+          </div>
+          <p class="card-description">Execute Google Gemini CLI for AI-powered automation and analysis. Ideal for image/PDF analysis and batch processing.</p>
+
+          <h4>Requirements</h4>
+          <ul class="list">
+            <li>Node.js 20+</li>
+            <li>Gemini CLI: <code>npm install -g @google/gemini-cli</code></li>
+          </ul>
+
+          <h4>Quick Reference</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Bash Examples</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code># Non-interactive (automation) - ALWAYS use -p flag
+gemini -p "prompt" --output-format json
+
+# Parse JSON response (cross-platform)
+gemini -p "query" --output-format json | node -p "JSON.parse(require('fs').readFileSync(0,'utf8')).response"
+
+# With piped input
+cat file.txt | gemini -p "analyze this"
+git diff | gemini -p "write commit message" --output-format json</code></pre>
+          </div>
+
+          <h4>Core Flags</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Flag</th>
+                  <th>Short</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>--prompt</code></td>
+                  <td><code>-p</code></td>
+                  <td><strong>Required</strong> for non-interactive mode</td>
+                </tr>
+                <tr>
+                  <td><code>--output-format</code></td>
+                  <td></td>
+                  <td><code>text</code>, <code>json</code>, <code>stream-json</code></td>
+                </tr>
+                <tr>
+                  <td><code>--model</code></td>
+                  <td><code>-m</code></td>
+                  <td>Model selection</td>
+                </tr>
+                <tr>
+                  <td><code>--sandbox</code></td>
+                  <td><code>-s</code></td>
+                  <td>Safe sandboxed execution</td>
+                </tr>
+                <tr>
+                  <td><code>--yolo</code></td>
+                  <td><code>-y</code></td>
+                  <td>Auto-approve actions (caution)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Models</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>gemini-2.5-flash</code></td>
+                  <td>Fast, automation (default)</td>
+                </tr>
+                <tr>
+                  <td><code>gemini-2.5-pro</code></td>
+                  <td>Complex reasoning, 1M context</td>
+                </tr>
+                <tr>
+                  <td><code>gemini-2.5-flash-lite</code></td>
+                  <td>Ultra-fast, simple tasks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- UI/UX Pro Max Skill -->
+        <div class="card" id="skill-uiux">
+          <div class="card-header">
+            <h3 class="card-title">UI/UX Pro Max</h3>
+            <span class="card-badge badge-pink">Design</span>
+          </div>
+          <p class="card-description">Frontend UI/UX design intelligence with searchable database of styles, colors, typography, and best practices.</p>
+
+          <h4>Searchable Database</h4>
+          <ul class="list">
+            <li>50 UI styles</li>
+            <li>21 color palettes</li>
+            <li>50 font pairings</li>
+            <li>20 chart types</li>
+            <li>8 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind)</li>
+          </ul>
+
+          <h4>Search Domains</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Use For</th>
+                  <th>Example Keywords</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>product</code></td>
+                  <td>Product type recommendations</td>
+                  <td>SaaS, e-commerce, portfolio</td>
+                </tr>
+                <tr>
+                  <td><code>style</code></td>
+                  <td>UI styles, colors, effects</td>
+                  <td>glassmorphism, minimalism, dark mode</td>
+                </tr>
+                <tr>
+                  <td><code>typography</code></td>
+                  <td>Font pairings, Google Fonts</td>
+                  <td>elegant, playful, professional</td>
+                </tr>
+                <tr>
+                  <td><code>color</code></td>
+                  <td>Color palettes by product</td>
+                  <td>saas, healthcare, beauty</td>
+                </tr>
+                <tr>
+                  <td><code>landing</code></td>
+                  <td>Page structure, CTA strategies</td>
+                  <td>hero, testimonial, pricing</td>
+                </tr>
+                <tr>
+                  <td><code>chart</code></td>
+                  <td>Chart types, libraries</td>
+                  <td>trend, comparison, timeline</td>
+                </tr>
+                <tr>
+                  <td><code>ux</code></td>
+                  <td>Best practices, anti-patterns</td>
+                  <td>animation, accessibility, z-index</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Usage</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Search Command</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code>python3 .claude/skills/ui-ux-pro-max/scripts/search.py "&lt;keyword&gt;" --domain &lt;domain&gt; [-n &lt;max_results&gt;]</code></pre>
+          </div>
+
+          <h4>Available Stacks</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Stack</th>
+                  <th>Focus</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>html-tailwind</code></td>
+                  <td>Tailwind utilities, responsive, a11y (DEFAULT)</td>
+                </tr>
+                <tr>
+                  <td><code>react</code></td>
+                  <td>State, hooks, performance, patterns</td>
+                </tr>
+                <tr>
+                  <td><code>nextjs</code></td>
+                  <td>SSR, routing, images, API routes</td>
+                </tr>
+                <tr>
+                  <td><code>vue</code></td>
+                  <td>Composition API, Pinia, Vue Router</td>
+                </tr>
+                <tr>
+                  <td><code>svelte</code></td>
+                  <td>Runes, stores, SvelteKit</td>
+                </tr>
+                <tr>
+                  <td><code>swiftui</code></td>
+                  <td>Views, State, Navigation, Animation</td>
+                </tr>
+                <tr>
+                  <td><code>react-native</code></td>
+                  <td>Components, Navigation, Lists</td>
+                </tr>
+                <tr>
+                  <td><code>flutter</code></td>
+                  <td>Widgets, State, Layout, Theming</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Skill Creator Skill -->
+        <div class="card" id="skill-creator">
+          <div class="card-header">
+            <h3 class="card-title">Skill Creator</h3>
+            <span class="card-badge badge-purple">Meta</span>
+          </div>
+          <p class="card-description">Guide for creating effective skills that extend Claude's capabilities with specialized knowledge and workflows.</p>
+
+          <h4>What Skills Provide</h4>
+          <ul class="list">
+            <li><strong>Specialized workflows</strong> - Multi-step procedures for specific domains</li>
+            <li><strong>Tool integrations</strong> - Instructions for working with specific file formats or APIs</li>
+            <li><strong>Domain expertise</strong> - Company-specific knowledge, schemas, business logic</li>
+            <li><strong>Bundled resources</strong> - Scripts, references, and assets for complex tasks</li>
+          </ul>
+
+          <h4>Skill Anatomy</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Directory Structure</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code>skill-name/
+├── SKILL.md (required)
+│   ├── YAML frontmatter metadata (required)
+│   │   ├── name: (required)
+│   │   └── description: (required)
+│   └── Markdown instructions (required)
+└── Bundled Resources (optional)
+    ├── scripts/          - Executable code
+    ├── references/       - Documentation for context loading
+    └── assets/           - Files used in output</code></pre>
+          </div>
+
+          <h4>Progressive Disclosure</h4>
+          <ol class="list">
+            <li><strong>Metadata</strong> (name + description) - Always in context (~100 words)</li>
+            <li><strong>SKILL.md body</strong> - When skill triggers (&lt;5k words)</li>
+            <li><strong>Bundled resources</strong> - As needed by Claude</li>
+          </ol>
+
+          <h4>Core Principles</h4>
+          <div class="callout callout-info">
+            <div class="callout-title">Concise is Key</div>
+            Context window is a public good. Set appropriate degrees of freedom - match specificity to task fragility.
+          </div>
+
+          <h4>Bundled Scripts</h4>
+          <ul class="list">
+            <li><code>scripts/init_skill.py</code> - Initialize new skill with template</li>
+            <li><code>scripts/package_skill.py</code> - Package skill into .skill file</li>
+            <li><code>scripts/quick_validate.py</code> - Validate skill structure</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Commands Section -->
+      <section class="section" id="commands">
+        <div class="section-header">
+          <div class="section-icon icon-cyan">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 17 10 11 4 5"></polyline>
+              <line x1="12" y1="19" x2="20" y2="19"></line>
+            </svg>
+          </div>
+          <h2>Commands</h2>
+        </div>
+
+        <p>Commands are user-facing slash commands that trigger workflows and interactive processes.</p>
+
+        <!-- Brainstorm Command -->
+        <div class="card" id="cmd-brainstorm">
+          <div class="card-header">
+            <h3 class="card-title">/brainstorm</h3>
+            <span class="card-badge badge-cyan">Interactive</span>
+          </div>
+          <p class="card-description">Start interactive brainstorm session to refine a specification. Creates structured spec through conversation with developer.</p>
+
+          <h4>Invocation</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Usage</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code>/brainstorm [initial spec or feature description]
+
+# Examples
+/brainstorm user-authentication
+/brainstorm Add dark mode toggle to settings page
+/brainstorm Implement real-time notifications using WebSockets</code></pre>
+          </div>
+
+          <h4>Output</h4>
+          <p><code>.claude/.specs/{feature-name}.md</code></p>
+
+          <h4>Execution Protocol</h4>
+          <ol class="list">
+            <li><strong>Parse Feature Name</strong> - Extract and convert to kebab-case</li>
+            <li><strong>Initialize Spec File</strong> - Create using template</li>
+            <li><strong>Analyze Codebase</strong> - Quick search + optional deep analysis via scouter/researcher</li>
+            <li><strong>Identify Gaps and Questions</strong> - Missing information, decisions needed</li>
+            <li><strong>Present Findings</strong> - STOP and wait for developer</li>
+            <li><strong>Conversation Loop</strong> - Process responses, update spec, present remaining</li>
+            <li><strong>Finalize Spec</strong> - Generate final spec when developer confirms</li>
+          </ol>
+
+          <h4>Key Rules</h4>
+          <div class="callout callout-warning">
+            <div class="callout-title">Important</div>
+            <ul class="list">
+              <li>ALWAYS wait for developer response</li>
+              <li>Use <code>Task(subagent_type: "scouter", ...)</code> for deep codebase analysis</li>
+              <li>Use <code>Task(subagent_type: "researcher", ...)</code> for external research</li>
+              <li>NEVER make decisions for the developer</li>
+              <li>Update spec file after each developer input</li>
+            </ul>
+          </div>
+
+          <h4>Spec Template Sections</h4>
+          <ol class="list">
+            <li>Original Requirements</li>
+            <li>Analysis (Codebase Impact, Gaps Identified, Open Questions)</li>
+            <li>Approach Options (A/B with pros/cons, effort estimate)</li>
+            <li>Technical Decisions (table with choice, reason, date)</li>
+            <li>Final Spec (Objective, Requirements, Technical Approach, Out of Scope, Acceptance Criteria, Dependencies, Risks)</li>
+          </ol>
+        </div>
+
+        <!-- Run Command -->
+        <div class="card" id="cmd-run">
+          <div class="card-header">
+            <h3 class="card-title">/run</h3>
+            <span class="card-badge badge-green">Workflow</span>
+          </div>
+          <p class="card-description">Execute a development workflow with scale-adaptive routing. Orchestrates agents and skills through defined workflow phases.</p>
+
+          <h4>Invocation</h4>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span>Usage</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><code>/run [workflow] [name-or-description]
+
+# Explicit workflow
+/run feature user-auth
+/run bugfix login-button-broken
+/run hotfix production-down
+/run refactor authentication-module
+/run review
+/run research jwt-vs-sessions
+/run docs api-reference
+
+# Auto-detect workflow
+/run implement user authentication
+/run fix the login button is broken
+/run urgent production is down
+
+# Resume/Status
+/run resume user-auth
+/run status user-auth</code></pre>
+          </div>
+
+          <h4>Auto-Detection Mappings</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Intent</th>
+                  <th>Workflow</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Add NEW functionality, create, build, implement</td>
+                  <td><code>feature</code></td>
+                </tr>
+                <tr>
+                  <td>Fix something BROKEN, bug, error, defect</td>
+                  <td><code>bugfix</code></td>
+                </tr>
+                <tr>
+                  <td>URGENT, critical, production down, P0, emergency</td>
+                  <td><code>hotfix</code></td>
+                </tr>
+                <tr>
+                  <td>IMPROVE code without changing behavior</td>
+                  <td><code>refactor</code></td>
+                </tr>
+                <tr>
+                  <td>REVIEW code, PR, audit, check quality</td>
+                  <td><code>review</code></td>
+                </tr>
+                <tr>
+                  <td>LEARN, investigate, explore, compare, research</td>
+                  <td><code>research</code></td>
+                </tr>
+                <tr>
+                  <td>DOCUMENT, readme, api-docs, changelog</td>
+                  <td><code>docs</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Workflow Phases</h4>
+          <div class="accordion">
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Feature Workflow</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <p><strong>Requires Spec:</strong> Yes</p>
+                <p><strong>Phases:</strong> research → plan → implement → test → review → commit</p>
+                <ul class="list">
+                  <li><strong>research</strong> - <code>researcher</code> + <code>scouter</code> agents (parallel)</li>
+                  <li><strong>plan</strong> - <code>planning</code> skill</li>
+                  <li><strong>implement</strong> - <code>implementation</code> skill</li>
+                  <li><strong>test</strong> - <code>testing</code> skill + run tests</li>
+                  <li><strong>review</strong> - <code>reviewer</code> agent</li>
+                  <li><strong>commit</strong> - <code>git-workflow</code> skill</li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Bugfix Workflow</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <p><strong>Requires Spec:</strong> No</p>
+                <p><strong>Phases:</strong> scout → analyze → plan → fix → test → commit</p>
+                <ul class="list">
+                  <li><strong>scout</strong> - <code>scouter</code> agent to locate bug</li>
+                  <li><strong>analyze</strong> - Determine root cause, minimal fix approach</li>
+                  <li><strong>plan</strong> - <code>planning</code> skill for fix plan</li>
+                  <li><strong>fix</strong> - <code>implementation</code> skill</li>
+                  <li><strong>test</strong> - <code>testing</code> skill + regression test</li>
+                  <li><strong>commit</strong> - <code>git-workflow</code> skill (type: fix)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <button class="accordion-header">
+                <span>Hotfix Workflow</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <p><strong>Requires Spec:</strong> No</p>
+                <p><strong>Phases:</strong> analyze → fix → test → commit</p>
+                <ul class="list">
+                  <li><strong>analyze</strong> - Quick analysis (5 min limit)</li>
+                  <li><strong>fix</strong> - MINIMAL fix, add TODO for proper fix</li>
+                  <li><strong>test</strong> - Smoke test only</li>
+                  <li><strong>commit</strong> - <code>git-workflow</code> skill (type: fix, scope: hotfix)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h4>Key Rules</h4>
+          <ul class="list">
+            <li>Use <code>Task(subagent_type: ...)</code> for all agent phases</li>
+            <li>Use <code>Skill(skill: ...)</code> for all skill phases</li>
+            <li>Use <code>AskUserQuestion</code> for all confirmations</li>
+            <li>Use <code>TodoWrite</code> after every phase status change</li>
+            <li>NEVER skip phases - every defined phase MUST execute</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Rules Section -->
+      <section class="section" id="rules">
+        <div class="section-header">
+          <div class="section-icon icon-green">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h2>Global Rules</h2>
+        </div>
+
+        <p>Global rules are always-loaded behavioral guidelines that ensure consistent quality and safety across all operations.</p>
+
+        <!-- Code Quality Rule -->
+        <div class="card" id="rule-code-quality">
+          <div class="card-header">
+            <h3 class="card-title">Code Quality</h3>
+            <span class="card-badge badge-green">Standards</span>
+          </div>
+          <p class="card-description">Establish code quality standards across all development work.</p>
+
+          <h4>DO</h4>
+          <ul class="list">
+            <li>Write clean, readable, self-documenting code</li>
+            <li>Follow existing patterns in the codebase</li>
+            <li>Handle errors explicitly with meaningful messages</li>
+            <li>Keep functions focused and single-purpose</li>
+            <li>Use descriptive naming (verbs for functions, nouns for variables)</li>
+          </ul>
+
+          <h4>DON'T</h4>
+          <ul class="list">
+            <li>Leave commented-out code</li>
+            <li>Use magic numbers without constants</li>
+            <li>Catch exceptions without handling them</li>
+            <li>Create deeply nested conditionals</li>
+            <li>Duplicate code - extract to shared functions</li>
+          </ul>
+
+          <h4>Error Handling</h4>
+          <ul class="list">
+            <li>Always handle potential failure points</li>
+            <li>Provide context in error messages</li>
+            <li>Log errors with sufficient detail for debugging</li>
+            <li>Fail fast and fail loudly in development</li>
+          </ul>
+
+          <h4>Security</h4>
+          <ul class="list">
+            <li>Never log sensitive data (passwords, tokens, PII)</li>
+            <li>Validate all external input</li>
+            <li>Use parameterized queries for database operations</li>
+            <li>Escape output in templates</li>
+          </ul>
+        </div>
+
+        <!-- Communication Rule -->
+        <div class="card" id="rule-communication">
+          <div class="card-header">
+            <h3 class="card-title">Communication</h3>
+            <span class="card-badge badge-blue">Style</span>
+          </div>
+          <p class="card-description">Guide output style and documentation practices.</p>
+
+          <h4>Output Style</h4>
+          <ul class="list">
+            <li>Be concise and direct</li>
+            <li>Use code examples over lengthy explanations</li>
+            <li>Format output for terminal readability</li>
+            <li>Use markdown for structure</li>
+          </ul>
+
+          <h4>When Explaining</h4>
+          <ul class="list">
+            <li>Start with the "what" before the "why"</li>
+            <li>Use bullet points for multiple items</li>
+            <li>Include command examples when relevant</li>
+            <li>Reference file paths with line numbers</li>
+          </ul>
+
+          <h4>Documentation</h4>
+          <ul class="list">
+            <li>Document the "why" not the "what"</li>
+            <li>Keep comments minimal and meaningful</li>
+            <li>Update docs when changing functionality</li>
+            <li>Use JSDoc/docstrings for public APIs only</li>
+          </ul>
+        </div>
+
+        <!-- Knowledge Freshness Rule -->
+        <div class="card" id="rule-knowledge">
+          <div class="card-header">
+            <h3 class="card-title">Knowledge Freshness</h3>
+            <span class="card-badge badge-purple">Research</span>
+          </div>
+          <p class="card-description">Ensure accurate timestamps and current information.</p>
+
+          <h4>Date & Time Commands</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Purpose</th>
+                  <th>Command</th>
+                  <th>Example Output</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Report timestamp</td>
+                  <td><code>date +"%Y-%m-%d %H:%M"</code></td>
+                  <td>2026-01-02 14:30</td>
+                </tr>
+                <tr>
+                  <td>File naming</td>
+                  <td><code>date +"%Y-%m-%d-%H%M"</code></td>
+                  <td>2026-01-02-1430</td>
+                </tr>
+                <tr>
+                  <td>Current year (searches)</td>
+                  <td><code>date +%Y</code></td>
+                  <td>2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Research First</h4>
+          <ul class="list">
+            <li>Verify current best practices before implementing</li>
+            <li>Check official documentation for latest APIs</li>
+            <li>Look for deprecation warnings in existing code</li>
+          </ul>
+
+          <h4>When Uncertain</h4>
+          <ul class="list">
+            <li>Use WebSearch for current information</li>
+            <li>Check package versions and changelogs</li>
+            <li>Verify compatibility with project dependencies</li>
+          </ul>
+        </div>
+
+        <!-- Safety Rule -->
+        <div class="card" id="rule-safety">
+          <div class="card-header">
+            <h3 class="card-title">Safety</h3>
+            <span class="card-badge badge-orange">Protection</span>
+          </div>
+          <p class="card-description">Protect sensitive files and prevent dangerous operations.</p>
+
+          <h4>Protected Files</h4>
+          <p>Never modify without explicit confirmation:</p>
+          <ul class="list">
+            <li><code>.env</code>, <code>.env.*</code> - Environment configuration</li>
+            <li><code>package-lock.json</code>, <code>yarn.lock</code> - Lock files</li>
+            <li><code>*.pem</code>, <code>*.key</code> - Certificates and keys</li>
+            <li><code>.git/</code> - Git internals</li>
+            <li><code>node_modules/</code> - Dependencies</li>
+          </ul>
+
+          <h4>Dangerous Commands</h4>
+          <p>Always warn before executing:</p>
+          <ul class="list">
+            <li><code>rm -rf</code> - Recursive deletion</li>
+            <li><code>git push --force</code> - Force push</li>
+            <li><code>git reset --hard</code> - Hard reset</li>
+            <li><code>DROP TABLE</code>, <code>DELETE FROM</code> without WHERE</li>
+          </ul>
+
+          <h4>Credentials</h4>
+          <ul class="list">
+            <li>Never echo secrets to console</li>
+            <li>Never commit credentials to git</li>
+            <li>Use environment variables for sensitive values</li>
+            <li>Redact secrets in logs and output</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Configuration Section -->
+      <section class="section" id="config">
+        <div class="section-header">
+          <div class="section-icon icon-blue">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M12 1v6m0 6v10M1 12h6m6 0h10"></path>
+            </svg>
+          </div>
+          <h2>Configuration</h2>
+        </div>
+
+        <h3>Settings File</h3>
+        <p>Located at <code>.claude/settings.json</code></p>
+
+        <div class="code-block">
+          <div class="code-block-header">
+            <span>settings.json</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre><code>{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pytest:*)",
+      "Bash(go:*)",
+      "Bash(cargo:*)",
+      "Task(*)",
+      "Skill(*)",
+      "Read(src/**)",
+      "Read(docs/**)",
+      "Read(.claude/**)",
+      "Edit(src/**)",
+      "Edit(docs/**)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/.env)",
+      "Read(secrets/**)",
+      "Read(credentials/**)",
+      "Read(*.pem)",
+      "Read(*.key)",
+      "Edit(.env)",
+      "Edit(.env.*)",
+      "Edit(secrets/**)",
+      "Bash(sudo:*)",
+      "Bash(rm -rf:*)"
+    ]
+  },
+  "env": {
+    "CLAUDE_CODE_KIT_VERSION": "1.0.0"
+  },
+  "attribution": {
+    "commit": "Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude &lt;noreply@anthropic.com&gt;",
+    "pr": "Generated with [Claude Code](https://claude.com/claude-code)"
+  }
+}</code></pre>
+        </div>
+
+        <h3 id="permissions">Permission Categories</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Allowed</th>
+                <th>Denied</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Bash</strong></td>
+                <td>git, npm, npx, python, python3, pytest, go, cargo</td>
+                <td>sudo, rm -rf</td>
+              </tr>
+              <tr>
+                <td><strong>Read</strong></td>
+                <td>src/**, docs/**, .claude/**</td>
+                <td>.env, secrets/**, credentials/**, *.pem, *.key</td>
+              </tr>
+              <tr>
+                <td><strong>Edit</strong></td>
+                <td>src/**, docs/**</td>
+                <td>.env, secrets/**</td>
+              </tr>
+              <tr>
+                <td><strong>Task</strong></td>
+                <td>All subagent types</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td><strong>Skill</strong></td>
+                <td>All skills</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
 
     <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="logo" aria-hidden="true">
-                        <div class="logo-mark">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="4 17 10 11 4 5"/>
-                                <line x1="12" y1="19" x2="20" y2="19"/>
-                            </svg>
-                        </div>
-                        <span class="logo-text">Claude Code Kit</span>
-                    </div>
-                    <p>A comprehensive configuration for Claude Code. Open source. MIT Licensed.</p>
-                </div>
-                <nav class="footer-links" aria-label="Footer navigation">
-                    <div class="footer-column">
-                        <h4>Documentation</h4>
-                        <a href="#commands">Commands</a>
-                        <a href="#workflows">Workflows</a>
-                        <a href="#skills">Skills</a>
-                        <a href="#agents">Agents</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Resources</h4>
-                        <a href="https://github.com/anthropics/claude-code-kit" target="_blank" rel="noopener noreferrer">GitHub<span class="visually-hidden"> (opens in new tab)</span></a>
-                        <a href="https://github.com/anthropics/claude-code-kit/issues" target="_blank" rel="noopener noreferrer">Issues<span class="visually-hidden"> (opens in new tab)</span></a>
-                        <a href="https://github.com/anthropics/claude-code-kit/discussions" target="_blank" rel="noopener noreferrer">Discussions<span class="visually-hidden"> (opens in new tab)</span></a>
-                    </div>
-                </nav>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Anthropic. Released under MIT License.</p>
-            </div>
-        </div>
+    <footer class="footer">
+      <p>Claude Code Kit - Framework-agnostic development toolkit</p>
+      <p>Built with Dark Mode + Glassmorphism + Minimalism</p>
     </footer>
+  </main>
 
-    <script src="js/app.js"></script>
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
 </body>
 </html>

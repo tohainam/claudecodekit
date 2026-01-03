@@ -1,271 +1,316 @@
-# TDD, BDD & ATDD Methodologies
-
-## Table of Contents
-1. [Test-Driven Development (TDD)](#test-driven-development-tdd)
-2. [Behavior-Driven Development (BDD)](#behavior-driven-development-bdd)
-3. [Acceptance Test-Driven Development (ATDD)](#acceptance-test-driven-development-atdd)
-4. [Combining Methodologies](#combining-methodologies)
-5. [AI-Assisted TDD (2025)](#ai-assisted-tdd-2025)
-
----
+# TDD & BDD
 
 ## Test-Driven Development (TDD)
 
-### Red-Green-Refactor Cycle
+### The Red-Green-Refactor Cycle
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    TDD CYCLE                            │
-│                                                         │
-│     ┌─────────┐                                        │
-│     │  RED    │ ◄── Write failing test first           │
-│     └────┬────┘                                        │
-│          │                                              │
-│          ▼                                              │
-│     ┌─────────┐                                        │
-│     │  GREEN  │ ◄── Write minimum code to pass         │
-│     └────┬────┘                                        │
-│          │                                              │
-│          ▼                                              │
-│     ┌─────────┐                                        │
-│     │REFACTOR │ ◄── Improve code, tests still pass    │
-│     └────┬────┘                                        │
-│          │                                              │
-│          └──────────────► Repeat                       │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+    ┌─────────────────────────────────┐
+    │                                 │
+    ▼                                 │
+┌───────┐     ┌───────┐     ┌─────────┴─┐
+│  RED  │ ──► │ GREEN │ ──► │ REFACTOR  │
+└───────┘     └───────┘     └───────────┘
+ Write         Write         Improve
+ failing       minimal       code
+ test          code          quality
 ```
 
-### TDD Best Practices
+### Step-by-Step
 
-1. **Write descriptive test names**
-   ```python
-   # Bad
-   def test_user():
-       pass
+1. **RED**: Write a failing test
 
-   # Good
-   def test_user_creation_with_valid_email_succeeds():
-       pass
-   ```
+   - Test doesn't compile? That counts as failing
+   - Test should fail for the right reason
+   - One test at a time
 
-2. **Use Arrange-Act-Assert (AAA) pattern**
-   ```python
-   def test_calculate_discount():
-       # Arrange
-       cart = ShoppingCart()
-       cart.add_item(Item(price=100))
+2. **GREEN**: Make it pass
 
-       # Act
-       discount = cart.calculate_discount(percentage=10)
+   - Write minimal code to pass
+   - Don't over-engineer
+   - Okay to write "ugly" code here
 
-       # Assert
-       assert discount == 10
-   ```
+3. **REFACTOR**: Clean up
+   - Improve code quality
+   - Remove duplication
+   - Tests must still pass
 
-3. **Keep tests atomic and isolated**
-   - Each test should be independent
-   - No shared mutable state between tests
-   - Use setup/teardown for initialization
+### TDD Example
 
-4. **Test edge cases before happy paths**
-   - Null/empty inputs
-   - Boundary values
-   - Error conditions
+```typescript
+// Step 1: RED - Write failing test
+describe("Stack", () => {
+  it("should return true for isEmpty when stack is empty", () => {
+    const stack = new Stack();
+    expect(stack.isEmpty()).toBe(true);
+  });
+});
 
-5. **Write minimum code to pass**
-   - Avoid over-engineering
-   - Let tests drive the design
+// Test fails: Stack doesn't exist
 
-### Benefits of TDD
+// Step 2: GREEN - Minimal implementation
+class Stack {
+  isEmpty(): boolean {
+    return true; // Simplest thing that works
+  }
+}
 
-| Metric | Impact |
-|--------|--------|
-| Defect reduction | 40-90% fewer bugs |
-| Test coverage | Near 100% by design |
-| Development time | +15-35% initially, saves later |
-| Code quality | Cleaner APIs, modular design |
+// Test passes!
 
----
+// Step 3: RED - Add another test
+it("should return false for isEmpty after push", () => {
+  const stack = new Stack();
+  stack.push(1);
+  expect(stack.isEmpty()).toBe(false);
+});
+
+// Test fails
+
+// Step 4: GREEN - Expand implementation
+class Stack {
+  private items: number[] = [];
+
+  isEmpty(): boolean {
+    return this.items.length === 0;
+  }
+
+  push(item: number): void {
+    this.items.push(item);
+  }
+}
+
+// Continue cycle...
+```
+
+### TDD Benefits
+
+| Benefit               | Description                           |
+| --------------------- | ------------------------------------- |
+| **Design feedback**   | Tests reveal API awkwardness early    |
+| **Documentation**     | Tests show how to use the code        |
+| **Confidence**        | Full coverage by definition           |
+| **Focus**             | Work on one thing at a time           |
+| **Regression safety** | Changes don't break existing behavior |
+
+### TDD Challenges
+
+| Challenge        | Mitigation                  |
+| ---------------- | --------------------------- |
+| Slower initially | Pays off in maintenance     |
+| Learning curve   | Start with simple functions |
+| Legacy code      | Add tests around changes    |
+| UI testing       | Use BDD/integration tests   |
 
 ## Behavior-Driven Development (BDD)
+
+### Core Concepts
+
+BDD extends TDD with:
+
+- Natural language specifications
+- Focus on behavior, not implementation
+- Shared understanding (devs, QA, product)
 
 ### Gherkin Syntax
 
 ```gherkin
-Feature: User Authentication
-  As a registered user
-  I want to log into my account
-  So that I can access personalized features
+Feature: Shopping Cart
+  As a customer
+  I want to add products to my cart
+  So that I can purchase multiple items at once
 
-  Scenario: Successful login with valid credentials
-    Given I am on the login page
-    And I have a registered account with email "user@example.com"
-    When I enter my email "user@example.com"
-    And I enter my password "correct_password"
-    And I click the login button
-    Then I should be redirected to the dashboard
-    And I should see a welcome message
+  Background:
+    Given I am logged in as a customer
+    And the product catalog is loaded
 
-  Scenario: Failed login with invalid password
-    Given I am on the login page
-    When I enter my email "user@example.com"
-    And I enter my password "wrong_password"
-    And I click the login button
-    Then I should see an error message "Invalid credentials"
-    And I should remain on the login page
+  Scenario: Adding a product to empty cart
+    Given my cart is empty
+    When I add "Red T-Shirt" to my cart
+    Then my cart should contain 1 item
+    And the cart total should be $29.99
+
+  Scenario: Adding multiple quantities
+    Given my cart is empty
+    When I add 3 "Blue Jeans" to my cart
+    Then my cart should contain 3 items
+    And the cart total should be $149.97
+
+  Scenario Outline: Discount thresholds
+    Given my cart total is <initial_total>
+    When I apply discount code "<code>"
+    Then my discount should be <discount>
+
+    Examples:
+      | initial_total | code   | discount |
+      | $50           | SAVE10 | $0       |
+      | $100          | SAVE10 | $10      |
+      | $200          | SAVE10 | $20      |
 ```
 
-### BDD Frameworks by Language
+### Step Definitions
 
-| Language | Framework | Key Features |
-|----------|-----------|--------------|
-| Python | behave, pytest-bdd | Gherkin support, fixtures |
-| JavaScript | Cucumber.js | Async support, browser testing |
-| Java | Cucumber-JVM | Spring integration |
-| Ruby | Cucumber | Original implementation |
-| Go | godog | Concurrent execution |
+```typescript
+// step-definitions/cart.steps.ts
+import { Given, When, Then } from "@cucumber/cucumber";
 
-### Step Definition Example (Python)
+Given("my cart is empty", function () {
+  this.cart = new ShoppingCart();
+});
 
-```python
-from behave import given, when, then
+When("I add {string} to my cart", function (productName: string) {
+  const product = this.catalog.findByName(productName);
+  this.cart.add(product);
+});
 
-@given('I am on the login page')
-def step_on_login_page(context):
-    context.browser.visit('/login')
+When(
+  "I add {int} {string} to my cart",
+  function (quantity: number, productName: string) {
+    const product = this.catalog.findByName(productName);
+    this.cart.add(product, quantity);
+  }
+);
 
-@when('I enter my email "{email}"')
-def step_enter_email(context, email):
-    context.browser.fill('email', email)
+Then("my cart should contain {int} item(s)", function (count: number) {
+  expect(this.cart.itemCount).toBe(count);
+});
 
-@when('I click the login button')
-def step_click_login(context):
-    context.browser.click_button('Login')
-
-@then('I should be redirected to the dashboard')
-def step_redirected_dashboard(context):
-    assert context.browser.url.endswith('/dashboard')
+Then("the cart total should be ${float}", function (total: number) {
+  expect(this.cart.total).toBe(total);
+});
 ```
 
----
+### BDD Without Gherkin
 
-## Acceptance Test-Driven Development (ATDD)
+You can apply BDD principles without Cucumber:
 
-### ATDD Process
+```typescript
+describe("Shopping Cart", () => {
+  describe("when adding products", () => {
+    it("should add product to empty cart", () => {
+      // Given
+      const cart = new ShoppingCart();
+      const product = createProduct({ name: "T-Shirt", price: 29.99 });
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    ATDD WORKFLOW                        │
-│                                                         │
-│  1. DISCUSS                                            │
-│     ├── Business analysts                              │
-│     ├── Developers                                     │
-│     └── QA define acceptance criteria together         │
-│                                                         │
-│  2. DISTILL                                            │
-│     └── Convert criteria to executable tests           │
-│                                                         │
-│  3. DEVELOP                                            │
-│     └── Implement until all acceptance tests pass      │
-│                                                         │
-│  4. DEMO                                               │
-│     └── Demonstrate working feature to stakeholders    │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-```
+      // When
+      cart.add(product);
 
-### ATDD vs BDD vs TDD
+      // Then
+      expect(cart.itemCount).toBe(1);
+      expect(cart.total).toBe(29.99);
+    });
 
-| Aspect | TDD | BDD | ATDD |
-|--------|-----|-----|------|
-| Focus | Code correctness | System behavior | Business requirements |
-| Written by | Developers | Developers + QA | Team + Stakeholders |
-| Language | Technical | Natural (Gherkin) | Business-oriented |
-| Scope | Unit level | Feature level | Acceptance level |
-| Primary goal | Design + Quality | Communication | Alignment |
+    it("should handle multiple quantities", () => {
+      // Given
+      const cart = new ShoppingCart();
+      const product = createProduct({ name: "Jeans", price: 49.99 });
 
----
+      // When
+      cart.add(product, 3);
 
-## Combining Methodologies
-
-### Recommended Approach (2025)
-
-```
-┌─────────────────────────────────────────────────────────┐
-│               COMBINED APPROACH                         │
-│                                                         │
-│  ATDD (Acceptance)                                     │
-│    │                                                    │
-│    └──► BDD (Feature/Integration)                      │
-│           │                                             │
-│           └──► TDD (Unit)                              │
-│                                                         │
-│  Flow:                                                  │
-│  1. Define acceptance criteria with stakeholders       │
-│  2. Write BDD scenarios for features                   │
-│  3. Implement using TDD for each component             │
-│  4. Verify all levels pass before merge                │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+      // Then
+      expect(cart.itemCount).toBe(3);
+      expect(cart.total).toBeCloseTo(149.97);
+    });
+  });
+});
 ```
 
-### Integration Example
+## TDD vs BDD Comparison
 
-```python
-# Level 1: Acceptance Test (ATDD)
-# acceptance_tests/test_checkout.py
-def test_user_can_complete_purchase():
-    """Customer can checkout and receive confirmation email"""
-    # High-level end-to-end test
+| Aspect            | TDD              | BDD               |
+| ----------------- | ---------------- | ----------------- |
+| **Language**      | Technical (code) | Natural (Gherkin) |
+| **Audience**      | Developers       | Everyone          |
+| **Focus**         | Implementation   | Behavior          |
+| **Granularity**   | Unit level       | Feature level     |
+| **Documentation** | Code comments    | Living specs      |
 
-# Level 2: BDD Scenario
-# features/checkout.feature
-"""
-Scenario: Successful checkout with valid payment
-  Given I have items in my cart
-  When I proceed to checkout
-  And I enter valid payment details
-  Then my order should be confirmed
-"""
+## When to Use Which
 
-# Level 3: TDD Unit Tests
-# tests/test_payment_processor.py
-def test_payment_processor_validates_card_number():
-    # Detailed unit test
+### Use TDD For
+
+- Complex algorithms
+- Data transformations
+- Utility functions
+- Internal APIs
+- Library development
+
+### Use BDD For
+
+- User-facing features
+- Business rules
+- Acceptance criteria
+- Cross-team communication
+- Complex workflows
+
+### Hybrid Approach
+
+```
+Feature Level (BDD):
+  ┌─────────────────────────────────┐
+  │ Feature: User Registration      │
+  │   Scenario: Successful signup   │
+  │   Scenario: Email already used  │
+  │   Scenario: Invalid email format│
+  └─────────────────────────────────┘
+              │
+              ▼
+Unit Level (TDD):
+  ┌─────────────────────────────────┐
+  │ EmailValidator                  │
+  │   - validates format            │
+  │   - checks domain               │
+  │   - handles edge cases          │
+  └─────────────────────────────────┘
 ```
 
----
+## Common Patterns
 
-## AI-Assisted TDD (2025)
+### Arrange-Act-Assert (AAA)
 
-### AI Integration Points
+```typescript
+it("should apply discount to order", () => {
+  // Arrange
+  const order = new Order([{ product: "Laptop", price: 1000 }]);
+  const discount = new PercentageDiscount(10);
 
-1. **Test scaffolding**: AI generates starter unit tests
-2. **Edge case discovery**: LLMs suggest corner scenarios humans miss
-3. **Refactoring assistance**: AI highlights redundant tests
-4. **Regression automation**: AI predicts high-risk areas
+  // Act
+  order.applyDiscount(discount);
 
-### AI-Augmented Workflow
-
-```python
-# Example: AI-suggested test cases
-# Original function
-def calculate_shipping(weight, distance, express=False):
-    base_rate = weight * 0.5 + distance * 0.1
-    return base_rate * 2 if express else base_rate
-
-# AI-suggested edge cases:
-# 1. weight = 0 (empty package)
-# 2. distance = 0 (local pickup)
-# 3. weight = MAX_FLOAT (overflow)
-# 4. negative values (validation)
-# 5. express toggle with zero base rate
+  // Assert
+  expect(order.total).toBe(900);
+});
 ```
 
-### Best Practices for AI-Assisted Testing
+### Given-When-Then (GWT)
 
-- Review AI-generated tests for correctness
-- Use AI for coverage gaps, not replacement
-- Validate edge cases AI suggests
-- Maintain human oversight of test quality
+```typescript
+it("should apply discount to order", () => {
+  // Given an order with a laptop
+  const order = new Order([{ product: "Laptop", price: 1000 }]);
+
+  // When a 10% discount is applied
+  order.applyDiscount(new PercentageDiscount(10));
+
+  // Then the total should be reduced
+  expect(order.total).toBe(900);
+});
+```
+
+## Best Practices
+
+### TDD Best Practices
+
+1. **One assertion per test** (ideally)
+2. **Test behavior, not implementation**
+3. **Don't test private methods**
+4. **Keep tests fast**
+5. **Refactor tests too**
+
+### BDD Best Practices
+
+1. **Write scenarios before code**
+2. **Use business language**
+3. **Avoid technical details in scenarios**
+4. **Keep scenarios focused**
+5. **Reuse step definitions**

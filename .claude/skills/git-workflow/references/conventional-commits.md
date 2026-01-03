@@ -1,279 +1,289 @@
-# Conventional Commits Reference
+# Conventional Commits
 
-## Table of Contents
-1. [Format Specification](#format-specification)
-2. [Commit Types](#commit-types)
-3. [Scopes](#scopes)
-4. [Breaking Changes](#breaking-changes)
-5. [Examples by Technology](#examples-by-technology)
-6. [Semantic Versioning Mapping](#semantic-versioning-mapping)
+## Specification (v1.0.0)
 
----
+### Format
 
-## Format Specification
-
-### Full Format
 ```
-<type>(<scope>): <subject>
+<type>[optional scope]: <description>
 
-<body>
+[optional body]
 
-<footer(s)>
-```
-
-### Minimal Format
-```
-<type>: <subject>
+[optional footer(s)]
 ```
 
 ### Rules
-| Element | Required | Description |
-|---------|----------|-------------|
-| `type` | Yes | Category of change |
-| `scope` | No | Component affected |
-| `!` | No | Breaking change indicator |
-| `subject` | Yes | Short description (imperative mood) |
-| `body` | No | Detailed explanation |
-| `footer` | No | Metadata (breaking changes, refs) |
 
-### Subject Guidelines
-- Use imperative mood: "add" not "added" or "adds"
-- No capitalization at start
-- No period at end
-- Max 50 characters (72 for body lines)
-- Complete the sentence: "This commit will..."
+1. **Type** is required
+2. **Scope** is optional, in parentheses
+3. **Description** starts with lowercase, no period at end
+4. **Body** is optional, blank line after description
+5. **Footer** is optional, for breaking changes and references
 
----
+## Types
 
-## Commit Types
+### Core Types
 
-### Core Types (SemVer Impact)
+| Type   | Description | Semantic Version |
+| ------ | ----------- | ---------------- |
+| `feat` | New feature | MINOR            |
+| `fix`  | Bug fix     | PATCH            |
 
-| Type | Description | SemVer | Example |
-|------|-------------|--------|---------|
-| `feat` | New feature | MINOR | `feat: add user registration` |
-| `fix` | Bug fix | PATCH | `fix: resolve null pointer exception` |
+### Extended Types
 
-### Extended Types (No Version Bump)
+| Type       | Description                 | SemVer Impact |
+| ---------- | --------------------------- | ------------- |
+| `docs`     | Documentation only          | None          |
+| `style`    | Formatting, no code change  | None          |
+| `refactor` | Code change, no feature/fix | None          |
+| `perf`     | Performance improvement     | PATCH         |
+| `test`     | Adding/fixing tests         | None          |
+| `build`    | Build system, dependencies  | None          |
+| `ci`       | CI configuration            | None          |
+| `chore`    | Other changes               | None          |
+| `revert`   | Revert previous commit      | Depends       |
 
-| Type | Description | When to Use |
-|------|-------------|-------------|
-| `build` | Build system/dependencies | webpack config, package.json |
-| `chore` | Maintenance tasks | gitignore, editor config |
-| `ci` | CI/CD configuration | GitHub Actions, Jenkins |
-| `docs` | Documentation only | README, API docs, comments |
-| `style` | Code formatting | whitespace, semicolons, linting |
-| `refactor` | Code restructure (no behavior change) | rename, extract method |
-| `perf` | Performance improvement | optimize algorithm, caching |
-| `test` | Add/modify tests | unit tests, integration tests |
-| `revert` | Revert previous commit | undo changes |
+## Examples
 
----
+### Simple Commits
 
-## Scopes
+```bash
+# Feature
+git commit -m "feat: add user avatar upload"
 
-### Purpose
-Scopes provide additional context about what part of the codebase was affected.
+# Bug fix
+git commit -m "fix: resolve race condition in checkout"
 
-### Scope Conventions by Project Type
+# Documentation
+git commit -m "docs: add API authentication guide"
 
-**Frontend (React/Vue/Angular):**
-```
-components, hooks, store, utils, api, styles, types, config
+# Refactoring
+git commit -m "refactor: extract validation logic"
+
+# Performance
+git commit -m "perf: optimize database queries"
 ```
 
-**Backend (API):**
-```
-auth, users, orders, payments, db, middleware, routes, services
-```
+### With Scope
 
-**Full-Stack:**
-```
-client, server, shared, api, db, config, deploy
-```
+```bash
+# Feature with scope
+git commit -m "feat(auth): implement OAuth2 login"
 
-**Mobile:**
-```
-ios, android, shared, navigation, screens, services
+# Fix with scope
+git commit -m "fix(api): handle null response gracefully"
+
+# Refactor with scope
+git commit -m "refactor(user): simplify profile update logic"
 ```
 
-**Monorepo:**
-```
-pkg-name, app-name, lib-name
-```
+### With Body
 
-### Examples with Scopes
-```
-feat(auth): add OAuth2 support
-fix(api): handle timeout errors gracefully
-docs(readme): update installation steps
-style(components): apply consistent formatting
-refactor(utils): extract date formatting helpers
-test(users): add integration tests for registration
+```bash
+git commit -m "feat(cart): add quantity validation
+
+Validates that cart item quantities are positive integers.
+Prevents negative quantities and decimal values.
+
+Addresses user-reported issue with cart totals."
 ```
 
----
+### Breaking Changes
 
-## Breaking Changes
+```bash
+# Method 1: Footer
+git commit -m "feat(api): change authentication header format
 
-### Marking Breaking Changes
+BREAKING CHANGE: Authorization header now uses Bearer scheme.
+Update all API clients to use 'Bearer <token>' instead of '<token>'."
 
-**Method 1: Exclamation Mark**
-```
-feat!: remove deprecated API endpoints
-feat(api)!: change response format
-```
-
-**Method 2: Footer**
-```
-feat: update authentication flow
-
-BREAKING CHANGE: JWT tokens now expire after 1 hour instead of 24 hours.
-Existing tokens will be invalidated.
+# Method 2: Exclamation mark
+git commit -m "feat(api)!: change authentication header format"
 ```
 
-**Method 3: Both (Recommended for Major Changes)**
-```
-feat(auth)!: migrate to OAuth2
+### References
 
-BREAKING CHANGE: Basic auth is no longer supported.
-Users must re-authenticate using OAuth2.
+```bash
+# Closes issue
+git commit -m "fix(login): resolve timeout error
 
-Migration guide: https://docs.example.com/oauth2-migration
-```
+Closes #123"
 
-### Breaking Change Footer Format
-```
-BREAKING CHANGE: <description>
+# Multiple references
+git commit -m "feat(dashboard): add analytics widget
 
-<optional detailed explanation>
-<optional migration instructions>
+Implements #456
+See-also: #789"
 ```
 
----
+## Multi-Line Commits (Template)
 
-## Examples by Technology
+```bash
+# Using heredoc
+git commit -m "$(cat <<'EOF'
+feat(payments): implement Stripe integration
 
-### Frontend (React/Vue)
-```
-feat(components): add DatePicker component
-fix(hooks): prevent memory leak in useSubscription
-style(ui): standardize button spacing
-refactor(store): migrate from Redux to Zustand
-perf(images): implement lazy loading
-test(forms): add validation tests
-build(webpack): optimize bundle splitting
-```
+Add support for Stripe payment processing:
+- Credit card payments
+- Webhook handling
+- Refund processing
 
-### Backend (Node.js/Python/Go/Java)
-```
-feat(api): add rate limiting middleware
-fix(db): resolve connection pool exhaustion
-perf(queries): add index for user lookups
-refactor(services): extract payment logic
-docs(swagger): update API documentation
-test(integration): add e2e tests for checkout
-ci(docker): multi-stage build optimization
+This replaces the legacy payment system.
+
+Closes #234
+Co-authored-by: Alice <alice@example.com>
+EOF
+)"
 ```
 
-### Mobile (iOS/Android/Flutter)
-```
-feat(ios): implement biometric authentication
-fix(android): resolve crash on orientation change
-perf(flutter): optimize list rendering
-style(ui): update theme colors
-refactor(navigation): simplify routing logic
-test(screens): add widget tests
-```
+## Scope Guidelines
 
-### DevOps/Infrastructure
-```
-ci(actions): add automated testing workflow
-chore(deps): update security dependencies
-build(docker): reduce image size
-feat(terraform): add auto-scaling configuration
-fix(k8s): correct resource limits
-docs(runbook): add incident response guide
-```
+### Choosing Scopes
 
-### Database/Migrations
-```
-feat(migrations): add users table
-fix(schema): correct foreign key constraint
-refactor(queries): optimize slow queries
-docs(erd): update database diagram
-```
+Define scopes based on your project:
 
----
+| Project Type | Example Scopes                                 |
+| ------------ | ---------------------------------------------- |
+| Monolith     | `auth`, `api`, `ui`, `db`, `config`            |
+| Monorepo     | `@app/web`, `@lib/utils`, `@api/users`         |
+| Frontend     | `components`, `hooks`, `pages`, `styles`       |
+| Backend      | `handlers`, `models`, `middleware`, `services` |
 
-## Semantic Versioning Mapping
+### Scope Rules
 
-### How Commits Map to Versions
+1. Keep scopes short (1-2 words)
+2. Use lowercase
+3. Be consistent across team
+4. Document allowed scopes in CONTRIBUTING.md
 
-| Commit Type | Version Bump | Before | After |
-|-------------|--------------|--------|-------|
-| `fix:` | PATCH | 1.2.3 | 1.2.4 |
-| `feat:` | MINOR | 1.2.3 | 1.3.0 |
-| `BREAKING CHANGE` or `!` | MAJOR | 1.2.3 | 2.0.0 |
-| `docs:`, `style:`, `refactor:`, `test:`, `chore:` | None | 1.2.3 | 1.2.3 |
+## Commit Message Best Practices
 
-### Release Automation
+### Description Guidelines
 
-Tools that support conventional commits:
-- **semantic-release**: Fully automated versioning and publishing
-- **standard-version**: Changelog generation and versioning
-- **commitlint**: Enforce commit message format
-- **husky**: Git hooks for validation
+```bash
+# Good: Imperative mood, concise
+git commit -m "feat: add user search functionality"
 
-### Changelog Generation
+# Bad: Past tense
+git commit -m "feat: added user search functionality"
 
-Conventional commits enable automatic changelog grouping:
+# Bad: Present participle
+git commit -m "feat: adding user search functionality"
 
-```markdown
-## [2.1.0] - 2025-12-26
+# Bad: Too vague
+git commit -m "feat: update code"
 
-### Features
-- add user registration (abc1234)
-- implement OAuth2 support (def5678)
-
-### Bug Fixes
-- resolve null pointer exception (ghi9012)
-- handle timeout errors gracefully (jkl3456)
-
-### Performance
-- optimize database queries (mno7890)
+# Bad: Too detailed (put in body)
+git commit -m "feat: add search with elasticsearch using fuzzy matching and pagination"
 ```
 
----
+### Body Guidelines
+
+- Explain **what** and **why**, not **how**
+- Wrap at 72 characters
+- Use bullet points for multiple changes
+- Reference issues and other commits
+
+```
+fix(auth): prevent session fixation attack
+
+The previous implementation reused session IDs after login,
+which could allow session fixation attacks.
+
+Changes:
+- Regenerate session ID on successful login
+- Clear old session data
+- Add audit logging for session events
+
+Security: This addresses CVE-2024-XXXX
+Closes #567
+```
+
+## Automation
+
+### Commitlint Configuration
+
+```javascript
+// commitlint.config.js
+module.exports = {
+  extends: ["@commitlint/config-conventional"],
+  rules: {
+    "type-enum": [
+      2,
+      "always",
+      [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "build",
+        "ci",
+        "chore",
+        "revert",
+      ],
+    ],
+    "scope-enum": [2, "always", ["auth", "api", "ui", "db", "config", "deps"]],
+    "subject-case": [2, "always", "lower-case"],
+    "subject-max-length": [2, "always", 72],
+    "body-max-line-length": [2, "always", 100],
+  },
+};
+```
+
+### Husky Pre-Commit Hook
+
+```bash
+# .husky/commit-msg
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+npx --no -- commitlint --edit "$1"
+```
+
+### Semantic Release
+
+```javascript
+// release.config.js
+module.exports = {
+  branches: ["main"],
+  plugins: [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    "@semantic-release/github",
+  ],
+};
+```
 
 ## Quick Reference Card
 
 ```
-# Feature
-feat: add login functionality
-feat(auth): add OAuth2 support
-
-# Bug Fix
-fix: resolve memory leak
-fix(api): handle null response
-
-# Breaking Change
-feat!: remove deprecated endpoint
-feat(api)!: change response format
-
-# With Body
-fix(auth): prevent session timeout
-
-The session was expiring prematurely due to
-incorrect token refresh logic.
-
-Closes #123
-
-# With Multiple Footers
-feat(payments): add Stripe integration
-
-Implements payment processing via Stripe API.
-
-Reviewed-by: John Doe
-Refs: #456, #789
+┌─────────────────────────────────────────────────────┐
+│                 CONVENTIONAL COMMITS                 │
+├─────────────────────────────────────────────────────┤
+│  FORMAT: <type>(<scope>): <description>             │
+│                                                     │
+│  TYPES:                                             │
+│    feat     → New feature          (MINOR)         │
+│    fix      → Bug fix              (PATCH)         │
+│    docs     → Documentation                        │
+│    style    → Formatting                           │
+│    refactor → Code restructure                     │
+│    perf     → Performance          (PATCH)         │
+│    test     → Tests                                │
+│    build    → Build system                         │
+│    ci       → CI config                            │
+│    chore    → Maintenance                          │
+│                                                     │
+│  BREAKING CHANGE:                                   │
+│    feat!: ...  or  BREAKING CHANGE: in footer      │
+│                                                     │
+│  EXAMPLES:                                          │
+│    feat(auth): add OAuth login                     │
+│    fix(api): handle null response                  │
+│    docs: update README                             │
+└─────────────────────────────────────────────────────┘
 ```

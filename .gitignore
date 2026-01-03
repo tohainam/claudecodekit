@@ -1,5 +1,57 @@
-.decisions
-.discussions
-.plans
-.reports
-__pycache__
+# Claude Code Kit
+.claude/settings.local.json
+CLAUDE.local.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+
+# Node.js
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Testing
+coverage/
+*.lcov
+.nyc_output/
+
+# Build
+*.tsbuildinfo
+.turbo/
+.cache/
+
+# Temporary files
+*.tmp
+*.temp
+.temp/
+.tmp/

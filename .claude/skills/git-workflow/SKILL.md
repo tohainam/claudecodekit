@@ -1,265 +1,153 @@
 ---
 name: git-workflow
-description: >
-  Comprehensive Git operations including commits, branching, PRs, and version control best practices.
-  Use when Claude needs to - (1) Create commits with proper conventional commit messages,
-  (2) Choose or implement branching strategies (GitFlow, GitHub Flow, Trunk-based),
-  (3) Create or review pull requests, (4) Handle git operations safely (merge, rebase, reset),
-  (5) Set up branch naming conventions, (6) Generate changelogs or manage releases,
-  (7) Resolve merge conflicts, (8) Review git history or recover from mistakes.
-  Applies to all technologies - frontend, backend, mobile, DevOps, and full-stack projects.
+description: Git conventions, branching strategies, and commit practices. Use when: Choosing a branching strategy, Writing commit messages, Creating pull requests, Reviewing code.
 ---
 
 # Git Workflow
 
-## Quick Reference
+## When to Use
 
-### Commit Format (Conventional Commits)
-```
-<type>(<scope>): <subject>
+- Choosing a branching strategy for a project
+- Writing commit messages
+- Creating or reviewing pull requests
+- Setting up Git workflow automation
+- Resolving merge conflicts
 
-<body>
+## Quick Start
 
-<footer>
-```
+### Branching Strategy Decision
 
-**Types:** `feat` | `fix` | `docs` | `style` | `refactor` | `perf` | `test` | `build` | `ci` | `chore` | `revert`
+| Situation                  | Recommended Strategy    |
+| -------------------------- | ----------------------- |
+| CI/CD, frequent deploys    | Trunk-based development |
+| Multiple release versions  | GitFlow                 |
+| Small team, single product | GitHub Flow             |
+| Open source project        | Fork & Pull Request     |
 
-**Breaking Changes:** Add `!` after type or `BREAKING CHANGE:` in footer
+### Conventional Commits (Quick Reference)
 
-### Common Examples
-```bash
-feat: add user authentication
-fix(api): handle null response
-docs: update README installation
-refactor(auth)!: migrate to OAuth2
-
-BREAKING CHANGE: Basic auth removed
-```
-
----
-
-## Workflow Decision Tree
-
-```
-What operation?
-├── Commit changes ────────────► See "Creating Commits"
-├── Choose branching strategy ─► See references/branching-strategies.md
-├── Create/review PR ──────────► See references/pr-guidelines.md
-├── Dangerous operation ───────► See references/safety.md
-└── Need commit type details ──► See references/conventional-commits.md
-```
-
----
-
-## Creating Commits
-
-### Step 1: Review Changes
-```bash
-git status                    # See what changed
-git diff                      # Review unstaged changes
-git diff --staged             # Review staged changes
-```
-
-### Step 2: Stage Changes
-```bash
-git add <file>                # Stage specific file
-git add -p                    # Stage interactively (recommended)
-git add .                     # Stage all (use carefully)
-```
-
-### Step 3: Write Commit Message
-
-**Format:**
-```
-<type>(<scope>): <subject>    # Max 50 chars
-
-<body>                        # Wrap at 72 chars
-
-<footer>
-```
-
-**Rules:**
-- Subject: imperative mood ("add" not "added"), no period, max 50 chars
-- Body: explain WHY, not WHAT (code shows what)
-- Footer: reference issues, note breaking changes
-
-**Quick Type Selection:**
-| Change Type | Use | Example |
-|------------|-----|---------|
-| New feature | `feat` | `feat: add dark mode toggle` |
-| Bug fix | `fix` | `fix: prevent crash on empty input` |
-| Documentation | `docs` | `docs: add API examples` |
-| Formatting | `style` | `style: fix indentation` |
-| Restructure | `refactor` | `refactor: extract validation logic` |
-| Speed improvement | `perf` | `perf: cache database queries` |
-| Tests | `test` | `test: add auth unit tests` |
-| Build/deps | `build` | `build: upgrade webpack to v5` |
-| CI/CD | `ci` | `ci: add GitHub Actions workflow` |
-| Maintenance | `chore` | `chore: update gitignore` |
-
-### Step 4: Commit
-```bash
-git commit -m "feat(auth): add OAuth2 support"
-
-# Or for longer messages
-git commit  # Opens editor
-```
-
----
-
-## Branch Operations
-
-### Create Feature Branch
-```bash
-git checkout main
-git pull origin main
-git checkout -b feature/description
-```
-
-### Keep Branch Updated
-```bash
-git fetch origin
-git rebase origin/main        # Preferred for feature branches
-# OR
-git merge origin/main         # Creates merge commit
-```
-
-### Branch Naming Convention
-```
-<type>/<ticket>-<description>
-
-feature/PROJ-123-user-auth
-fix/PROJ-456-login-error
-hotfix/security-patch
-release/v2.1.0
-docs/api-reference
-```
-
----
-
-## Pull Request Workflow
-
-### Before Creating PR
-```bash
-# Ensure branch is up to date
-git fetch origin
-git rebase origin/main
-
-# Run checks
-npm test                      # or project's test command
-npm run lint                  # or project's lint command
-
-# Review your changes
-git log --oneline main..HEAD
-git diff main..HEAD --stat
-```
-
-### PR Title Format
 ```
 <type>(<scope>): <description>
 
-feat(auth): add OAuth2 login support
-fix(api): handle timeout errors
+[optional body]
+
+[optional footer(s)]
 ```
 
-### PR Description Template
+**Types**:
+| Type | Use For |
+|------|---------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `docs` | Documentation |
+| `style` | Formatting (no code change) |
+| `refactor` | Code restructure |
+| `perf` | Performance improvement |
+| `test` | Adding tests |
+| `chore` | Maintenance |
+
+**Examples**:
+
+```
+feat(auth): add OAuth2 login support
+fix(api): handle null response from payment gateway
+docs: update API documentation for v2 endpoints
+refactor(user): extract validation into separate module
+```
+
+## Guidelines
+
+### DO
+
+- Use trunk-based development for most projects
+- Write atomic commits (one logical change per commit)
+- Use conventional commit format
+- Keep PRs small (< 250 lines of code)
+- Review PRs within 24 hours
+- Use merge queues for high-traffic repos
+
+### DON'T
+
+- Force push to main/master
+- Commit directly to protected branches
+- Create long-lived feature branches (> 2-3 days)
+- Squash commits that should stay separate
+- Skip code review for "small" changes
+- Leave PRs open for more than a few days
+
+## Pull Request Guidelines
+
+### Size Recommendations
+
+| Size | Lines Changed | Review Time |
+| ---- | ------------- | ----------- |
+| XS   | < 50          | 15 min      |
+| S    | 50-200        | 30 min      |
+| M    | 200-400       | 1 hour      |
+| L    | 400-800       | 2+ hours    |
+| XL   | > 800         | Split it    |
+
+### PR Template
+
 ```markdown
 ## Summary
-Brief description of changes
 
-## Changes
-- Change 1
-- Change 2
+[Brief description of changes]
 
-## Test Plan
-How to verify changes
+## Type of Change
 
-Closes #<issue>
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Documentation update
+
+## Testing
+
+- [ ] Unit tests added/updated
+- [ ] Integration tests added/updated
+- [ ] Manual testing performed
+
+## Checklist
+
+- [ ] Code follows project style
+- [ ] Self-reviewed changes
+- [ ] Documentation updated
 ```
 
----
+## Git Safety
 
-## Safety Guidelines
+### Before Dangerous Operations
 
-### Commands to Avoid
-| Dangerous | Safe Alternative |
-|-----------|------------------|
-| `git push --force` | `git push --force-with-lease` |
-| `git reset --hard` | `git stash` first |
-| `git rebase` on shared branch | Use on local branches only |
-| `--no-verify` flag | Fix hook issues properly |
-| Amend after push | Create new commit |
-
-### Before Destructive Operations
 ```bash
-# Create backup
-git branch backup-$(date +%Y%m%d)
+# Always backup before rebase
+git branch backup-branch-name
 
-# Or stash changes
-git stash
+# Check current state
+git status
+git log --oneline -5
 
-# Check reflog exists
-git reflog
+# Verify remote state
+git fetch --all
+git branch -vv
 ```
 
 ### Recovery Commands
+
 ```bash
-# View history
-git reflog
-
-# Recover commit
-git cherry-pick <hash>
-
-# Recover branch
-git checkout -b recovered <hash>
-
 # Undo last commit (keep changes)
 git reset --soft HEAD~1
+
+# Recover deleted branch
+git reflog
+git checkout -b branch-name <commit-sha>
+
+# Abort failed rebase
+git rebase --abort
 ```
 
----
+## References
 
-## Version & Release
-
-### Semantic Versioning
-```
-MAJOR.MINOR.PATCH (e.g., 2.1.3)
-
-MAJOR: Breaking changes
-MINOR: New features (backward compatible)
-PATCH: Bug fixes (backward compatible)
-```
-
-### How Commits Map to Versions
-| Commit | Version Bump |
-|--------|--------------|
-| `fix:` | PATCH (1.0.0 → 1.0.1) |
-| `feat:` | MINOR (1.0.0 → 1.1.0) |
-| `BREAKING CHANGE` or `!` | MAJOR (1.0.0 → 2.0.0) |
-
-### Creating Release
-```bash
-git checkout main
-git pull
-git tag -a v1.2.0 -m "Release v1.2.0"
-git push origin v1.2.0
-```
-
----
-
-## Resources
-
-### Reference Files
-| File | When to Use |
-|------|-------------|
-| [references/branching-strategies.md](references/branching-strategies.md) | Choosing GitFlow vs GitHub Flow vs Trunk-based |
-| [references/conventional-commits.md](references/conventional-commits.md) | Detailed commit types, scopes, and examples |
-| [references/pr-guidelines.md](references/pr-guidelines.md) | PR templates, review checklists, CODEOWNERS |
-| [references/safety.md](references/safety.md) | Dangerous commands, recovery procedures |
-
-### External Tools
-- **commitlint**: Enforce commit message format
-- **husky**: Git hooks for validation
-- **semantic-release**: Automated versioning
-- **standard-version**: Changelog generation
+- [Branching Strategies](references/branching.md) - Trunk-based, GitFlow, GitHub Flow
+- [Conventional Commits](references/conventional-commits.md) - Message format
+- [Pull Requests](references/pull-requests.md) - PR best practices
+- [Code Review](references/code-review.md) - Review guidelines

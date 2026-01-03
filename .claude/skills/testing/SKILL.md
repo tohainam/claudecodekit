@@ -1,168 +1,140 @@
 ---
 name: testing
-description: |
-  Comprehensive testing expertise for all technologies: frontend (React, Vue, Angular), backend (Python, Node.js, Go, Java), and mobile (React Native, Flutter, iOS, Android). Covers TDD/BDD methodologies, test strategies, coverage optimization, and modern testing tools (Vitest, Playwright, pytest, Jest).
-
-  Use this skill when:
-  - Writing unit tests, integration tests, or E2E tests
-  - Implementing TDD (Test-Driven Development) or BDD workflows
-  - Setting up testing frameworks (Vitest, Jest, pytest, etc.)
-  - Configuring Playwright or Cypress for E2E testing
-  - Testing React, Vue, Angular, or Svelte components
-  - Testing React Native or Flutter mobile apps
-  - Writing API/backend tests for any language
-  - Improving test coverage or fixing flaky tests
-  - Setting up CI/CD test pipelines
-  - Creating mocks, stubs, fixtures, or test data
-  - Performance/load testing with k6 or Locust
+description: Testing patterns, strategies, and best practices. Use when: Writing tests for new code, Reviewing test coverage, Choosing testing approach (TDD, BDD), Setting up test infrastructure.
 ---
 
-# Testing Skill
+# Testing
+
+## When to Use
+
+- Writing tests for new features
+- Improving test coverage
+- Choosing between testing strategies
+- Setting up test infrastructure
+- Debugging test failures
+- Reviewing test quality
 
 ## Quick Start
 
-### TDD Workflow (Red-Green-Refactor)
-1. **RED**: Write failing test first
-2. **GREEN**: Write minimum code to pass
-3. **REFACTOR**: Improve code while tests pass
-
-### Test Structure (AAA Pattern)
-```
-Arrange → Set up test data and dependencies
-Act     → Execute the code under test
-Assert  → Verify expected outcomes
-```
-
-## Testing Pyramid
+### Testing Philosophy
 
 ```
-         ┌─────────┐
-         │  E2E    │ ← Few (3-10), critical flows
-        ─┴─────────┴─
-      ┌───────────────┐
-      │  Integration  │ ← Many, component interactions
-     ─┴───────────────┴─
-   ┌───────────────────┐
-   │      Unit         │ ← Most, business logic
-  ─┴───────────────────┴─
+Tests are documentation that never lies.
+Tests are a safety net for refactoring.
+Tests give confidence to ship.
 ```
 
-## Framework Quick Reference
+### Test Pyramid vs Testing Trophy
 
-| Stack | Unit Testing | E2E Testing |
-|-------|-------------|-------------|
-| React/Vue/Angular | Vitest | Playwright |
-| Node.js | Vitest/Jest | Supertest + Playwright |
-| Python | pytest | pytest + Playwright |
-| Go | testing + testify | - |
-| Java | JUnit 5 | REST Assured |
-| React Native | Jest | Detox |
-| Flutter | dart test | Patrol |
+**Traditional Pyramid** (Google, 70/20/10):
 
-## Detailed References
+```
+        /\
+       /  \     E2E (10%)
+      /----\
+     /      \   Integration (20%)
+    /--------\
+   /          \ Unit (70%)
+  --------------
+```
 
-Read these files based on your needs:
+**Testing Trophy** (Kent C. Dodds):
 
-| File | When to Read |
-|------|--------------|
-| [references/tdd-bdd.md](references/tdd-bdd.md) | Learning TDD/BDD methodologies, writing Gherkin specs |
-| [references/frontend.md](references/frontend.md) | Testing React, Vue, Angular; Vitest/Playwright setup |
-| [references/backend.md](references/backend.md) | API testing, Python/Node.js/Go/Java tests |
-| [references/mobile.md](references/mobile.md) | React Native, Flutter, iOS, Android testing |
-| [references/strategies.md](references/strategies.md) | Coverage targets, risk-based testing, CI/CD |
-| [references/patterns.md](references/patterns.md) | Testing patterns, mocking, anti-patterns to avoid |
-| [references/tools.md](references/tools.md) | Tool comparison, setup commands, configurations |
+```
+         __
+        |  |    E2E
+     ___|  |___
+    |          |   Integration (focus)
+    |__________|
+        ||        Unit
+        ||
+     Static Types
+```
 
-## Common Patterns
-
-### Unit Test Template
+### Quick Test Template (AAA Pattern)
 
 ```typescript
-describe('ComponentName', () => {
-  describe('methodName', () => {
-    it('does X when Y', () => {
-      // Arrange
-      const input = createTestData()
+describe("FeatureName", () => {
+  it("should [expected behavior] when [condition]", () => {
+    // Arrange: Set up test data
+    const input = createTestInput();
 
-      // Act
-      const result = methodUnderTest(input)
+    // Act: Execute the code under test
+    const result = functionUnderTest(input);
 
-      // Assert
-      expect(result).toBe(expected)
-    })
-  })
-})
+    // Assert: Verify the outcome
+    expect(result).toEqual(expectedOutput);
+  });
+});
 ```
 
-### Mocking External Dependencies
+## Guidelines
 
-```typescript
-// Mock module
-vi.mock('./api', () => ({
-  fetchData: vi.fn().mockResolvedValue({ data: 'test' })
-}))
+### DO
 
-// Inline mock
-const mockFn = vi.fn().mockReturnValue('result')
-```
+- Write tests before or alongside code (TDD/BDD)
+- Test behavior, not implementation
+- Use descriptive test names that explain intent
+- Keep tests independent and isolated
+- Test edge cases and error scenarios
+- Maintain 80-90% meaningful coverage
 
-### E2E Test Template
+### DON'T
 
-```typescript
-test('user completes checkout', async ({ page }) => {
-  await page.goto('/products')
-  await page.click('[data-testid="add-to-cart"]')
-  await page.click('[data-testid="checkout"]')
-  await expect(page.locator('[data-testid="confirmation"]')).toBeVisible()
-})
-```
+- Test implementation details (private methods)
+- Write tests that depend on execution order
+- Mock everything (integration tests matter)
+- Ignore flaky tests (fix or delete them)
+- Over-test trivial code (getters/setters)
+- Chase 100% coverage at expense of quality
 
-## Best Practices Checklist
+## Test Types Quick Reference
 
-### Writing Tests
-- [ ] Test behavior, not implementation
-- [ ] One assertion concept per test
-- [ ] Use descriptive test names
-- [ ] Keep tests independent (no shared state)
-- [ ] Test edge cases and error paths
+| Type            | Scope                 | Speed  | Confidence  | When to Use            |
+| --------------- | --------------------- | ------ | ----------- | ---------------------- |
+| **Unit**        | Single function/class | Fast   | Low-Medium  | Pure logic, algorithms |
+| **Integration** | Multiple components   | Medium | Medium-High | Features, user flows   |
+| **E2E**         | Entire system         | Slow   | High        | Critical paths         |
+| **Contract**    | API boundaries        | Fast   | Medium      | Microservices          |
 
-### Test Quality
-- [ ] Aim for 80%+ coverage on core logic
-- [ ] Use mutation testing for critical code
-- [ ] Fix flaky tests immediately
-- [ ] Keep test suite fast (<5min for unit tests)
+## Coverage Guidelines
 
-### CI/CD
-- [ ] Run tests on every PR
-- [ ] Block merges on test failure
-- [ ] Generate and track coverage reports
-- [ ] Parallelize test execution
+### Target: 80-90% Meaningful Coverage
 
-## Common Issues & Solutions
+**What to Test**:
 
-| Issue | Solution |
-|-------|----------|
-| Flaky tests | Add proper waits, mock time-dependent code |
-| Slow tests | Parallelize, use in-memory DBs, reduce E2E |
-| Low coverage | Focus on untested branches, use mutation testing |
-| Test maintenance | Use Page Objects, factories, shared fixtures |
-| Mocking complexity | Use fakes for infrastructure, real objects elsewhere |
+- Business logic
+- Edge cases
+- Error handling
+- Integration points
+- User-facing features
 
-## Quick Commands
+**What NOT to Test**:
+
+- Framework code
+- Third-party libraries
+- Configuration files
+- Simple getters/setters
+- Generated code
+
+### Mutation Testing
+
+Verify test quality by introducing bugs:
 
 ```bash
-# Vitest
-npx vitest                    # Run tests
-npx vitest --coverage         # With coverage
-npx vitest --ui               # Interactive UI
+# Using Stryker (JS/TS)
+npx stryker run
 
-# Playwright
-npx playwright test           # Run E2E tests
-npx playwright codegen        # Generate tests
-npx playwright show-report    # View report
-
-# pytest
-pytest                        # Run tests
-pytest --cov=src              # With coverage
-pytest -x                     # Stop on first failure
+# Target: 60-80% mutation score
 ```
+
+## References
+
+- [Testing Pyramid](references/testing-pyramid.md) - Test type distribution
+- [TDD & BDD](references/tdd-bdd.md) - Test-driven methodologies
+- [Test Coverage](references/test-coverage.md) - Coverage strategies
+
+## Examples
+
+- [Unit Tests](examples/unit-tests.md) - AAA pattern, mocking
+- [Integration Tests](examples/integration-tests.md) - API testing, TestContainers

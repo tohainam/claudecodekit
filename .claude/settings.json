@@ -1,70 +1,43 @@
 {
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": ".claude/hooks/file-protection.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": ".claude/hooks/skill-loader.py",
-            "timeout": 5
-          },
-          {
-            "type": "command",
-            "command": ".claude/hooks/mcp-loader.py",
-            "timeout": 5
-          },
-          {
-            "type": "command",
-            "command": ".claude/hooks/language-loader.py",
-            "timeout": 5
-          }
-        ]
-      }
-    ]
-  },
   "permissions": {
     "allow": [
-      "Bash(npm run:*)",
-      "Bash(npx:*)",
       "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pytest:*)",
       "Bash(go:*)",
       "Bash(cargo:*)",
-      "Bash(pytest:*)",
-      "Bash(python -m pytest:*)",
       "Task(*)",
       "Skill(*)",
-      "Bash(chmod:*)",
-      "Bash(python3:*)"
+      "Read(src/**)",
+      "Read(docs/**)",
+      "Read(.claude/**)",
+      "Edit(src/**)",
+      "Edit(docs/**)"
     ],
     "deny": [
       "Read(.env)",
       "Read(.env.*)",
-      "Edit(.env)",
-      "Edit(.env.*)",
-      "Write(.env)",
-      "Write(.env.*)",
+      "Read(**/.env)",
       "Read(secrets/**)",
-      "Edit(secrets/**)",
       "Read(credentials/**)",
-      "Edit(credentials/**)",
       "Read(*.pem)",
       "Read(*.key)",
-      "Edit(*.pem)",
-      "Edit(*.key)"
+      "Edit(.env)",
+      "Edit(.env.*)",
+      "Edit(secrets/**)",
+      "Bash(sudo:*)",
+      "Bash(rm -rf:*)"
     ]
   },
-  "responseLanguage": "en"
+  "env": {
+    "CLAUDE_CODE_KIT_VERSION": "1.0.0"
+  },
+  "attribution": {
+    "commit": "Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
+    "pr": "Generated with [Claude Code](https://claude.com/claude-code)"
+  },
+  "hooks": {}
 }
