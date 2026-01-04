@@ -23,9 +23,9 @@
 - Log errors with sufficient detail for debugging
 - Fail fast and fail loudly in development
 
-## Security
+## Secure Coding
 
-- Never log sensitive data (passwords, tokens, PII)
 - Validate all external input
 - Use parameterized queries for database operations
 - Escape output in templates
+- See `safety.md` for credentials and sensitive data handling

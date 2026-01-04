@@ -50,16 +50,58 @@ Starting analysis...
 
 ### Step 3: Analyze Codebase
 
-1. Quick search: `Glob(pattern: "**/*{keyword}*")` + `Grep(pattern: "{keyword}")`
-2. For complex features:
-   ```
-   Task(subagent_type: "scouter", prompt: "Analyze codebase for {feature}", description: "Codebase analysis")
-   ```
-3. For unfamiliar tech:
-   ```
-   Task(subagent_type: "researcher", prompt: "Research best practices for {technology}", description: "Research")
-   ```
-4. Update spec Section 2.1: `Edit(file_path: ".claude/.specs/{feature_name}.md", old_string: ..., new_string: ...)`
+**Scaling**: Check `cck.json` → `workflow.maxInstances` for limits.
+
+**Choose based on complexity:**
+
+| Scenario | Action |
+|----------|--------|
+| Simple feature | Quick search only |
+| Complex codebase impact | Spawn scouter(s) |
+| Unfamiliar technology | Spawn researcher(s) |
+| Complex + unfamiliar | Spawn BOTH types in parallel |
+
+**1. Quick search** (always do first):
+```
+Glob(pattern: "**/*{keyword}*")
+Grep(pattern: "{keyword}")
+```
+
+**2. Scouter only** (complex codebase):
+```
+Task(subagent_type: "scouter", prompt: "...", description: "...")
+```
+
+**3. Researcher only** (unfamiliar tech):
+```
+Task(subagent_type: "researcher", prompt: "...", description: "...")
+```
+
+**4. Both in parallel** (complex + unfamiliar):
+```
+# Spawn agents (respect maxInstances limits)
+scouter = Task(subagent_type: "scouter", prompt: "...", run_in_background: true)
+researcher = Task(subagent_type: "researcher", prompt: "...", run_in_background: true)
+
+# Wait for ALL agents
+scouter_data = TaskOutput(task_id: scouter, block: true)
+researcher_data = TaskOutput(task_id: researcher, block: true)
+
+# Use report skill to write reports
+# Skill(skill: "report") - provides templates and synthesis guidance
+Write(".claude/.reports/{feature_name}-scout.md", ...)
+Write(".claude/.reports/{feature_name}-research.md", ...)
+```
+
+**Scaling Guidelines**:
+
+| Scope | Agents per Type |
+|-------|-----------------|
+| Narrow (1-2 areas) | 1 agent |
+| Medium (3-5 areas) | 2 agents |
+| Broad (6+ areas) | up to maxInstances |
+
+**5. Update spec**: `Edit(file_path: ".claude/.specs/{feature_name}.md", ...)` - Section 2.1
 
 ### Step 4: Identify Gaps and Questions
 
@@ -280,6 +322,9 @@ You can now run:
 - `Write(file_path: ".claude/.specs/{feature_name}.md", ...)` at start (step 2)
 - `Task(subagent_type: "scouter", ...)` for deep codebase analysis - NEVER do inline with `Read`, `Grep`, `Glob`
 - `Task(subagent_type: "researcher", ...)` for external research - NEVER do inline with `WebSearch`, `WebFetch`
+- **If spawning BOTH scouter and researcher** → run in parallel with `run_in_background: true`
+- **Wait for ALL agents** before presenting findings to developer
+- **Optional: Save agent reports** to `.reports/{feature_name}-brainstorm-*.md` for `/run` reference
 - Present findings clearly with counts
 - Wait for developer response after each presentation
 - `Edit(...)` to update spec file after each developer input
@@ -301,18 +346,20 @@ You can now run:
 - Make decisions for the developer
 - Rush through phases
 - Use text Y/N prompts - MUST use `AskUserQuestion(...)`
+- **Proceed before ALL spawned agents complete** - always use `TaskOutput(block: true)`
 
 ## Tools
 
-| Tool                | Invocation                                                                                             | Use For                     |
-| ------------------- | ------------------------------------------------------------------------------------------------------ | --------------------------- |
-| `Write`             | `Write(file_path: "...", content: "...")`                                                              | Create spec file            |
-| `Edit`              | `Edit(file_path: "...", old_string: "...", new_string: "...")`                                         | Update spec sections        |
-| `Glob`              | `Glob(pattern: "**/*{keyword}*")`                                                                      | Find related files (quick)  |
-| `Grep`              | `Grep(pattern: "{keyword}")`                                                                           | Search code content (quick) |
-| `Task` (scouter)    | `Task(subagent_type: "scouter", prompt: "...", description: "...")`                                    | Deep codebase analysis      |
-| `Task` (researcher) | `Task(subagent_type: "researcher", prompt: "...", description: "...")`                                 | External research           |
-| `AskUserQuestion`   | `AskUserQuestion(questions: [{ question: "...", header: "...", options: [...], multiSelect: false }])` | Confirm incomplete finalize |
+| Tool                | Invocation                                                                                             | Use For                       |
+| ------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------- |
+| `Write`             | `Write(file_path: "...", content: "...")`                                                              | Create spec file              |
+| `Edit`              | `Edit(file_path: "...", old_string: "...", new_string: "...")`                                         | Update spec sections          |
+| `Glob`              | `Glob(pattern: "**/*{keyword}*")`                                                                      | Find related files (quick)    |
+| `Grep`              | `Grep(pattern: "{keyword}")`                                                                           | Search code content (quick)   |
+| `Task` (scouter)    | `Task(subagent_type: "scouter", prompt: "...", description: "...", run_in_background: true)`           | Deep codebase analysis        |
+| `Task` (researcher) | `Task(subagent_type: "researcher", prompt: "...", description: "...", run_in_background: true)`        | External research             |
+| `TaskOutput`        | `TaskOutput(task_id: agent_id, block: true)`                                                           | Wait for agent to complete    |
+| `AskUserQuestion`   | `AskUserQuestion(questions: [{ question: "...", header: "...", options: [...], multiSelect: false }])` | Confirm incomplete finalize   |
 
 ## Examples
 

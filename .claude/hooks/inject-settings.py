@@ -104,20 +104,16 @@ def build_context(settings: dict) -> str:
     lines.append(f"- Documents (.reports, .plans, comments, commits): {document_display}")
     lines.append("")
 
-    # Features
-    features = settings.get('features', {})
-
-    # Gemini feature
-    gemini_enabled = features.get('gemini', False)
-    if gemini_enabled:
-        lines.append("**Gemini**: ENABLED")
-        lines.append("- You CAN proactively use Gemini skill when beneficial.")
-    else:
-        lines.append("**Gemini**: DISABLED (manual only)")
-        lines.append("- Do NOT proactively use or suggest Gemini.")
-        lines.append("- ONLY use Gemini if user explicitly requests (e.g., '/gemini', 'use gemini').")
-
-    lines.append("")
+    # Workflow settings
+    workflow = settings.get('workflow', {})
+    if workflow:
+        max_instances = workflow.get('maxInstances', {})
+        if max_instances:
+            lines.append("**Workflow**: Max agents per type:")
+            for agent, max_val in max_instances.items():
+                lines.append(f"  - {agent}: {max_val}")
+            lines.append("  - CRITICAL: Wait for ALL agents to complete before next phase")
+            lines.append("")
 
     return '\n'.join(lines)
 

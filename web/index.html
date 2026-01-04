@@ -78,6 +78,8 @@
                     <ul class="nav-list">
                         <li><a href="#cmd-brainstorm" class="nav-item" data-section="cmd-brainstorm">/brainstorm</a></li>
                         <li><a href="#cmd-run" class="nav-item" data-section="cmd-run">/run</a></li>
+                        <li><a href="#cmd-onboarding" class="nav-item" data-section="cmd-onboarding">/onboarding</a></li>
+                        <li><a href="#cmd-view-docs" class="nav-item" data-section="cmd-view-docs">/view-docs</a></li>
                     </ul>
                 </div>
 
@@ -118,6 +120,7 @@
                         <li><a href="#skill-git" class="nav-item" data-section="skill-git">Git Workflow</a></li>
                         <li><a href="#skill-gemini" class="nav-item" data-section="skill-gemini">Gemini</a></li>
                         <li><a href="#skill-creator" class="nav-item" data-section="skill-creator">Skill Creator</a></li>
+                        <li><a href="#skill-report" class="nav-item" data-section="skill-report">Report</a></li>
                     </ul>
                 </div>
 
@@ -162,7 +165,7 @@
                                 <path d="M2 12l10 5 10-5"></path>
                             </svg>
                         </div>
-                        <h3>8 Extensible Skills</h3>
+                        <h3>10 Extensible Skills</h3>
                         <p>Domain knowledge with progressive disclosure design</p>
                     </div>
                     <div class="feature-card">
@@ -200,6 +203,8 @@
 ├── agents/          # Agent definitions
 ├── skills/          # Skill modules
 ├── commands/        # Slash commands
+├── hooks/           # Hook scripts
+├── tools/           # CLI tools
 └── rules/           # Global guidelines">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="9" y="9" width="13" height="13" rx="2"></rect>
@@ -215,6 +220,8 @@
 ├── agents/          # Agent definitions
 ├── skills/          # Skill modules
 ├── commands/        # Slash commands
+├── hooks/           # Hook scripts
+├── tools/           # CLI tools
 └── rules/           # Global guidelines</code></pre>
                 </div>
             </section>
@@ -674,6 +681,138 @@ cd claude-code-kit</code></pre>
                     <div class="tool-card">
                         <span class="tool-name">security-audit</span>
                         <span class="tool-desc">OWASP, input validation, auth checks</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Command: Onboarding -->
+            <section class="doc-section" id="cmd-onboarding">
+                <div class="section-header">
+                    <span class="section-badge command">/onboarding</span>
+                    <h1>Onboarding Command</h1>
+                    <p class="section-lead">Initialize Claude Code Kit for your project. Analyzes codebase and generates CLAUDE.md + project rules.</p>
+                </div>
+
+                <h2>Usage</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Claude Code</span>
+                        <button class="copy-btn" data-copy="/onboarding">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <pre><code>/onboarding</code></pre>
+                </div>
+
+                <h2>What It Does</h2>
+                <div class="workflow-phases-detail compact">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Analyze</h3>
+                        </div>
+                        <p>Deep analysis of project structure, tech stack, and patterns via scouter agent</p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Generate</h3>
+                        </div>
+                        <p>Creates CLAUDE.md and project-specific rules in .claude/rules/</p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Configure</h3>
+                        </div>
+                        <p>Sets up cck.json with language and workflow settings</p>
+                    </div>
+                </div>
+
+                <h2>Output Files</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>.claude/CLAUDE.md</code></td><td>Project context and instructions</td></tr>
+                            <tr><td><code>.claude/rules/{category}/</code></td><td>Path-specific coding rules</td></tr>
+                            <tr><td><code>.claude/.reports/{date}-onboarding-analysis.md</code></td><td>Analysis report</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4M12 8h.01"></path>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <strong>Note:</strong> Existing rules in <code>_global/</code> folder are preserved. Use confirmation prompts to handle existing rules.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Command: View Docs -->
+            <section class="doc-section" id="cmd-view-docs">
+                <div class="section-header">
+                    <span class="section-badge command">/view-docs</span>
+                    <h1>View Docs Command</h1>
+                    <p class="section-lead">View CCK documents in browser with live reload.</p>
+                </div>
+
+                <h2>Usage</h2>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Claude Code</span>
+                        <button class="copy-btn" data-copy="/view-docs">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <pre><code>/view-docs [port]</code></pre>
+                </div>
+
+                <h2>Features</h2>
+                <div class="feature-grid compact">
+                    <div class="feature-card small">
+                        <h4>3-Level Navigation</h4>
+                        <p>Date → Type → Files hierarchy</p>
+                    </div>
+                    <div class="feature-card small">
+                        <h4>Live Reload</h4>
+                        <p>Real-time updates when files change</p>
+                    </div>
+                    <div class="feature-card small">
+                        <h4>Dark/Light Mode</h4>
+                        <p>Theme toggle support</p>
+                    </div>
+                    <div class="feature-card small">
+                        <h4>Zero Dependencies</h4>
+                        <p>No npm install required</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4M12 8h.01"></path>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <strong>Default port:</strong> 4567 (auto-increments if busy). Opens browser automatically.
                     </div>
                 </div>
             </section>
@@ -2128,6 +2267,85 @@ gemini "List all API endpoints" --all-files</code></pre>
                             <tr><td>3. Resources</td><td>References, scripts (as needed)</td><td>Unlimited</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </section>
+
+            <!-- Skill: Report -->
+            <section class="doc-section" id="skill-report">
+                <div class="section-header">
+                    <span class="section-badge skill">Skill</span>
+                    <h1>Report</h1>
+                    <p class="section-lead">Report writing and synthesis skill for CCK workflows.</p>
+                </div>
+
+                <h2>When to Use</h2>
+                <ul class="usage-list">
+                    <li>Synthesizing raw data from subagents (researcher, scouter, reviewer) into structured reports</li>
+                    <li>Writing reports to .reports/ directory</li>
+                    <li>Merging multiple agent outputs into cohesive documents</li>
+                </ul>
+
+                <h2>Report Types</h2>
+                <div class="table-wrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Source</th>
+                                <th>Output</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>research</code></td><td>researcher agents</td><td><code>{name}-research.md</code></td></tr>
+                            <tr><td><code>comparison</code></td><td>researcher (A vs B)</td><td><code>{name}-comparison.md</code></td></tr>
+                            <tr><td><code>scout</code></td><td>scouter agents</td><td><code>{name}-scout.md</code></td></tr>
+                            <tr><td><code>review</code></td><td>reviewer agent</td><td><code>{name}-review.md</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Workflow</h2>
+                <div class="workflow-phases-detail compact">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">1</span>
+                            <h3>Collect</h3>
+                        </div>
+                        <p>Wait for ALL agents via TaskOutput(block: true)</p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">2</span>
+                            <h3>Select Template</h3>
+                        </div>
+                        <p>Choose template based on agent type</p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">3</span>
+                            <h3>Synthesize</h3>
+                        </div>
+                        <p>Remove duplicates, resolve conflicts, consolidate sources</p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-num">4</span>
+                            <h3>Write</h3>
+                        </div>
+                        <p>Save to .claude/.reports/{name}-{type}.md</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4M12 8h.01"></path>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <strong>Key:</strong> NEVER merge researcher and scouter into same report. Use separate files: <code>{name}-research.md</code> and <code>{name}-scout.md</code>.
+                    </div>
                 </div>
             </section>
 

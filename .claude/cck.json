@@ -1,10 +1,14 @@
 {
   "language": {
-    "think": "en",
-    "response": "en",
-    "document": "en"
+    "think": "vi",
+    "response": "vi",
+    "document": "vi"
   },
-  "features": {
-    "gemini": false
+  "workflow": {
+    "maxInstances": {
+      "researcher": 3,
+      "scouter": 3,
+      "reviewer": 1
+    }
   }
 }

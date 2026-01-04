@@ -1,6 +1,6 @@
 ---
 name: debug
-description: Systematic debugging and root cause analysis skill. Use when: (1) Investigating bugs or errors, (2) Analyzing stack traces or error logs, (3) Finding root cause of failures, (4) Debugging production issues, (5) Performing root cause analysis. Provides structured 5-phase methodology (Investigate → Analyze → Hypothesize → Fix → Document) with AI-enhanced pattern recognition.
+description: "Systematic debugging and root cause analysis skill. Use when: (1) Investigating bugs or errors, (2) Analyzing stack traces or error logs, (3) Finding root cause of failures, (4) Debugging production issues, (5) Performing root cause analysis. Provides structured 5-phase methodology (Investigate → Analyze → Hypothesize → Fix → Document) with AI-enhanced pattern recognition."
 ---
 
 # Debug Skill
@@ -30,6 +30,7 @@ Systematic debugging (15-30 min, 95% first-time fix rate) beats random fixes (2-
 **Goal**: Reproduce consistently and gather evidence.
 
 **Actions**:
+
 1. Read error messages carefully - they often contain the answer
 2. Reproduce the bug consistently (if can't reproduce, can't fix)
 3. Check recent changes: `git diff HEAD~5`, `git log --oneline -10`
@@ -39,6 +40,7 @@ Systematic debugging (15-30 min, 95% first-time fix rate) beats random fixes (2-
 **Output**: Reproduction steps, error context, evidence log
 
 **Techniques**:
+
 ```bash
 # Check recent changes
 git log --oneline -10
@@ -56,6 +58,7 @@ tail -100 logs/app.log | grep -i error
 **Goal**: Understand the pattern and isolate the problem.
 
 **Actions**:
+
 1. Find similar working code - what's different?
 2. Compare against reference implementations
 3. List ALL differences between working and broken
@@ -65,6 +68,7 @@ tail -100 logs/app.log | grep -i error
 **Output**: Pattern comparison, difference list, dependency map
 
 **Binary Search Debugging**:
+
 ```bash
 # Git bisect for regression finding
 git bisect start
@@ -74,6 +78,7 @@ git bisect good v1.2.3
 ```
 
 **5 Whys Analysis**:
+
 ```
 Problem: API returns 500 error
 1. Why? → Database query failed
@@ -89,6 +94,7 @@ Problem: API returns 500 error
 **Goal**: Form and test a single, specific hypothesis.
 
 **Actions**:
+
 1. Form ONE specific hypothesis (not multiple)
 2. Make smallest possible change to test it
 3. Verify results before continuing
@@ -97,6 +103,7 @@ Problem: API returns 500 error
 **Output**: Written hypothesis, test plan, verification result
 
 **Hypothesis Template**:
+
 ```
 HYPOTHESIS: The error occurs because [specific cause]
 TEST: I will [specific action] to verify
@@ -106,6 +113,7 @@ CONCLUSION: [confirmed/refuted, next step]
 ```
 
 **Red Flags** (stop if thinking this):
+
 - "Quick fix for now, investigate later"
 - "Just try changing X and see"
 - "Add multiple changes, run tests"
@@ -116,6 +124,7 @@ CONCLUSION: [confirmed/refuted, next step]
 **Goal**: Implement minimal, verified fix.
 
 **Actions**:
+
 1. Write failing test case FIRST (TDD)
 2. Implement single, focused fix
 3. Verify fix works (test passes)
@@ -125,6 +134,7 @@ CONCLUSION: [confirmed/refuted, next step]
 **Output**: Failing test, minimal fix, passing tests
 
 **Fix Checklist**:
+
 - [ ] Root cause confirmed with evidence
 - [ ] Failing test written first
 - [ ] Fix is minimal (no unrelated changes)
@@ -136,6 +146,7 @@ CONCLUSION: [confirmed/refuted, next step]
 **Goal**: Prevent recurrence and share knowledge.
 
 **Actions**:
+
 1. Record root cause in commit message
 2. Document fix rationale
 3. Ensure regression test exists
@@ -144,6 +155,7 @@ CONCLUSION: [confirmed/refuted, next step]
 **Output**: Root cause summary, fix rationale, regression test
 
 **Commit Message Template**:
+
 ```
 fix(scope): brief description
 
@@ -157,27 +169,30 @@ Closes #123
 
 These indicate deviation from systematic process:
 
-| Signal | Problem | Action |
-|--------|---------|--------|
-| "Quick fix, investigate later" | Skipping root cause | Stop, go back to Phase 1 |
-| "Try X and see if it works" | Random guessing | Form proper hypothesis |
-| "Multiple changes at once" | Can't isolate fix | Revert, one change at a time |
-| "Skip the test, verify manually" | No regression protection | Write the test first |
-| "3+ failed fix attempts" | Wrong hypothesis | Escalate, architecture review |
+| Signal                           | Problem                  | Action                        |
+| -------------------------------- | ------------------------ | ----------------------------- |
+| "Quick fix, investigate later"   | Skipping root cause      | Stop, go back to Phase 1      |
+| "Try X and see if it works"      | Random guessing          | Form proper hypothesis        |
+| "Multiple changes at once"       | Can't isolate fix        | Revert, one change at a time  |
+| "Skip the test, verify manually" | No regression protection | Write the test first          |
+| "3+ failed fix attempts"         | Wrong hypothesis         | Escalate, architecture review |
 
 ## AI-Enhanced Debugging
 
 ### Log Analysis
+
 - Pattern recognition in error logs
 - Semantic clustering of related errors
 - Anomaly detection in metrics
 
 ### Stack Trace Interpretation
+
 - Extract key information from traces
 - Map to source code locations
 - Suggest relevant code to investigate
 
 ### Hypothesis Generation
+
 - Suggest causes based on error patterns
 - Check against common anti-patterns
 - Cross-reference with known issues
@@ -185,6 +200,7 @@ These indicate deviation from systematic process:
 ## Advanced Techniques
 
 For complex issues, see: [references/methodologies.md](references/methodologies.md)
+
 - Delta debugging
 - Fault tree analysis
 - Distributed tracing

@@ -23,6 +23,8 @@ Claude Code Kit provides automated workflows, intelligent orchestration, and a h
 - `agents/` - Subagent definitions
 - `skills/` - Multi-file skills
 - `commands/` - Slash commands (includes workflow orchestration via `/run`)
+- `hooks/` - Hook scripts (inject-settings.py)
+- `tools/` - CLI tools (docs-viewer.js)
 
 ## Key Principles
 
