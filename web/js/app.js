@@ -149,75 +149,6 @@
         }
     };
 
-    // ==========================================
-    // Table of Contents (Right Sidebar)
-    // ==========================================
-    const TOC = {
-        init() {
-            this.container = document.querySelector('.toc-nav');
-            if (!this.container) return;
-
-            this.generateTOC();
-            this.initScrollSpy();
-        },
-
-        generateTOC() {
-            // Get current visible section
-            const mainContent = document.querySelector('.main-content');
-            if (!mainContent) return;
-
-            // Find all h2 and h3 headings in the current section
-            const headings = mainContent.querySelectorAll('h2[id], h3[id]');
-            if (!headings.length) return;
-
-            const fragment = document.createDocumentFragment();
-            let currentH2 = null;
-
-            headings.forEach(heading => {
-                const link = document.createElement('a');
-                link.href = `#${heading.id}`;
-                link.textContent = heading.textContent;
-                link.classList.add('toc-link');
-
-                if (heading.tagName === 'H2') {
-                    link.classList.add('toc-h2');
-                    currentH2 = link;
-                    fragment.appendChild(link);
-                } else if (heading.tagName === 'H3') {
-                    link.classList.add('toc-h3');
-                    fragment.appendChild(link);
-                }
-            });
-
-            this.container.innerHTML = '';
-            this.container.appendChild(fragment);
-        },
-
-        initScrollSpy() {
-            const headings = document.querySelectorAll('h2[id], h3[id]');
-            if (!headings.length) return;
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id');
-                        this.setActiveLink(id);
-                    }
-                });
-            }, {
-                rootMargin: '-80px 0px -70% 0px'
-            });
-
-            headings.forEach(heading => observer.observe(heading));
-        },
-
-        setActiveLink(id) {
-            const links = this.container?.querySelectorAll('.toc-link');
-            links?.forEach(link => {
-                link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-            });
-        }
-    };
 
     // ==========================================
     // Search Functionality
@@ -633,7 +564,6 @@
     function init() {
         ThemeManager.init();
         Sidebar.init();
-        TOC.init();
         Search.init();
         CodeBlocks.init();
         SmoothScroll.init();

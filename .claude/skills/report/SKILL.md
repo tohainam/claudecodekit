@@ -109,3 +109,13 @@ Write(".claude/.reports/{name}-scout.md", merged_scouter_results)
 # Review phase
 Write(".claude/.reports/{name}-review.md", reviewer_result)
 ```
+
+### /onboarding
+
+```
+# After scouter analysis
+scouter_data = TaskOutput(task_id: scouter, block: true)
+
+# Use scout template for project analysis report
+Write(".claude/.reports/onboarding-scout.md", formatted_scout_report)
+```

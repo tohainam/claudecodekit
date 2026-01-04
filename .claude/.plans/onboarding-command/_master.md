@@ -1,8 +1,9 @@
 # Implementation Plan: Onboarding Command
 
 **Spec**: `.specs/onboarding-command.md`
-**Status**: In Progress
+**Status**: Completed
 **Created**: 2026-01-04
+**Updated**: 2026-01-04
 **Effort**: M (4-8 hours)
 
 ---
@@ -17,6 +18,7 @@ Tạo slash command `/onboarding` để tự động phân tích project và gen
 2. **Global rules**: Không có `paths:` = global (load cho tất cả files)
 3. **CCK command pattern**: YAML frontmatter → Role → Context → Execution Protocol → Rules → Tools → Examples
 4. **Scouter delegation**: NEVER làm analysis inline, spawn scouter agent
+5. **Report skill integration**: Use `Skill(skill: "report")` templates for consistent report format
 
 ---
 
@@ -102,6 +104,55 @@ Tạo slash command `/onboarding` để tự động phân tích project và gen
 
 ---
 
+### Phase 6: Report Skill Integration (Size: S)
+
+**Status**: Completed
+
+**Tasks**:
+1. Update report naming convention: `{timestamp}-onboarding-analysis.md` → `onboarding-scout.md`
+2. Add reference to `Skill(skill: "report")` templates
+3. Update report content to follow scout template structure
+4. Add `/onboarding` integration section to `SKILL.md`
+5. Update Tools table to include report skill
+
+**Output**:
+- Updated `.claude/commands/onboarding.md`
+- Updated `.claude/skills/report/SKILL.md`
+
+---
+
+### Phase 7: Scouter Scaling Support (Size: S)
+
+**Status**: Completed
+
+**Tasks**:
+1. Add scaling decision logic based on project size (file count, tech stacks)
+2. Define parallel scouter patterns for medium/large projects
+3. Add synthesis process for merging multiple scouter outputs
+4. Update Rules section with scaling requirements
+5. Update Tools table with TaskOutput
+6. Update Examples with scaling scenarios
+
+**Output**: Updated `.claude/commands/onboarding.md` with full scaling support
+
+---
+
+### Phase 8: TodoWrite Integration (Size: S)
+
+**Status**: Completed
+
+**Tasks**:
+1. Add Step 0: Initialize todo list with 8 steps
+2. Add todo tracking markers (`in_progress`, `completed`) to each step
+3. Add final step to clear todo list
+4. Add TodoWrite to Tools table
+5. Update Rules section with todo requirements
+6. Update Examples with todo tracking flow
+
+**Output**: Updated `.claude/commands/onboarding.md` with full progress tracking
+
+---
+
 ## Files To Create
 
 | File | Purpose | Size |
@@ -118,18 +169,25 @@ Tạo slash command `/onboarding` để tự động phân tích project và gen
 | Risk | Mitigation |
 |------|------------|
 | Scouter analysis không chính xác | User confirm trước khi apply |
-| Large project chậm | Single scouter agent (không parallel) |
+| Large project chậm | Scale to multiple parallel scouters (up to maxInstances) |
+| Multiple scouter conflicts | Synthesis process resolves by using most specific finding |
 | Rules format outdated | Research report đã verify format mới nhất |
 
 ## Success Criteria
 
-- [ ] `/onboarding` command hoạt động
-- [ ] Scouter detect languages, frameworks, dependencies
-- [ ] Report được generate vào `.reports/`
-- [ ] User confirm trước khi write
-- [ ] CLAUDE.md được generate
-- [ ] Rules được tạo với đúng format (paths string, không array)
-- [ ] Existing rules được handle đúng
+- [x] `/onboarding` command hoạt động
+- [x] Scouter detect languages, frameworks, dependencies
+- [x] **Scouter scaling based on project size** (1-3 agents)
+- [x] **Multiple scouter outputs synthesized into ONE report**
+- [x] Report được generate vào `.reports/onboarding-scout.md`
+- [x] Report follow scout template từ report skill
+- [x] User confirm trước khi write
+- [x] CLAUDE.md được generate
+- [x] Rules được tạo với đúng format (paths string, không array)
+- [x] Existing rules được handle đúng
+- [x] Report skill integration documented in SKILL.md
+- [x] **TodoWrite integration** - Progress tracking qua 8 steps
+- [x] **Todo cleared on completion** - Clean finish
 
 ---
 
