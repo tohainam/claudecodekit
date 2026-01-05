@@ -1,10 +1,6 @@
 ---
 name: gemini
-description: |
-  Execute Google Gemini CLI in headless/non-interactive mode for automation and scripting.
-  Use when: (1) Running Gemini from scripts, (2) Batch processing files with AI,
-  (3) Piping content for analysis, (4) Code review in CI/CD, (5) Image/document analysis,
-  (6) Building AI-powered CLI tools, (7) Any non-interactive Gemini usage.
+description: "Execute Gemini CLI in headless mode for automation, scripting, batch AI processing, and CI/CD integration."
 ---
 
 # Gemini CLI
