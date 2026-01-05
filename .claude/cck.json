@@ -2,7 +2,7 @@
   "language": {
     "think": "vi",
     "response": "vi",
-    "document": "vi"
+    "document": "en"
   },
   "workflow": {
     "maxInstances": {
