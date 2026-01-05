@@ -151,44 +151,51 @@
 
 
     // ==========================================
-    // Search Functionality
+    // Search Functionality (Inline Dropdown)
     // ==========================================
     const Search = {
         init() {
-            this.modal = document.getElementById('searchModal');
             this.input = document.getElementById('searchInput');
+            this.dropdown = document.getElementById('searchDropdown');
             this.results = document.getElementById('searchResults');
-            this.searchBtn = document.getElementById('searchBtn');
-            this.closeBtn = this.modal?.querySelector('.search-close');
+            this.wrapper = this.input?.closest('.search-wrapper');
 
             this.searchIndex = [];
             this.buildSearchIndex();
 
-            // Open search
-            this.searchBtn?.addEventListener('click', () => this.openSearch());
+            // Show dropdown on focus
+            this.input?.addEventListener('focus', () => {
+                this.showDropdown();
+                if (!this.input.value.trim()) {
+                    this.results.innerHTML = this.renderQuickLinks();
+                }
+            });
 
-            // Close search
-            this.closeBtn?.addEventListener('click', () => this.closeSearch());
-            this.modal?.addEventListener('click', (e) => {
-                if (e.target === this.modal) this.closeSearch();
+            // Search on input
+            this.input?.addEventListener('input', (e) => {
+                this.search(e.target.value);
+                this.showDropdown();
+            });
+
+            // Hide dropdown on click outside
+            document.addEventListener('click', (e) => {
+                if (!this.wrapper?.contains(e.target)) {
+                    this.hideDropdown();
+                }
             });
 
             // Keyboard shortcuts
             document.addEventListener('keydown', (e) => {
-                // Ctrl/Cmd + K to open search
+                // Ctrl/Cmd + K to focus search
                 if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                     e.preventDefault();
-                    this.openSearch();
+                    this.input?.focus();
                 }
-                // Escape to close
-                if (e.key === 'Escape' && this.modal?.classList.contains('active')) {
-                    this.closeSearch();
+                // Escape to close dropdown
+                if (e.key === 'Escape' && this.dropdown?.classList.contains('active')) {
+                    this.hideDropdown();
+                    this.input?.blur();
                 }
-            });
-
-            // Search input handler
-            this.input?.addEventListener('input', (e) => {
-                this.search(e.target.value);
             });
 
             // Navigate results with keyboard
@@ -199,6 +206,15 @@
                 } else if (e.key === 'Enter') {
                     e.preventDefault();
                     this.selectResult();
+                }
+            });
+
+            // Handle result clicks
+            this.results?.addEventListener('click', (e) => {
+                const result = e.target.closest('.search-result');
+                if (result) {
+                    this.hideDropdown();
+                    this.input.value = '';
                 }
             });
         },
@@ -232,30 +248,25 @@
         },
 
         getSectionType(id) {
-            if (id.includes('workflow')) return 'workflow';
+            if (id.includes('workflow') || id.includes('wf-')) return 'workflow';
             if (id.includes('agent')) return 'agent';
             if (id.includes('skill')) return 'skill';
-            if (id.includes('command')) return 'command';
+            if (id.includes('cmd-') || id.includes('command')) return 'command';
             if (id.includes('example')) return 'example';
             return 'docs';
         },
 
-        openSearch() {
-            this.modal?.classList.add('active');
-            this.input?.focus();
-            document.body.style.overflow = 'hidden';
+        showDropdown() {
+            this.dropdown?.classList.add('active');
         },
 
-        closeSearch() {
-            this.modal?.classList.remove('active');
-            if (this.input) this.input.value = '';
-            if (this.results) this.results.innerHTML = '';
-            document.body.style.overflow = '';
+        hideDropdown() {
+            this.dropdown?.classList.remove('active');
         },
 
         search(query) {
             if (!query.trim()) {
-                this.results.innerHTML = this.renderRecentSearches();
+                this.results.innerHTML = this.renderQuickLinks();
                 return;
             }
 
@@ -263,11 +274,11 @@
             const matches = this.searchIndex.filter(item => {
                 const text = `${item.title} ${item.content}`.toLowerCase();
                 return terms.every(term => text.includes(term));
-            }).slice(0, 10);
+            }).slice(0, 8);
 
             this.results.innerHTML = matches.length
                 ? this.renderResults(matches, query)
-                : '<div class="search-no-results">No results found</div>';
+                : '<div class="search-no-results">No results found for "' + this.escapeHtml(query) + '"</div>';
         },
 
         renderResults(matches, query) {
@@ -275,39 +286,46 @@
                 <a href="#${item.id}" class="search-result ${index === 0 ? 'active' : ''}" data-index="${index}">
                     <span class="search-result-type">${item.type}</span>
                     <span class="search-result-title">${this.highlight(item.title, query)}</span>
-                    <span class="search-result-preview">${this.highlight(item.content.substring(0, 100), query)}...</span>
+                    <span class="search-result-preview">${this.highlight(item.content.substring(0, 80), query)}...</span>
                 </a>
             `).join('');
         },
 
-        renderRecentSearches() {
+        renderQuickLinks() {
             return `
                 <div class="search-hints">
                     <div class="search-hint-title">Quick links</div>
-                    <a href="#workflows" class="search-result">
-                        <span class="search-result-type">section</span>
-                        <span class="search-result-title">Workflows</span>
+                    <a href="#quick-start" class="search-result" data-index="0">
+                        <span class="search-result-type">docs</span>
+                        <span class="search-result-title">Quick Start</span>
                     </a>
-                    <a href="#agents" class="search-result">
-                        <span class="search-result-type">section</span>
-                        <span class="search-result-title">Agents</span>
+                    <a href="#wf-feature" class="search-result" data-index="1">
+                        <span class="search-result-type">workflow</span>
+                        <span class="search-result-title">Feature Workflow</span>
                     </a>
-                    <a href="#skills" class="search-result">
-                        <span class="search-result-type">section</span>
-                        <span class="search-result-title">Skills</span>
+                    <a href="#agent-researcher" class="search-result" data-index="2">
+                        <span class="search-result-type">agent</span>
+                        <span class="search-result-title">Researcher Agent</span>
                     </a>
-                    <a href="#examples" class="search-result">
-                        <span class="search-result-type">section</span>
-                        <span class="search-result-title">Examples</span>
+                    <a href="#skill-debug" class="search-result" data-index="3">
+                        <span class="search-result-type">skill</span>
+                        <span class="search-result-title">Debug Skill</span>
                     </a>
                 </div>
             `;
         },
 
         highlight(text, query) {
-            if (!query) return text;
+            if (!query) return this.escapeHtml(text);
+            const escaped = this.escapeHtml(text);
             const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-            return text.replace(regex, '<mark>$1</mark>');
+            return escaped.replace(regex, '<mark>$1</mark>');
+        },
+
+        escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         },
 
         navigateResults(direction) {
@@ -329,7 +347,8 @@
             const active = this.results?.querySelector('.search-result.active');
             if (active) {
                 active.click();
-                this.closeSearch();
+                this.hideDropdown();
+                if (this.input) this.input.value = '';
             }
         }
     };
