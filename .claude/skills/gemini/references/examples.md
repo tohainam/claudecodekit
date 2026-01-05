@@ -1,296 +1,573 @@
-# Gemini CLI Automation Examples
+# Gemini CLI Examples
+
+Practical examples for common automation use cases.
 
 ## Table of Contents
 
-- [Node.js JSON Parser](#nodejs-json-parser)
-- [Basic Patterns](#basic-patterns)
-- [Image Analysis](#image-analysis)
-- [Code Analysis](#code-analysis)
-- [Git Integration](#git-integration)
-- [File Processing](#file-processing)
-- [Saving Reports](#saving-reports)
-- [Error Handling](#error-handling)
+- [Code Review](#code-review)
+- [Image Analysis & OCR](#image-analysis--ocr)
+- [Documentation Generation](#documentation-generation)
+- [Git Operations](#git-operations)
+- [Log & Error Analysis](#log--error-analysis)
+- [Test Generation](#test-generation)
+- [Batch Processing](#batch-processing)
+- [CI/CD Integration](#cicd-integration)
+- [Quick Reference](#quick-reference)
+- [Multi-turn Workflows](#multi-turn-workflows)
 
-## Node.js JSON Parser
+---
 
-Safe pattern for extracting response (handles empty/malformed output):
+## Setup
 
-```bash
-# Reusable parser (single quotes for bash safety)
-node -e '
-const fs = require("fs");
-const d = fs.readFileSync(0, "utf8");
-const m = d.match(/{[\s\S]*}/);
-console.log(m ? JSON.parse(m[0]).response : "");
-'
-```
+### Recommended: Shell Helper Function with Fallback
 
-## Basic Patterns
-
-### Simple query with JSON output
+Add to `~/.bashrc` or `~/.zshrc` for cleaner commands with automatic model fallback:
 
 ```bash
-gemini "Explain Docker containers" --output-format json 2>/dev/null | node -e '
-const fs = require("fs");
-const d = fs.readFileSync(0, "utf8");
-const m = d.match(/{[\s\S]*}/);
-console.log(m ? JSON.parse(m[0]).response : "");
-'
-```
+# Cross-platform Gemini wrapper with model fallback
+gemi() {
+  local MODELS=("gemini-3-pro-preview" "gemini-3-flash-preview" "gemini-2.5-pro" "gemini-2.5-flash" "gemini-2.5-flash-lite")
 
-### Pipe content for analysis
+  for model in "${MODELS[@]}"; do
+    result=$(gemini -m "$model" "$@" -o json 2>&1)
+    response=$(echo "$result" | node -p "
+      const d=require('fs').readFileSync(0,'utf8');
+      const idx=d.indexOf('{');
+      if(idx<0){process.exit(1)}
+      const j=JSON.parse(d.slice(idx));
+      if(j.error){process.exit(1)}
+      j.response||''
+    " 2>/dev/null)
 
-```bash
-cat src/auth.py | gemini "Review for security issues" --output-format json 2>/dev/null | node -e '
-const fs = require("fs");
-const d = fs.readFileSync(0, "utf8");
-const m = d.match(/{[\s\S]*}/);
-console.log(m ? JSON.parse(m[0]).response : "");
-'
-```
+    if [ -n "$response" ]; then
+      echo "$response"
+      return 0
+    fi
+  done
 
-### Save output to file
-
-```bash
-gemini "Generate API documentation" --output-format json 2>/dev/null | node -e '
-const fs = require("fs");
-const d = fs.readFileSync(0, "utf8");
-try {
-  const m = d.match(/{[\s\S]*}/);
-  if (!m) throw new Error("No JSON");
-  const r = JSON.parse(m[0]).response;
-  fs.writeFileSync("api-docs.md", r || d);
-  console.log("Saved to api-docs.md");
-} catch (e) {
-  console.error("Failed:", e.message);
-  process.exit(1);
+  echo "GEMINI_FALLBACK: All models failed" >&2
+  return 1
 }
-'
 ```
 
-## Image Analysis
+Then use `gemi "prompt"` - it will automatically try models in priority order.
 
-### Describe an image
+### Simple Helper (No Fallback)
 
-```bash
-gemini "Describe this image in detail" @screenshot.png
-```
-
-### Analyze UI screenshot
+For quick use without fallback logic:
 
 ```bash
-gemini "Analyze this UI. List all elements and suggest improvements." @ui.png
-```
-
-### Image with JSON output
-
-```bash
-gemini "What text is visible in this image?" @photo.jpg --output-format json 2>/dev/null | node -e '
-const fs = require("fs");
-const d = fs.readFileSync(0, "utf8");
-const m = d.match(/{[\s\S]*}/);
-console.log(m ? JSON.parse(m[0]).response : "");
-'
-```
-
-## Code Analysis
-
-### Security review
-
-```bash
-cat "$file" | gemini "Review for security vulnerabilities. List issues with severity."
-```
-
-### Bug detection
-
-```bash
-gemini "Scan for potential bugs and anti-patterns" --all-files
-```
-
-### Code explanation
-
-```bash
-cat complex_function.py | gemini "Explain this code step by step"
-```
-
-### With file attachment
-
-```bash
-gemini "Review this code for issues" @src/main.py
-```
-
-## Git Integration
-
-### Generate commit message
-
-```bash
-git diff --cached | gemini "Write a concise commit message following conventional commits format"
-```
-
-### PR description
-
-```bash
-git diff origin/main...HEAD | gemini "Write a pull request description with summary and test plan"
-```
-
-### Review changes
-
-```bash
-git diff | gemini "Review for bugs, security issues, and code quality"
-```
-
-### Release notes
-
-```bash
-git log --oneline v1.0.0..HEAD | gemini "Generate release notes from these commits"
-```
-
-## File Processing
-
-### Summarize documentation
-
-```bash
-cat README.md | gemini "Create a one-paragraph summary"
-```
-
-### Generate tests
-
-```bash
-cat src/utils.ts | gemini "Generate unit tests for these functions using Jest"
-```
-
-### With file attachment
-
-```bash
-gemini "Summarize this documentation" @README.md
-```
-
-## Saving Reports
-
-### Save to .claude/.reports with timestamp
-
-```bash
-gemini "Analyze codebase architecture" --all-files --output-format json 2>/dev/null | node -e '
-const fs = require("fs");
-const d = fs.readFileSync(0, "utf8");
-try {
-  const m = d.match(/{[\s\S]*}/);
-  if (!m) throw new Error("No JSON");
-  const data = JSON.parse(m[0]);
-  const ts = new Date().toISOString().slice(0, 16).replace(/[T:]/g, "-");
-  const path = ".claude/.reports/" + ts + "-architecture.md";
-  fs.writeFileSync(path, "# Architecture Analysis\n\n" + (data.response || d));
-  console.log("Saved:", path);
-} catch (e) {
-  console.error("Failed:", e.message);
-  process.exit(1);
+# Simple wrapper - uses default model
+gemi-simple() {
+  gemini "$@" -o json 2>&1 | node -p "
+    const d=require('fs').readFileSync(0,'utf8');
+    const j=JSON.parse(d.slice(d.indexOf('{')));
+    if(j.error){console.error('Error:',j.error.message);process.exit(1)}
+    j.response
+  "
 }
-'
 ```
 
-### Security scan with report
+### Direct Pattern (No Setup)
+
+All examples use this Node.js pattern to extract JSON (works on macOS, Linux, Windows):
 
 ```bash
-gemini "Find security vulnerabilities" --all-files --output-format json 2>/dev/null | node -e '
-const fs = require("fs");
-const d = fs.readFileSync(0, "utf8");
-try {
-  const m = d.match(/{[\s\S]*}/);
-  if (!m) throw new Error("No JSON");
-  const data = JSON.parse(m[0]);
-  const ts = new Date().toISOString().slice(0, 16).replace(/[T:]/g, "-");
-  const path = ".claude/.reports/" + ts + "-security-scan.md";
-  fs.writeFileSync(path, "# Security Scan Report\n\n" + (data.response || d));
-  console.log("Report saved:", path);
-  console.log(data.response || "");
-} catch (e) {
-  console.error("Failed:", e.message);
-  process.exit(1);
+gemini "..." -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Model Priority
+
+When calling directly, use models in this order until one succeeds:
+1. `gemini-3-pro-preview` - Best quality
+2. `gemini-3-flash-preview` - Fast + capable
+3. `gemini-2.5-pro` - Stable production
+4. `gemini-2.5-flash` - Fast automation
+5. `gemini-2.5-flash-lite` - Simple tasks
+6. **Claude Code fallback** - If all fail
+
+---
+
+## Code Review
+
+### Staged Changes
+```bash
+git diff --staged | gemini "Review for:
+1. Security vulnerabilities
+2. Performance issues
+3. Code quality
+4. Bugs" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Pull Request
+```bash
+git diff origin/main...HEAD | gemini "Review PR:
+- Breaking changes
+- Issues
+- Improvements" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Security Audit
+```bash
+gemini "Security audit @./src/auth/:
+- SQL injection
+- XSS
+- Auth flaws" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Specific File
+```bash
+gemini "Review @./src/api/users.ts:
+- Error handling
+- Input validation
+- Best practices" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Batch Review
+```bash
+for file in src/**/*.ts; do
+  echo "=== $file ==="
+  gemini "Quick review @./$file" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+done
+```
+
+---
+
+## Image Analysis & OCR
+
+> **Important**: Image analysis requires pro-tier models. Use `gemini-3-pro-preview` or `gemini-2.5-pro`. Flash/lite models may return empty responses.
+
+### Extract Text
+```bash
+gemini -m gemini-3-pro-preview "Extract text from @./screenshot.png" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Architecture Diagram
+```bash
+gemini -m gemini-3-pro-preview "Analyze @./system-design.png:
+- Components
+- Data flow
+- Bottlenecks" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Compare Screenshots
+```bash
+gemini -m gemini-3-pro-preview "Compare changes:
+Before: @./ui-before.png
+After: @./ui-after.png" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Process Invoice
+```bash
+gemini -m gemini-3-pro-preview "Extract from @./invoice.png:
+- Vendor, Invoice #, Date
+- Line items, Total
+Output JSON" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Alt Text
+```bash
+gemini -m gemini-3-pro-preview "Write alt-text for @./hero-image.jpg" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Error Screenshot
+```bash
+gemini -m gemini-3-pro-preview "Analyze error @./error.png:
+- What error?
+- Cause?
+- Fix?" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Image Analysis with Fallback
+```bash
+# Fallback script for image analysis
+analyze_image() {
+  local file="$1"
+  local prompt="$2"
+  local MODELS=("gemini-3-pro-preview" "gemini-2.5-pro")
+
+  for model in "${MODELS[@]}"; do
+    result=$(gemini -m "$model" "$prompt @$file" -o json 2>&1)
+    response=$(echo "$result" | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response" 2>/dev/null)
+
+    if [ -n "$response" ]; then
+      echo "$response"
+      return 0
+    fi
+  done
+
+  echo "IMAGE_ANALYSIS_FAILED: Use Claude Code directly" >&2
+  return 1
 }
-'
+
+# Usage
+analyze_image "./screenshot.png" "Describe this image"
 ```
 
-### Batch analysis with combined report
+---
 
+## Documentation Generation
+
+### JSDoc
 ```bash
-node -e '
-const { spawnSync } = require("child_process");
-const fs = require("fs");
-const files = fs.readdirSync("src").filter(f => f.endsWith(".py"));
-let report = "# Batch Code Analysis\n\n";
-
-files.forEach(file => {
-  console.log("Analyzing:", file);
-  try {
-    const result = spawnSync("gemini", [
-      "Find issues in this code",
-      "@src/" + file,
-      "--output-format", "json"
-    ], { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] });
-    const m = (result.stdout || "").match(/{[\s\S]*}/);
-    if (m) {
-      const data = JSON.parse(m[0]);
-      report += "## " + file + "\n\n" + (data.response || "No issues found") + "\n\n";
-    } else {
-      report += "## " + file + "\n\nNo response\n\n";
-    }
-  } catch (e) {
-    report += "## " + file + "\n\nError: " + e.message + "\n\n";
-  }
-});
-
-const ts = new Date().toISOString().slice(0, 16).replace(/[T:]/g, "-");
-fs.writeFileSync(".claude/.reports/" + ts + "-batch-analysis.md", report);
-console.log("Report saved");
-'
+gemini "Generate JSDoc for @./src/utils.ts" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
 ```
 
-## Error Handling
-
-### Safe JSON parsing with Node.js
-
+### README
 ```bash
-gemini "Query" --output-format json 2>/dev/null | node -e '
-const fs = require("fs");
-const d = fs.readFileSync(0, "utf8");
-try {
-  const m = d.match(/{[\s\S]*}/);
-  console.log(m ? JSON.parse(m[0]).response || "No response" : "Empty");
-} catch (e) {
-  console.error("Parse failed:", e.message);
-  process.exit(1);
-}
-'
+gemini "Generate README for @./src/lib/auth/:
+- Overview
+- Usage
+- API reference" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
 ```
 
-### With timeout (Unix/macOS)
-
+### API Docs
 ```bash
-timeout 60 bash -c 'gemini "Complex analysis" --output-format json 2>/dev/null | node -e "
-const fs = require(\"fs\");
-const d = fs.readFileSync(0, \"utf8\");
-const m = d.match(/{[\\s\\S]*}/);
-console.log(m ? JSON.parse(m[0]).response : \"\");
-"' || echo "Timed out"
+gemini "Document @./src/routes/users.ts:
+- Description
+- Request/response
+- Errors" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
 ```
 
-### Check exit code
-
+### Explain Code
 ```bash
-if gemini "Analyze code" --output-format json 2>/dev/null | node -e '
-const fs = require("fs");
-const d = fs.readFileSync(0, "utf8");
-try {
-  const m = d.match(/{[\s\S]*}/);
-  if (!m) throw new Error("No JSON");
-  console.log(JSON.parse(m[0]).response);
-} catch (e) {
-  process.exit(1);
-}
-'; then
-  echo "Success"
-else
-  echo "Gemini CLI failed"
-  exit 1
+gemini "Explain @./src/algorithms/pathfinding.ts for new developers" \
+  -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+---
+
+## Git Operations
+
+### Commit Message
+```bash
+git diff --cached | gemini "Conventional commit message.
+Format: type(scope): description
+Types: feat, fix, docs, refactor, test, chore" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### PR Description
+```bash
+git log origin/main..HEAD --oneline | gemini "PR description:
+## Summary
+## Changes
+## Testing" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Release Notes
+```bash
+git log v1.0.0..HEAD --oneline | gemini "Release notes:
+- Features
+- Bug Fixes
+- Breaking Changes" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Commit Analysis
+```bash
+git log --oneline -20 | gemini "Summarize recent activity" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+---
+
+## Log & Error Analysis
+
+### Error Logs
+```bash
+tail -100 /var/log/app.log | grep -i error | \
+  gemini "Categorize, find root causes, suggest fixes" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Incident Summary
+```bash
+cat incident.log | gemini "Incident summary:
+- Timeline
+- Impact
+- Root cause
+- Resolution" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Stack Trace
+```bash
+cat stacktrace.txt | gemini "Analyze:
+- Cause?
+- File/line?
+- Fix?" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Log Patterns
+```bash
+cat app.log | gemini "Find anomalies:
+- Frequency spikes
+- New errors
+- Performance issues" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+---
+
+## Test Generation
+
+### Unit Tests
+```bash
+gemini "Generate Vitest tests for @./src/utils/validation.ts:
+- Edge cases
+- Error scenarios" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Integration Tests
+```bash
+gemini "Generate integration tests for @./src/api/users.ts:
+- CRUD operations
+- Error handling" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Test Cases
+```bash
+cat requirements.md | gemini "Generate test cases:
+- Positive/negative cases
+- Priority" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+---
+
+## Batch Processing
+
+### Multiple Files
+```bash
+# Note: Quote variables to handle filenames with spaces
+for file in src/**/*.ts; do
+  gemini "Analyze @./$file" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response" > "reports/$(basename "$file").md"
+done
+```
+
+### Directory
+```bash
+gemini "Analyze architecture of @./src/:
+- Modules
+- Dependencies
+- Improvements" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Parallel
+```bash
+# Safe pattern: use $1 instead of {} to prevent shell injection
+find src -name "*.ts" | xargs -P 4 -I {} bash -c \
+  'gemini "Lint @$1" -o json 2>&1 | node -p "JSON.parse(require(\"fs\").readFileSync(0,\"utf8\").replace(/^[^{]*/s,\"\")).response" > "lint-$(basename "$1").txt"' -- {}
+```
+
+---
+
+## CI/CD Integration
+
+### GitHub Actions
+```yaml
+name: AI Review
+on: [pull_request]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Gemini CLI
+        run: npm install -g @google/gemini-cli
+      - name: Review
+        run: |
+          git diff origin/main...HEAD | \
+            gemini "Review for bugs and security" -o json 2>&1 | \
+            node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response" > review.md
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+```
+
+### Official Action
+```yaml
+- uses: google-github-actions/run-gemini-cli@v0
+  with:
+    gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+    prompt: Review this PR
+```
+
+### Pre-commit Hook
+```bash
+#!/bin/bash
+# .git/hooks/pre-commit
+if [ -n "$(git diff --cached --name-only)" ]; then
+  git diff --cached | gemini "Quick check. Reply OK or list issues." \
+    -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
 fi
 ```
+
+---
+
+## Quick Reference
+
+> **Note**: One-liners below are for quick use. For production scripts, use the robust error-checking pattern from [SKILL.md](../SKILL.md#error-handling).
+
+### One-Liners
+
+```bash
+# Helper function for brevity (add to shell config)
+alias gparse="node -p \"JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response\""
+
+# Code review
+git diff | gemini "Review" -o json 2>&1 | gparse
+
+# Image OCR
+gemini "Extract text @./screenshot.png" -o json 2>&1 | gparse
+
+# Commit message
+git diff --cached | gemini "Write commit" -o json 2>&1 | gparse
+
+# Explain code
+gemini "Explain @./complex.ts" -o json 2>&1 | gparse
+
+# Generate tests
+gemini "Write tests for @./utils.ts" -o json 2>&1 | gparse
+
+# Analyze logs
+tail -50 app.log | gemini "Summarize errors" -o json 2>&1 | gparse
+
+# Compare files
+gemini "Diff @./old.ts and @./new.ts" -o json 2>&1 | gparse
+
+# Security check
+gemini "Security audit @./src/auth/" -o json 2>&1 | gparse
+```
+
+### Batch (using gparse alias)
+```bash
+# Review all files
+for f in src/*.ts; do gemini "Review @$f" -o json 2>&1 | gparse; done
+
+# Generate docs
+for d in src/*/; do gemini "Document @$d" -o json 2>&1 | gparse > "docs/$(basename "$d").md"; done
+
+# OCR all images
+for i in *.png; do gemini "OCR @$i" -o json 2>&1 | gparse > "${i%.png}.txt"; done
+```
+
+### Safe Mode
+```bash
+gemini -s "Analyze @./src/ without modifications" -o json 2>&1 | node -p "JSON.parse(require('fs').readFileSync(0,'utf8').replace(/^[^{]*/s,'')).response"
+```
+
+### Sessions
+```bash
+gemini -c "Start complex task"        # With checkpointing
+gemini --resume "Continue"            # Resume
+gemini --list-sessions                # List
+```
+
+---
+
+## Multi-turn Workflows
+
+### Node.js Helper for Sessions
+
+For multi-turn workflows, create a helper script `gemini-parse.js`:
+
+```javascript
+// gemini-parse.js - Save this file for multi-turn workflows
+const chunks = [];
+process.stdin.on('data', c => chunks.push(c));
+process.stdin.on('end', () => {
+  const data = Buffer.concat(chunks).toString();
+  const idx = data.indexOf('{');
+  if (idx < 0) { console.error('No JSON found'); process.exit(1); }
+  try {
+    const json = JSON.parse(data.slice(idx));
+    if (json.error) { console.error('Error:', json.error.message); process.exit(1); }
+    // Output both session_id and response for multi-turn
+    if (process.argv[2] === '--session') {
+      console.log(json.session_id);
+    } else {
+      console.log(json.response);
+    }
+  } catch (e) { console.error('Parse error:', e.message); process.exit(1); }
+});
+```
+
+### Iterative Code Refinement
+```bash
+#!/bin/bash
+# Generate code, then refine based on errors
+
+# Step 1: Generate initial code (capture session_id)
+session_id=$(gemini -c "Write a Python function to parse CSV with error handling" \
+  -o json 2>&1 | node gemini-parse.js --session)
+
+gemini -c "Write a Python function to parse CSV with error handling" \
+  -o json 2>&1 | node gemini-parse.js > generated_code.py
+
+# Step 2: Test the code and capture errors
+if ! python generated_code.py 2> errors.txt; then
+  # Step 3: Resume session with error context to fix
+  cat errors.txt | gemini --resume "$session_id" "Fix these errors in the code you generated" \
+    -o json 2>&1 | node gemini-parse.js > generated_code.py
+fi
+```
+
+### Review and Apply Feedback Loop
+```bash
+#!/bin/bash
+# Code review -> Apply suggestions -> Verify
+
+# Step 1: Initial review with checkpointing
+session_id=$(gemini -c "Review @./src/api.ts for security issues" \
+  -o json 2>&1 | node gemini-parse.js --session)
+
+gemini -c "Review @./src/api.ts for security issues" \
+  -o json 2>&1 | node gemini-parse.js
+
+# Step 2: Ask for specific fixes (same session context)
+gemini --resume "$session_id" "Show me the fixed code for issue #1" \
+  -o json 2>&1 | node gemini-parse.js
+
+# Step 3: Verify the fix addresses the concern
+gemini --resume "$session_id" "Does this fix fully address the SQL injection risk?" \
+  -o json 2>&1 | node gemini-parse.js
+```
+
+### Progressive Documentation
+```bash
+#!/bin/bash
+# Build documentation incrementally
+
+# Start with overview (capture session)
+session_id=$(gemini -c "Document @./src/auth/ - start with module overview" \
+  -o json 2>&1 | node gemini-parse.js --session)
+
+echo "# Auth Module" > docs/auth.md
+gemini -c "Document @./src/auth/ - start with module overview" \
+  -o json 2>&1 | node gemini-parse.js >> docs/auth.md
+
+# Add API reference (continues context)
+echo -e "\n## API Reference" >> docs/auth.md
+gemini --resume "$session_id" "Now document each exported function" \
+  -o json 2>&1 | node gemini-parse.js >> docs/auth.md
+
+# Add usage examples (continues context)
+echo -e "\n## Examples" >> docs/auth.md
+gemini --resume "$session_id" "Add practical usage examples" \
+  -o json 2>&1 | node gemini-parse.js >> docs/auth.md
+```
+
+---
+
+## Platform Compatibility
+
+All examples in this document work on:
+
+| Platform | Shell | Notes |
+|----------|-------|-------|
+| macOS | bash/zsh | Native support |
+| Linux | bash/zsh | Native support |
+| Windows | PowerShell | Use `node` command directly |
+| Windows | Git Bash | Full compatibility |
+| Windows | WSL | Full compatibility |
