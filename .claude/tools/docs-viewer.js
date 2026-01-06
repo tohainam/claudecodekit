@@ -81,12 +81,11 @@ async function discoverDocuments() {
         const masterPath = join(fullPath, "_master.md");
         if (existsSync(masterPath)) {
           const stats = await stat(masterPath);
-          const contentDate = await extractDateFromContent(masterPath);
           docs.push({
             name: entry.name,
             path: join(folder, entry.name, "_master.md"),
             type: "plan",
-            date: contentDate || stats.mtime.toISOString().split("T")[0],
+            date: stats.mtime.toISOString().split("T")[0],
             mtime: stats.mtime.toISOString(),
           });
         }
@@ -95,9 +94,7 @@ async function discoverDocuments() {
         if (ext !== ".md" && ext !== ".json") continue;
 
         const stats = await stat(fullPath);
-        const contentDate =
-          ext === ".md" ? await extractDateFromContent(fullPath) : null;
-        const doc = parseDocument(entry.name, folder, stats, contentDate);
+        const doc = parseDocument(entry.name, folder, stats);
         if (doc) docs.push(doc);
       }
 
@@ -135,21 +132,10 @@ async function discoverDocuments() {
   return sortedTree;
 }
 
-async function extractDateFromContent(filePath) {
-  try {
-    const content = await readFile(filePath, "utf-8");
-    // Match **Generated**: YYYY-MM-DD or **Generated**: YYYY-MM-DD HH:MM
-    const match = content.match(/\*\*Generated\*\*:\s*(\d{4}-\d{2}-\d{2})/);
-    return match ? match[1] : null;
-  } catch {
-    return null;
-  }
-}
-
-function parseDocument(filename, folder, stats, contentDate = null) {
+function parseDocument(filename, folder, stats) {
   const ext = extname(filename);
   const name = basename(filename, ext);
-  const fallbackDate = stats.mtime.toISOString().split("T")[0];
+  const date = stats.mtime.toISOString().split("T")[0];
 
   // Format: {name}-{type}.md where type is research|scout|review|comparison
   const reportMatch = name.match(/^(.+)-(research|scout|review|comparison)$/);
@@ -158,7 +144,7 @@ function parseDocument(filename, folder, stats, contentDate = null) {
       name: reportMatch[1].replace(/-/g, " "),
       path: join(folder, filename),
       type: reportMatch[2],
-      date: contentDate || fallbackDate,
+      date,
       mtime: stats.mtime.toISOString(),
     };
   }
@@ -168,7 +154,7 @@ function parseDocument(filename, folder, stats, contentDate = null) {
     name: name.replace(/-/g, " "),
     path: join(folder, filename),
     type: ext === ".json" ? "state" : folder.replace(".", ""),
-    date: contentDate || fallbackDate,
+    date,
     mtime: stats.mtime.toISOString(),
   };
 }
@@ -685,14 +671,33 @@ function getHtmlTemplate() {
     .tree-file.active { background: var(--accent); color: white; }
     .tree-file-type {
       display: inline-block;
-      padding: 1px 4px;
+      padding: 1px 6px;
       font-size: 10px;
-      background: var(--bg-secondary);
       border-radius: 3px;
       margin-right: 6px;
-      color: var(--text-secondary);
+      font-weight: 500;
     }
-    .tree-file.active .tree-file-type { background: rgba(255,255,255,0.2); color: white; }
+    /* Badge colors by type */
+    .tree-file-type[data-type="research"] { background: #dbeafe; color: #1e40af; }
+    .tree-file-type[data-type="scout"] { background: #fef3c7; color: #92400e; }
+    .tree-file-type[data-type="review"] { background: #fce7f3; color: #9d174d; }
+    .tree-file-type[data-type="comparison"] { background: #e0e7ff; color: #3730a3; }
+    .tree-file-type[data-type="specs"] { background: #d1fae5; color: #065f46; }
+    .tree-file-type[data-type="plans"] { background: #fae8ff; color: #86198f; }
+    .tree-file-type[data-type="plan"] { background: #fae8ff; color: #86198f; }
+    .tree-file-type[data-type="state"] { background: #fef9c3; color: #854d0e; }
+    .tree-file-type[data-type="reports"] { background: #dbeafe; color: #1e40af; }
+    /* Dark mode badge colors */
+    [data-theme="dark"] .tree-file-type[data-type="research"] { background: #1e3a5f; color: #93c5fd; }
+    [data-theme="dark"] .tree-file-type[data-type="scout"] { background: #78350f; color: #fcd34d; }
+    [data-theme="dark"] .tree-file-type[data-type="review"] { background: #831843; color: #f9a8d4; }
+    [data-theme="dark"] .tree-file-type[data-type="comparison"] { background: #312e81; color: #a5b4fc; }
+    [data-theme="dark"] .tree-file-type[data-type="specs"] { background: #064e3b; color: #6ee7b7; }
+    [data-theme="dark"] .tree-file-type[data-type="plans"] { background: #701a75; color: #f0abfc; }
+    [data-theme="dark"] .tree-file-type[data-type="plan"] { background: #701a75; color: #f0abfc; }
+    [data-theme="dark"] .tree-file-type[data-type="state"] { background: #713f12; color: #fef08a; }
+    [data-theme="dark"] .tree-file-type[data-type="reports"] { background: #1e3a5f; color: #93c5fd; }
+    .tree-file.active .tree-file-type { background: rgba(255,255,255,0.2) !important; color: white !important; }
 
     /* Content */
     .content {
@@ -843,13 +848,13 @@ function getHtmlTemplate() {
 
     /* WYSIWYG Edit Mode */
     .markdown-body.editing {
-      outline: 2px solid var(--accent);
-      outline-offset: 8px;
-      border-radius: 4px;
       min-height: 200px;
+      background: var(--bg-secondary);
+      padding: 24px;
+      border-radius: 8px;
     }
     .markdown-body.editing:focus {
-      outline-color: var(--accent);
+      outline: none;
     }
     .markdown-body.editing pre,
     .markdown-body.editing code {
@@ -958,7 +963,7 @@ function getHtmlTemplate() {
           for (const file of files) {
             const typeLabel = file.type || folder;
             html += '<div class="tree-file" data-path="' + file.path + '" onclick="handleDocClick(\\'' + file.path + '\\')">';
-            html += '<span class="tree-file-type">' + typeLabel + '</span>';
+            html += '<span class="tree-file-type" data-type="' + typeLabel + '">' + typeLabel + '</span>';
             html += file.name;
             html += '</div>';
           }

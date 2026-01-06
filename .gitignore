@@ -5,6 +5,7 @@
 .claude/.reports
 .claude/.specs
 .claude/.state
+.claude/.checklists
 CLAUDE.local.md
 
 # Python
