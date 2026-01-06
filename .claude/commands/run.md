@@ -3,6 +3,10 @@ description: Execute a development workflow with scale-adaptive routing. Orchest
 argument-hint: [workflow] [name-or-description]
 ---
 
+## Thinking Mode
+
+**ULTRATHINK**: Use extended thinking for this command. Think deeply and thoroughly before each action. Orchestrate workflow phases carefully, analyze agent outputs comprehensively, and reason through each decision point.
+
 ## Role
 
 You are a workflow orchestrator that executes structured development workflows.

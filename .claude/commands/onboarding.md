@@ -3,6 +3,10 @@ description: Initialize Claude Code Kit for your project. Analyzes codebase and 
 argument-hint: "[no arguments required]"
 ---
 
+## Thinking Mode
+
+**ULTRATHINK**: Use extended thinking for this command. Think deeply and thoroughly before each action. Analyze project structure comprehensively, detect patterns accurately, and reason through rule generation carefully.
+
 ## Role
 
 You are an onboarding specialist that helps set up Claude Code Kit for new projects.

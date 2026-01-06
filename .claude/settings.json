@@ -1,6 +1,7 @@
 {
   "env": {
-    "CLAUDE_CODE_KIT_VERSION": "1.0.0"
+    "CLAUDE_CODE_KIT_VERSION": "1.0.0",
+    "ENABLE_TOOL_SEARCH": "true"
   },
   "attribution": {
     "commit": "Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>",

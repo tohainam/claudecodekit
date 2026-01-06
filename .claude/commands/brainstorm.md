@@ -3,6 +3,10 @@ description: Start interactive brainstorm session to refine a specification. Cre
 argument-hint: [initial spec or feature description]
 ---
 
+## Thinking Mode
+
+**ULTRATHINK**: Use extended thinking for this command. Think deeply and thoroughly before each action. Analyze requirements comprehensively, consider edge cases, and reason through decisions carefully.
+
 ## Role
 
 You are a requirements analyst conducting an interactive brainstorm session.
@@ -69,12 +73,18 @@ Grep(pattern: "{keyword}")
 
 **2. Scouter only** (complex codebase):
 ```
-Task(subagent_type: "scouter", prompt: "...", description: "...")
+scouter_data = Task(subagent_type: "scouter", prompt: "...", description: "...")
+
+# Save report for /run reference
+Write(".claude/.reports/{feature_name}-brainstorm-scout.md", scouter_data)
 ```
 
 **3. Researcher only** (unfamiliar tech):
 ```
-Task(subagent_type: "researcher", prompt: "...", description: "...")
+researcher_data = Task(subagent_type: "researcher", prompt: "...", description: "...")
+
+# Save report for /run reference
+Write(".claude/.reports/{feature_name}-brainstorm-research.md", researcher_data)
 ```
 
 **4. Both in parallel** (complex + unfamiliar):
@@ -87,10 +97,9 @@ researcher = Task(subagent_type: "researcher", prompt: "...", run_in_background:
 scouter_data = TaskOutput(task_id: scouter, block: true)
 researcher_data = TaskOutput(task_id: researcher, block: true)
 
-# Use report skill to write reports
-# Skill(skill: "report") - provides templates and synthesis guidance
-Write(".claude/.reports/{feature_name}-scout.md", ...)
-Write(".claude/.reports/{feature_name}-research.md", ...)
+# Save reports for /run reference
+Write(".claude/.reports/{feature_name}-brainstorm-scout.md", scouter_data)
+Write(".claude/.reports/{feature_name}-brainstorm-research.md", researcher_data)
 ```
 
 **Scaling Guidelines**:
@@ -324,7 +333,7 @@ You can now run:
 - `Task(subagent_type: "researcher", ...)` for external research - NEVER do inline with `WebSearch`, `WebFetch`
 - **If spawning BOTH scouter and researcher** → run in parallel with `run_in_background: true`
 - **Wait for ALL agents** before presenting findings to developer
-- **Optional: Save agent reports** to `.reports/{feature_name}-brainstorm-*.md` for `/run` reference
+- **Save agent reports** to `.reports/{feature_name}-brainstorm-*.md` for `/run` reference (REQUIRED when spawning agents)
 - Present findings clearly with counts
 - Wait for developer response after each presentation
 - `Edit(...)` to update spec file after each developer input
@@ -352,7 +361,7 @@ You can now run:
 
 | Tool                | Invocation                                                                                             | Use For                       |
 | ------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------- |
-| `Write`             | `Write(file_path: "...", content: "...")`                                                              | Create spec file              |
+| `Write`             | `Write(file_path: "...", content: "...")`                                                              | Create spec file & save reports |
 | `Edit`              | `Edit(file_path: "...", old_string: "...", new_string: "...")`                                         | Update spec sections          |
 | `Glob`              | `Glob(pattern: "**/*{keyword}*")`                                                                      | Find related files (quick)    |
 | `Grep`              | `Grep(pattern: "{keyword}")`                                                                           | Search code content (quick)   |
@@ -373,8 +382,9 @@ You can now run:
 2. `Write(file_path: ".claude/.specs/user-authentication.md", content: template)`
 3. `Glob(pattern: "**/*auth*")` + `Grep(pattern: "auth|login")` for quick search
 4. `Task(subagent_type: "scouter", prompt: "Analyze codebase for user-authentication", description: "Codebase analysis")`
-5. Identify 3 gaps, 4 questions
-6. Present findings, STOP and wait
+5. `Write(file_path: ".claude/.reports/user-authentication-brainstorm-scout.md", ...)` - save report
+6. Identify 3 gaps, 4 questions
+7. Present findings, STOP and wait
 
 ### Example: Developer Answers
 
